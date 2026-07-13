@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://deeptech2026.com'; // TODO: Update with the final production domain
+  const baseUrl = 'https://deep-tech-ai-26.vercel.app';
 
   return [
     {

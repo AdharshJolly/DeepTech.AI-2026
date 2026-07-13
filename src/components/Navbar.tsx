@@ -19,6 +19,7 @@ export default function Navbar() {
     { name: "About", href: "/#about" },
     { name: "Speakers", href: "/speakers" },
     { name: "Agenda", href: "/agenda" },
+    { name: "Committee", href: "/committee" },
     { name: "Partners", href: "/#partners" },
     { name: "Contact", href: "/contact" },
   ];
@@ -43,7 +44,7 @@ export default function Navbar() {
         }}
         animate={{
           width: isScrolled ? "95%" : "100%",
-          maxWidth: isScrolled ? "1024px" : "100%",
+          maxWidth: isScrolled ? "1280px" : "100%",
           borderRadius: isScrolled ? "9999px" : "0px",
           backgroundColor: isScrolled
             ? "rgba(255, 255, 255, 0.85)"
@@ -60,11 +61,11 @@ export default function Navbar() {
         }}
         transition={{ type: "spring", stiffness: 400, damping: 40 }}
       >
-        <div className="mx-auto px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto px-4 sm:px-8 lg:px-10">
           <motion.div
             className="flex justify-between items-center"
             initial={{ height: "5rem" }}
-            animate={{ height: isScrolled ? "4rem" : "5rem" }}
+            animate={{ height: isScrolled ? "4.5rem" : "5rem" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
           >
             <div className="shrink-0 flex items-center">
@@ -77,23 +78,23 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <div className="hidden md:flex space-x-8 items-center">
+            <div className="hidden lg:flex space-x-8 items-center">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm font-medium text-ieee-gray hover:text-ieee-blue transition-colors"
+                  className="text-sm font-semibold text-ieee-gray hover:text-ieee-blue transition-colors"
                 >
                   {link.name}
                 </Link>
               ))}
               <motion.button
                 aria-label="Registrations Coming Soon"
-                className="bg-ieee-orange text-ieee-white rounded-full font-semibold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80"
-                initial={{ padding: "0.5rem 1.5rem", fontSize: "0.875rem" }}
+                className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80"
+                initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
                 animate={{
-                  padding: isScrolled ? "0.4rem 1.25rem" : "0.5rem 1.5rem",
-                  fontSize: isScrolled ? "0.75rem" : "0.875rem",
+                  padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
+                  fontSize: isScrolled ? "0.8rem" : "0.875rem",
                 }}
                 disabled
               >

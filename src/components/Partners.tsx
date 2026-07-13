@@ -16,7 +16,7 @@ export default function Partners() {
             Our Partners
           </h2>
           <p className="text-lg text-ieee-gray mt-6 max-w-2xl mx-auto leading-relaxed">
-            Collaborating with the world's most innovative organizations to
+            Collaborating with the world&apos;s most innovative organizations to
             drive the future of Physical AI and robotics.
           </p>
         </div>
@@ -34,7 +34,8 @@ export default function Partners() {
                 alt="IEEE Computer Society Bangalore Chapter"
                 width={200}
                 height={80}
-                className="w-full h-auto object-contain" priority />
+                style={{ width: "100%", height: "auto" }}
+                className="object-contain" priority />
             </div>
           </div>
 
@@ -49,7 +50,8 @@ export default function Partners() {
                 alt="GE Healthcare"
                 width={200}
                 height={80}
-                className="w-full h-auto object-contain" priority />
+                style={{ width: "100%", height: "auto" }}
+                className="object-contain" priority />
             </div>
           </div>
         </div>

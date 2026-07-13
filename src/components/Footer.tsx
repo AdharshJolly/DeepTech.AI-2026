@@ -21,7 +21,8 @@ export default function Footer() {
                   alt="IEEE CS BC Logo"
                   width={120}
                   height={48}
-                  className="w-full h-full object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
+                  style={{ width: "100%", height: "auto" }}
+                  className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
                 />
               </div>
               <div className="flex items-center justify-start w-32 h-12">
@@ -30,7 +31,8 @@ export default function Footer() {
                   alt="GE Healthcare Logo"
                   width={120}
                   height={48}
-                  className="w-full h-full object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
+                  style={{ width: "100%", height: "auto" }}
+                  className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
                 />
               </div>
             </div>

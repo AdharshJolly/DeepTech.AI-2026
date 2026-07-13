@@ -14,6 +14,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://deep-tech-ai-26.vercel.app"),
   title: "DeepTech.ai 2026 - The premier IEEE CS event for Physical AI and Robotics",
   description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
   keywords: ["DeepTech", "AI", "Physical AI", "Robotics", "IEEE CS", "Conference", "2026"],
@@ -38,9 +39,7 @@ export const metadata: Metadata = {
   },
 };
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import BackgroundElements from "@/components/BackgroundElements";
+import AppWrapper from "@/components/AppWrapper";
 
 export default function RootLayout({
   children,
@@ -51,16 +50,10 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${montserrat.variable} ${openSans.variable} h-full antialiased scroll-smooth`}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col font-sans bg-transparent text-ieee-black relative">
-        
-        <BackgroundElements />
-
-        <Navbar />
-        <main className="flex-grow pt-20">
-          {children}
-        </main>
-        <Footer />
+        <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
   );

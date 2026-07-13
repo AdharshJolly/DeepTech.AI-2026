@@ -5,8 +5,6 @@ import {
   Users,
   Globe2,
   Lightbulb,
-  Eye,
-  Layers,
 } from "lucide-react";
 
 export default function About() {

@@ -1,51 +1,22 @@
 import Image from "next/image";
 import { Globe, MessageCircle, ArrowUpRight } from "lucide-react";
+import connectToDatabase from "@/lib/db";
+import Speaker from "@/models/Speaker";
 
-const speakers = [
-  {
-    name: "Speaker — TBA",
-    role: "Expert in Physical AI",
-    org: "Organization — TBA",
-    imgUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBplpkhho3847hz38bUG2COLPndSNvSg8Hv7Q_I5KBaqat7KUkzSWyF0HrQ7HLWsrgW9RfA0V7JjDrmxgiHsyUJE730DCv-jcCFBHo3mGeE_PFHbhWYJ56U7fbAs2GJAWL4jqzMD8tRVHRypEB71f9yHYX14ghzehSVDahQ_tQimFsvDPgxHL40bhO3EmQV8ibUu3Gr58xDEovVRh5PqgEN76KCNd2Zb8pSdCYgPwrOO3D553rjqr0",
-  },
-  {
-    name: "Speaker — TBA",
-    role: "Expert in Medical Imaging",
-    org: "Organization — TBA",
-    imgUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCNiZqAlPygfa-zrykxVTEtVk8507CgYGXeWRNaYhNbSuEIpkLEUjPrbeesvIuCT9XsiVpAlmQMFZySCxiQBN2_O8q-ZpLOdCSu1swyil-KGRK_73sU5xQgXA5qXpERB7m0qdMws3tZw2DoXTMjyilgD9zc6988XiRLu6kHxe9Q6EvYUTSYxBk2e3JCFNzeOl2_sfq6CNI8mLV4VE4jLA7Cr3CbC8JrJgTJGzRXxIAVjzbfF6OdzFI",
-  },
-  {
-    name: "Speaker — TBA",
-    role: "Expert in Autonomous Systems",
-    org: "Organization — TBA",
-    imgUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA4k6bcki7azzVWDrUDgvzq2LLoF3quBrtD7llzhbCNp4YRQr0LuF-Jb2Ucukd-T-wzpBMcTqvTcG27XiJULf-GFEPSlAOt0J0rll6xPj9k3gFHTRjLywnXKwWiOzvJxyYvf-Dh2uT2A7Y4E8u30W-bNmOBgMpGzN6C7GrUsad1nMJiJ3UToz7XQ7BcVSAK7qqZn4U7l4y0dvL5KrpoeE_DDxFLJwQGO7dlX_sF4g9VnNRYhiB3szc",
-  },
-  {
-    name: "Speaker — TBA",
-    role: "Expert in Edge Hardware",
-    org: "Organization — TBA",
-    imgUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDlBkfp8PDbzwXV2G8u3p_D5FPb-d9troMetjoQSKhXfXHCorkxcdFeibXH9Eo_eNpeoLxWulU-wRbjP8Uu7maXwzJz3disy9B0qA5bMTW2lCYwu99NQ4evPRr3bqYPiEDH_nfYm_53tDzhkTjUvAI9ZvY4EBjH811q_k2-iUHw0SRsRRBnhQzAVhZ_ntC2zunjbmNGmcLSg1Eu_VvL9aKpFpRSwJtP8eIO7hKG6rD3kWLmmt_Wg9s",
-  },
-  {
-    name: "Speaker — TBA",
-    role: "Expert in Neuromorphic Chips",
-    org: "Organization — TBA",
-    imgUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD8DkgYzDJ0idtjo7yvrcsxVxSDZLgaQff5HznjVnrGK_enhzJBc-nTClDFHEahP4yJOnvjqOphiWAsMLA_oTnWNYLWJrAoQ41kC0deiWWXKRNbcua2ENLQuPCPVI9vH2QQPr13R7GIwcr_2xM3K69VPYLC8UseIuGBbVqiuvNWj42TC7JoU6a17WXc-N42wjmiwcyGxr2MfoenUioBW1W7ki7p-Lt7GksO1stT4xSObhkmg61YaCY",
-  },
-  {
-    name: "Speaker — TBA",
-    role: "Expert in Industrial Automation",
-    org: "Organization — TBA",
-    imgUrl: null, // Placeholder for missing speaker
-  },
-];
+export interface SpeakerItem {
+  _id: unknown;
+  name: string;
+  role: string;
+  company: string;
+  bio?: string;
+  order?: number;
+  imageUrl?: string;
+}
 
-export default function Speakers() {
+export default async function Speakers() {
+  await connectToDatabase();
+  const speakers = await Speaker.find().sort({ order: 1 }).lean();
+
   return (
     <section
       id="speakers"
@@ -66,15 +37,15 @@ export default function Speakers() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-          {speakers.map((speaker, index) => (
+          {speakers.map((speaker: SpeakerItem) => (
             <div
-              key={index}
+              key={String(speaker._id)}
               className="group relative w-full aspect-3/4 rounded-[2.5rem] overflow-hidden bg-ieee-black shadow-2xl hover:shadow-[0_20px_50px_rgba(0,181,226,0.15)] transition-all duration-500"
             >
               {/* Background Image */}
-              {speaker.imgUrl ? (
+              {speaker.imageUrl ? (
                 <Image
-                  src={speaker.imgUrl}
+                  src={speaker.imageUrl}
                   alt={speaker.role}
                   fill
                   className="object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700 ease-out"
@@ -83,8 +54,8 @@ export default function Speakers() {
               ) : (
                 <div className="absolute inset-0 bg-linear-to-br from-ieee-gray/10 to-ieee-black flex items-center justify-center">
                   <div className="w-32 h-32 rounded-full border-2 border-ieee-gray/20 border-dashed animate-[spin_20s_linear_infinite]"></div>
-                  <span className="absolute text-ieee-gray/40 uppercase tracking-widest text-xs font-bold">
-                    To Be Announced
+                  <span className="absolute text-ieee-gray/40 uppercase tracking-widest text-xs font-bold text-center px-4">
+                    {speaker.name}
                   </span>
                 </div>
               )}
@@ -102,7 +73,7 @@ export default function Speakers() {
                   {/* Top Badge (Organization) */}
                   <div className="mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                     <span className="text-xs font-bold tracking-widest text-ieee-orange bg-ieee-orange/10 border border-ieee-orange/30 px-3 py-1.5 rounded-full uppercase backdrop-blur-md">
-                      {speaker.org}
+                      {speaker.company}
                     </span>
                   </div>
 
@@ -116,10 +87,10 @@ export default function Speakers() {
 
                   {/* Hidden Social Links / Action */}
                   <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200 border-t border-white/10 pt-6">
-                    <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center backdrop-blur-md transition-colors border border-white/10">
+                    <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center backdrop-blur-md transition-colors border border-white/10 cursor-not-allowed">
                       <Globe className="w-4 h-4 text-white" />
                     </button>
-                    <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center backdrop-blur-md transition-colors border border-white/10">
+                    <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center backdrop-blur-md transition-colors border border-white/10 cursor-not-allowed">
                       <MessageCircle className="w-4 h-4 text-white" />
                     </button>
                     <div className="ml-auto flex items-center text-xs font-bold tracking-widest text-white uppercase hover:text-ieee-orange cursor-pointer transition-colors">

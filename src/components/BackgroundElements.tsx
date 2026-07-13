@@ -3,7 +3,6 @@ import {
   Network,
   CircuitBoard,
   Hexagon,
-  Share2,
   Activity,
 } from "lucide-react";
 
