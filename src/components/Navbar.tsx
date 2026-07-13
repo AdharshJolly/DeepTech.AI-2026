@@ -70,6 +70,7 @@ export default function Navbar() {
             <div className="shrink-0 flex items-center">
               <Link
                 href="/"
+                aria-label="Home"
                 className="font-heading font-bold text-2xl text-ieee-blue tracking-tight"
               >
                 DeepTech<span className="text-ieee-orange">.ai</span>
@@ -87,6 +88,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <motion.button
+                aria-label="Registrations Coming Soon"
                 className="bg-ieee-orange text-ieee-white rounded-full font-semibold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80"
                 initial={{ padding: "0.5rem 1.5rem", fontSize: "0.875rem" }}
                 animate={{
@@ -102,9 +104,11 @@ export default function Navbar() {
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsOpen(!isOpen)}
+                aria-expanded={isOpen}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
                 className="text-ieee-gray hover:text-ieee-blue focus:outline-none bg-ieee-gray/5 p-2 rounded-full"
               >
-                {isOpen ? <X size={20} /> : <Menu size={20} />}
+                {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
               </button>
             </div>
           </motion.div>
@@ -133,6 +137,7 @@ export default function Navbar() {
               ))}
               <div className="pt-4">
                 <button
+                  aria-label="Registrations Coming Soon"
                   className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md"
                   disabled
                 >

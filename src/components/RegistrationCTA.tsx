@@ -22,7 +22,7 @@ export default function RegistrationCTA() {
 
           <div className="relative z-10 flex flex-col items-center">
             <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 backdrop-blur-md">
-              <Ticket className="w-10 h-10 text-ieee-cyan" />
+              <Ticket className="w-10 h-10 text-ieee-cyan" aria-hidden="true" />
             </div>
 
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black text-white tracking-tight mb-6">
@@ -40,6 +40,7 @@ export default function RegistrationCTA() {
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <button
                 disabled
+                aria-label="Registrations Coming Soon"
                 className="group/btn relative inline-flex items-center justify-center px-10 py-5 font-bold text-ieee-black transition-all duration-300 bg-white rounded-full shadow-[0_0_40px_rgba(0,181,226,0.2)] uppercase tracking-widest text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Registrations Coming Soon
@@ -48,11 +49,11 @@ export default function RegistrationCTA() {
 
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm font-bold tracking-widest text-ieee-gray/60 uppercase">
               <div className="flex items-center">
-                <Calendar className="w-4 h-4 mr-2 text-ieee-orange" />
+                <Calendar className="w-4 h-4 mr-2 text-ieee-orange" aria-hidden="true" />
                 Nov 12-14, 2026
               </div>
               <div className="flex items-center">
-                <Zap className="w-4 h-4 mr-2 text-ieee-cyan" />
+                <Zap className="w-4 h-4 mr-2 text-ieee-cyan" aria-hidden="true" />
                 Limited Seats Available
               </div>
             </div>
