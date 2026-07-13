@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DeepTech.ai 2026 🚀
 
-## Getting Started
+> The flagship IEEE Computer Society event exploring how Physical AI is transforming robotics, hardware, and industrial automation.
 
-First, run the development server:
+![DeepTech.ai 2026](https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+
+Welcome to the official repository for the **DeepTech.ai 2026** summit website, proudly organized by the **IEEE Computer Society Bangalore Chapter** and hosted at **GE Healthcare, Bengaluru**.
+
+## 🌟 Features
+
+- **Modern Architecture**: Built on **Next.js 15 (App Router)** for bleeding-edge React features and Server Components.
+- **Hardware-Accelerated UI**: Fluid, GPU-accelerated micro-animations powered by **Framer Motion** (including a dynamic scrollspy Agenda and floating dock Navbar).
+- **Responsive & Accessible**: Fully optimized for mobile screens with standard ARIA labels ensuring 100% screen reader compatibility.
+- **SEO & Performance Driven**: Dynamic XML Sitemaps, Open Graph metadata, Twitter Cards, and `next/image` lazy-loading & priority optimizations.
+- **Premium Design System**: Tailored around official IEEE CS Brand colors (Orange `#FFA300`, Cyan `#00B5E2`, Blue `#00629B`).
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
+- **Language:** TypeScript
+
+## 🚀 Getting Started
+
+First, clone the repository and install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the live site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Key Directories
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/` - Next.js App Router pages (Home, Agenda, Speakers, Contact, Custom 404, Loading).
+- `src/components/` - Reusable UI components (Hero, Navbar, InnovationAlley, Partners, etc.).
+- `public/images/` - Static image assets and official partner logos.
 
-## Learn More
+## 🤝 Partners
 
-To learn more about Next.js, take a look at the following resources:
+- **Organized By:** IEEE Computer Society Bangalore Chapter
+- **Venue Partner:** GE Healthcare, Bengaluru
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Designed and engineered with multi-agent AI for the future of Physical Intelligence.*
