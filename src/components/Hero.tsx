@@ -115,11 +115,11 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-8 mb-8"
         >
-          <div className="flex items-center text-ieee-black bg-white/70 px-6 py-3 rounded-full backdrop-blur-md border border-ieee-gray/20 text-sm shadow-lg">
+          <div className="flex items-center text-ieee-black bg-white/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-md border border-ieee-gray/20 text-xs md:text-sm shadow-lg">
             <Calendar className="w-4 h-4 mr-2 text-ieee-orange" />
             <span className="font-semibold tracking-wide">30 October 2026</span>
           </div>
-          <div className="flex items-center text-ieee-black bg-white/70 px-6 py-3 rounded-full backdrop-blur-md border border-ieee-gray/20 text-sm shadow-lg">
+          <div className="flex items-center text-ieee-black bg-white/70 px-4 py-2 md:px-6 md:py-3 rounded-full backdrop-blur-md border border-ieee-gray/20 text-xs md:text-sm shadow-lg">
             <MapPin className="w-4 h-4 mr-2 text-ieee-orange" />
             <span className="font-semibold tracking-wide">
               GE Healthcare, Bengaluru
@@ -134,7 +134,7 @@ export default function Hero() {
         >
           <button
             disabled
-            className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-ieee-white transition-all duration-300 bg-ieee-gray rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 disabled:opacity-90 disabled:cursor-not-allowed uppercase tracking-widest text-xs overflow-hidden"
+            className="group relative inline-flex items-center justify-center px-6 py-3 md:px-10 md:py-4 font-bold text-ieee-white transition-all duration-300 bg-ieee-gray rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 disabled:opacity-90 disabled:cursor-not-allowed uppercase tracking-widest text-[10px] md:text-xs overflow-hidden"
           >
             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-ieee-orange to-ieee-cyan opacity-20"></span>
             <span className="relative flex items-center">
