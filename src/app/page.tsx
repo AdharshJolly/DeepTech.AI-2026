@@ -6,7 +6,7 @@ import Countdown from '@/components/Countdown';
 import About from '@/components/About';
 import Partners from '@/components/Partners';
 import RegistrationCTA from '@/components/RegistrationCTA';
-
+import InnovationAlley from '@/components/InnovationAlley';
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
@@ -43,7 +43,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. Innovation Alley (TBA) */}
+      {/* 8. Innovation Alley */}
+      <InnovationAlley />
       
       {/* 9. Partners */}
       <Partners />

@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import React from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -16,55 +16,66 @@ export default function Navbar() {
   });
 
   const navLinks = [
-    { name: 'About', href: '/#about' },
-    { name: 'Speakers', href: '/speakers' },
-    { name: 'Agenda', href: '/agenda' },
-    { name: 'Partners', href: '/#partners' },
-    { name: 'Contact', href: '/contact' },
+    { name: "About", href: "/#about" },
+    { name: "Speakers", href: "/speakers" },
+    { name: "Agenda", href: "/agenda" },
+    { name: "Partners", href: "/#partners" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
-    <motion.div 
+    <motion.div
       className="fixed top-0 left-0 w-full z-50 pointer-events-none flex justify-center"
       initial={{ paddingTop: "0rem" }}
       animate={{ paddingTop: isScrolled ? "1rem" : "0rem" }}
       transition={{ type: "spring", stiffness: 400, damping: 40 }}
     >
-      <motion.nav 
+      <motion.nav
         className="pointer-events-auto backdrop-blur-xl relative"
-        initial={{ 
-          width: "100%", 
-          maxWidth: "100%", 
+        initial={{
+          width: "100%",
+          maxWidth: "100%",
           borderRadius: "0px",
           backgroundColor: "rgba(255, 255, 255, 0.9)",
           boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
           borderBottom: "1px solid rgba(117, 120, 123, 0.2)",
-          border: "0px solid rgba(117, 120, 123, 0.1)"
+          border: "0px solid rgba(117, 120, 123, 0.1)",
         }}
-        animate={{ 
+        animate={{
           width: isScrolled ? "95%" : "100%",
-          maxWidth: isScrolled ? "1024px" : "100%", 
+          maxWidth: isScrolled ? "1024px" : "100%",
           borderRadius: isScrolled ? "9999px" : "0px",
-          backgroundColor: isScrolled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.9)",
-          boxShadow: isScrolled ? "0 8px 30px rgba(0,0,0,0.12)" : "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-          borderBottom: isScrolled ? "1px solid transparent" : "1px solid rgba(117, 120, 123, 0.2)",
-          border: isScrolled ? "1px solid rgba(117, 120, 123, 0.1)" : "0px solid transparent"
+          backgroundColor: isScrolled
+            ? "rgba(255, 255, 255, 0.85)"
+            : "rgba(255, 255, 255, 0.9)",
+          boxShadow: isScrolled
+            ? "0 8px 30px rgba(0,0,0,0.12)"
+            : "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+          borderBottom: isScrolled
+            ? "1px solid transparent"
+            : "1px solid rgba(117, 120, 123, 0.2)",
+          border: isScrolled
+            ? "1px solid rgba(117, 120, 123, 0.1)"
+            : "0px solid transparent",
         }}
         transition={{ type: "spring", stiffness: 400, damping: 40 }}
       >
-        <div className="mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+        <div className="mx-auto px-4 sm:px-8 lg:px-16">
+          <motion.div
             className="flex justify-between items-center"
             initial={{ height: "5rem" }}
             animate={{ height: isScrolled ? "4rem" : "5rem" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
           >
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="font-heading font-bold text-2xl text-ieee-blue tracking-tight">
+            <div className="shrink-0 flex items-center">
+              <Link
+                href="/"
+                className="font-heading font-bold text-2xl text-ieee-blue tracking-tight"
+              >
                 DeepTech<span className="text-ieee-orange">.ai</span>
               </Link>
             </div>
-            
+
             <div className="hidden md:flex space-x-8 items-center">
               {navLinks.map((link) => (
                 <Link
@@ -75,12 +86,12 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <motion.button 
-                className="bg-ieee-orange text-ieee-white rounded-full font-semibold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80" 
+              <motion.button
+                className="bg-ieee-orange text-ieee-white rounded-full font-semibold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80"
                 initial={{ padding: "0.5rem 1.5rem", fontSize: "0.875rem" }}
-                animate={{ 
+                animate={{
                   padding: isScrolled ? "0.4rem 1.25rem" : "0.5rem 1.5rem",
-                  fontSize: isScrolled ? "0.75rem" : "0.875rem"
+                  fontSize: isScrolled ? "0.75rem" : "0.875rem",
                 }}
                 disabled
               >
@@ -100,12 +111,12 @@ export default function Navbar() {
         </div>
 
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className={`md:hidden absolute w-full ${
-              isScrolled 
-                ? "top-[110%] left-0 bg-white/95 backdrop-blur-2xl border border-ieee-gray/10 rounded-3xl shadow-2xl overflow-hidden" 
+              isScrolled
+                ? "top-[110%] left-0 bg-white/95 backdrop-blur-2xl border border-ieee-gray/10 rounded-3xl shadow-2xl overflow-hidden"
                 : "top-full left-0 bg-ieee-white/95 backdrop-blur-xl border-t border-ieee-gray/10 shadow-lg"
             }`}
           >
@@ -121,7 +132,10 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-4">
-                <button className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md" disabled>
+                <button
+                  className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md"
+                  disabled
+                >
                   Registrations Coming Soon
                 </button>
               </div>
