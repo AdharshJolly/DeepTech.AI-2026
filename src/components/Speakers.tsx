@@ -49,7 +49,7 @@ export default function Speakers() {
   return (
     <section
       id="speakers"
-      className="py-24 bg-transparent relative z-10 min-h-screen"
+      className="py-16 md:py-24 bg-transparent relative z-10 min-h-screen"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
@@ -59,13 +59,13 @@ export default function Speakers() {
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-ieee-black tracking-tight mt-4">
             Distinguished Speakers
           </h2>
-          <p className="text-lg text-ieee-gray mt-6 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-ieee-gray mt-4 md:mt-6 max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
             Hear from the pioneers of physical AI, edge computing, and robotics
             who are redefining the boundaries of hardware and software.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
           {speakers.map((speaker, index) => (
             <div
               key={index}
@@ -97,7 +97,7 @@ export default function Speakers() {
               <div className="absolute bottom-8 right-8 w-8 h-8 border-b-2 border-r-2 border-ieee-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0"></div>
 
               {/* Content */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end">
+              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
                 <div className="transform translate-y-12 group-hover:translate-y-0 transition-transform duration-500 ease-out">
                   {/* Top Badge (Organization) */}
                   <div className="mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">

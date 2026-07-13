@@ -99,7 +99,7 @@ export default function Agenda() {
   return (
     <section
       id="agenda"
-      className="py-16 bg-transparent relative z-10 min-h-200"
+      className="py-12 md:py-16 bg-transparent relative z-10 min-h-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -117,7 +117,7 @@ export default function Agenda() {
           <div className="hidden lg:block absolute left-[38%] top-20 bottom-20 w-px bg-linear-to-b from-transparent via-ieee-cyan/30 to-transparent"></div>
 
           {/* Left: Interactive List */}
-          <div className="w-full lg:w-5/12 flex flex-col gap-6 relative z-10">
+          <div className="w-full lg:w-5/12 flex flex-col gap-4 md:gap-6 relative z-10">
             {agendaItems.map((item, idx) => (
               <button
                 key={idx}
@@ -127,7 +127,7 @@ export default function Agenda() {
                 data-index={idx}
                 onClick={() => setActiveIndex(idx)}
                 onMouseEnter={() => setActiveIndex(idx)}
-                className={`text-left p-6 md:p-8 rounded-3xl transition-all duration-300 border relative group overflow-hidden ${
+                className={`text-left p-5 md:p-8 rounded-3xl transition-all duration-300 border relative group overflow-hidden ${
                   activeIndex === idx
                     ? "bg-ieee-black text-white shadow-2xl border-ieee-black lg:translate-x-4 scale-[1.02]"
                     : "bg-white text-ieee-black border-ieee-gray/10 hover:border-ieee-cyan/50 shadow-sm hover:shadow-md hover:scale-[1.01]"
@@ -159,7 +159,7 @@ export default function Agenda() {
 
           {/* Right: Detailed View Window */}
           <div className="w-full lg:w-7/12 sticky top-32 z-10">
-            <div className="bg-white rounded-3xl p-8 md:p-12 border border-ieee-gray/10 shadow-2xl relative overflow-hidden min-h-112.5 flex flex-col justify-center">
+            <div className="bg-white rounded-3xl p-6 md:p-8 lg:p-12 border border-ieee-gray/10 shadow-2xl relative overflow-hidden min-h-112.5 flex flex-col justify-center">
               {/* Background Tech Accent */}
               <div className="absolute -top-20 -right-20 w-64 h-64 bg-ieee-cyan/5 rounded-full blur-3xl"></div>
               <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-ieee-orange/5 rounded-full blur-3xl"></div>
@@ -184,16 +184,16 @@ export default function Agenda() {
                     </span>
                   </div>
 
-                  <h2 className="text-3xl md:text-4xl font-heading font-black text-ieee-black mb-6 leading-tight">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black text-ieee-black mb-4 md:mb-6 leading-tight">
                     {agendaItems[activeIndex].title}
                   </h2>
 
-                  <p className="text-ieee-gray text-lg leading-relaxed mb-10">
+                  <p className="text-ieee-gray text-base md:text-lg leading-relaxed mb-8 md:mb-10">
                     {agendaItems[activeIndex].desc}
                   </p>
 
                   {agendaItems[activeIndex].speaker && (
-                    <div className="flex items-center gap-6 p-6 rounded-3xl bg-ieee-gray/5 border border-ieee-gray/10 group">
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 p-4 md:p-6 rounded-3xl bg-ieee-gray/5 border border-ieee-gray/10 group">
                       {agendaItems[activeIndex].speaker.imgUrl ? (
                         <div className="w-20 h-20 rounded-2xl overflow-hidden border border-ieee-gray/20 shadow-md shrink-0 bg-white group-hover:scale-105 transition-transform duration-300">
                           <Image
