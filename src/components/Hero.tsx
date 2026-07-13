@@ -116,11 +116,11 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-8 mb-8"
         >
           <div className="flex items-center text-ieee-black bg-white/70 px-6 py-3 rounded-full backdrop-blur-md border border-ieee-gray/20 text-sm shadow-lg">
-            <Calendar className="w-4 h-4 mr-2 text-ieee-orange" />
+            <Calendar className="w-4 h-4 mr-2 text-ieee-orange" aria-hidden="true" />
             <span className="font-semibold tracking-wide">30 October 2026</span>
           </div>
           <div className="flex items-center text-ieee-black bg-white/70 px-6 py-3 rounded-full backdrop-blur-md border border-ieee-gray/20 text-sm shadow-lg">
-            <MapPin className="w-4 h-4 mr-2 text-ieee-orange" />
+            <MapPin className="w-4 h-4 mr-2 text-ieee-orange" aria-hidden="true" />
             <span className="font-semibold tracking-wide">
               GE Healthcare, Bengaluru
             </span>
@@ -134,12 +134,13 @@ export default function Hero() {
         >
           <button
             disabled
+            aria-label="Registrations Coming Soon"
             className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-ieee-white transition-all duration-300 bg-ieee-gray rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 disabled:opacity-90 disabled:cursor-not-allowed uppercase tracking-widest text-xs overflow-hidden"
           >
             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-ieee-orange to-ieee-cyan opacity-20"></span>
             <span className="relative flex items-center">
               Registrations Coming Soon
-              <ArrowRight className="w-3.5 h-3.5 ml-2 opacity-50" />
+              <ArrowRight className="w-3.5 h-3.5 ml-2 opacity-50" aria-hidden="true" />
             </span>
           </button>
         </motion.div>
