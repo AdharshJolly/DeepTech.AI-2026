@@ -34,8 +34,7 @@ export default function Partners() {
                 alt="IEEE Computer Society Bangalore Chapter"
                 width={200}
                 height={80}
-                className="w-full h-auto object-contain"
-              />
+                className="w-full h-auto object-contain" priority />
             </div>
           </div>
 
@@ -50,8 +49,7 @@ export default function Partners() {
                 alt="GE Healthcare"
                 width={200}
                 height={80}
-                className="w-full h-auto object-contain"
-              />
+                className="w-full h-auto object-contain" priority />
             </div>
           </div>
         </div>
@@ -82,3 +80,4 @@ export default function Partners() {
     </section>
   );
 }
+
