@@ -3,7 +3,7 @@ import { Globe, MessageCircle, ArrowUpRight } from "lucide-react";
 import connectToDatabase from "@/lib/db";
 import Speaker from "@/models/Speaker";
 
-export interface SpeakerItem {
+interface SpeakerItem {
   _id: unknown;
   name: string;
   role: string;

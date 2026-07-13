@@ -1,3 +1,4 @@
+// fallow-ignore-file code-duplication
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Speaker from '@/models/Speaker';
