@@ -6,12 +6,12 @@
 - [x] Configure `globals.css` with IEEE CS Primary Color Palette.
 - [x] Configure `layout.tsx` with global fonts: Montserrat (headings) and Open Sans (body).
 - [x] Build global `Navbar` and `Footer` components.
-- [ ] Build `Hero` section.
-- [ ] Build `Countdown` section.
-- [ ] Build `About` section.
-- [ ] Build `Event Highlights` section.
-- [ ] Build `Speakers` section (with tasteful placeholders).
-- [ ] Build `Agenda` section (with tasteful placeholders).
+- [x] Build `Hero` section.
+- [x] Build `Countdown` section.
+- [x] Build `About` section.
+- [x] Build `Event Highlights` section.
+- [x] Build `Speakers` section (with tasteful placeholders).
+- [x] Build `Agenda` section (with tasteful placeholders).
 - [ ] Build `Innovation Alley` section.
 - [ ] Build `Venue` section.
 - [ ] Build `Partners` section (with tasteful placeholders).

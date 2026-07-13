@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BackgroundElements from "@/components/BackgroundElements";
 
 export default function RootLayout({
   children,
@@ -31,7 +32,10 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${openSans.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+      <body className="min-h-full flex flex-col font-sans bg-transparent text-ieee-black relative">
+        
+        <BackgroundElements />
+
         <Navbar />
         <main className="flex-grow pt-20">
           {children}
