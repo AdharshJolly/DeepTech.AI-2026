@@ -93,14 +93,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-ieee-gray">
               <li>Bengaluru, India</li>
               <li>GE Healthcare — JFWTC</li>
-              <li className="pt-4">
-                <a
-                  href="mailto:contact@deeptech.ai"
-                  className="hover:text-ieee-orange transition-colors"
-                >
-                  contact@deeptech.ai
-                </a>
-              </li>
             </ul>
           </div>
         </div>
