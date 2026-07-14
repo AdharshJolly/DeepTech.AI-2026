@@ -30,29 +30,29 @@ export default function CommitteeTabs({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
       >
         {activeMembers.length > 0 ? (
           activeMembers.map((member) => (
             <div
               key={member._id}
-              className="group bg-white rounded-3xl p-6 border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col items-center text-center"
+              className="group bg-white rounded-3xl p-10 border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col items-center text-center"
             >
-              <div className="w-24 h-24 rounded-full bg-ieee-gray/5 mb-6 flex items-center justify-center border-4 border-white shadow-md group-hover:border-ieee-cyan/20 transition-colors overflow-hidden relative">
+              <div className="w-36 h-36 rounded-full bg-ieee-gray/5 mb-8 flex items-center justify-center border-4 border-white shadow-md group-hover:border-ieee-cyan/20 transition-colors overflow-hidden relative shrink-0">
                 {member.imageUrl ? (
                   <Image
                     src={member.imageUrl}
                     alt={member.name}
                     fill
-                    sizes="96px"
+                    sizes="144px"
                     className="object-cover"
                   />
                 ) : (
-                  <User className="w-8 h-8 text-ieee-gray/40" />
+                  <User className="w-12 h-12 text-ieee-gray/40" />
                 )}
               </div>
 
-              <h3 className="font-heading font-bold text-lg text-ieee-black mb-1">
+              <h3 className="font-heading font-bold text-xl text-ieee-black mb-1">
                 {member.name}
               </h3>
               
