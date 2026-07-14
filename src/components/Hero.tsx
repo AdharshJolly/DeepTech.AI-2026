@@ -1,47 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
-
-// Cybernetic decoding text effect
-const ScrambleText = ({
-  text,
-  delay = 0,
-}: {
-  text: string;
-  delay?: number;
-}) => {
-  const [displayText, setDisplayText] = useState("");
-  const chars = "!<>-_\\\\/[]{}—=+*^?#________";
-
-  useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-    const timeoutId = setTimeout(() => {
-      let iteration = 0;
-      intervalId = setInterval(() => {
-        setDisplayText(
-          text
-            .split("")
-            .map((letter, index) => {
-              if (index < iteration) return text[index];
-              return chars[Math.floor(Math.random() * chars.length)];
-            })
-            .join(""),
-        );
-        if (iteration >= text.length && intervalId) clearInterval(intervalId);
-        iteration += 1 / 5;
-      }, 60);
-    }, delay);
-
-    return () => {
-      clearTimeout(timeoutId);
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [text, delay]);
-
-  return <>{displayText || " "}</>;
-};
 
 export default function Hero() {
   return (
@@ -98,24 +58,24 @@ export default function Hero() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-ieee-orange"></span>
           </span>
           <span className="text-xs font-bold tracking-[0.2em] text-ieee-black uppercase">
-            <ScrambleText text="Physical AI Summit" delay={100} />
+            Physical AI Summit
           </span>
         </motion.div>
 
         <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-heading font-black text-ieee-black tracking-tighter mb-4 leading-none select-none">
-          <ScrambleText text="DeepTech" delay={400} />
+          DeepTech
           <span className="text-transparent bg-clip-text bg-linear-to-br from-ieee-blue to-ieee-cyan">
-            <ScrambleText text=".ai" delay={1200} />
+            .ai
           </span>
           <span className="block mt-2 text-4xl md:text-6xl text-ieee-gray font-light tracking-tight opacity-80">
-            <ScrambleText text="2026" delay={1800} />
+            2026
           </span>
         </h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2.2, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
           className="max-w-2xl mx-auto text-lg md:text-xl text-ieee-gray mb-10 font-medium leading-relaxed"
         >
           Bridging the gap between{" "}
@@ -127,7 +87,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2.4, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10"
         >
           <div className="flex items-center text-ieee-black bg-white/60 px-6 py-3 md:px-8 md:py-4 rounded-full backdrop-blur-xl border border-white/80 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
@@ -149,7 +109,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 2.6, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
         >
           <button
             disabled
