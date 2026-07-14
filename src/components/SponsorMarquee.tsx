@@ -26,6 +26,11 @@ export default function SponsorMarquee() {
         logoUrl: "/images/ieee_cs_bc.png",
       },
       { id: "3", name: "GE Healthcare", logoUrl: "/images/GE_Healthcare.png" },
+      {
+        id: "4",
+        name: "IEEE CS 80th Anniversary",
+        logoUrl: "/images/IEEE-CS-80th-icon.png",
+      },
     ];
 
     const fetchPartners = async () => {
@@ -58,14 +63,13 @@ export default function SponsorMarquee() {
           (partner, i) => (
             <div
               key={`${partner.id}-${i}`}
-              className="flex items-center justify-center w-40 h-20 opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+              className="flex items-center justify-center h-14 opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 shrink-0"
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={partner.logoUrl}
                 alt={partner.name}
-                width={160}
-                height={80}
-                className="object-contain max-h-full"
+                className="h-full w-auto object-contain"
               />
             </div>
           ),

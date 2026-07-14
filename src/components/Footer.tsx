@@ -14,27 +14,25 @@ export default function Footer() {
               The flagship IEEE Computer Society event exploring how Physical AI
               is transforming robotics, hardware, and industrial automation.
             </p>
-            <div className="pt-4 flex space-x-8 items-center">
-              <div className="flex items-center justify-start w-32 h-12">
-                <Image
-                  src="/images/ieee_cs_bc.png"
-                  alt="IEEE CS BC Logo"
-                  width={120}
-                  height={48}
-                  style={{ width: "100%", height: "auto" }}
-                  className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                />
-              </div>
-              <div className="flex items-center justify-start w-32 h-12">
-                <Image
-                  src="/images/GE_Healthcare.png"
-                  alt="GE Healthcare Logo"
-                  width={120}
-                  height={48}
-                  style={{ width: "100%", height: "auto" }}
-                  className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                />
-              </div>
+            <div className="pt-4 flex flex-wrap gap-8 items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/ieee_cs_bc.png"
+                alt="IEEE CS BC Logo"
+                className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/IEEE-CS-80th-icon.png"
+                alt="IEEE CS 80th Anniversary Logo"
+                className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/GE_Healthcare.png"
+                alt="GE Healthcare Logo"
+                className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
+              />
             </div>
           </div>
 
@@ -81,6 +79,14 @@ export default function Footer() {
                   className="hover:text-ieee-cyan transition-colors"
                 >
                   Partners
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/past-events"
+                  className="hover:text-ieee-cyan transition-colors"
+                >
+                  Past Events
                 </Link>
               </li>
             </ul>

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import Image from "next/image";
@@ -55,13 +54,13 @@ export default function CommitteeTabs({
               <h3 className="font-heading font-bold text-xl text-ieee-black mb-1">
                 {member.name}
               </h3>
-              
+
               {member.role && (
                 <p className="text-sm font-semibold tracking-wide text-ieee-orange uppercase mb-3">
                   {member.role}
                 </p>
               )}
-              
+
               {member.affiliation && (
                 <p className="text-sm text-ieee-gray mb-6">
                   {member.affiliation}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Cpu,
   Factory,
@@ -116,19 +117,18 @@ export default function About() {
             </div>
           </div>
 
-          {/* Box 6: Innovation Alley (Spans full width) */}
-          <div className="md:col-span-3 lg:col-span-4 bg-white/70 backdrop-blur-xl border border-white/50 p-6 md:p-8 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col md:flex-row items-center justify-between group cursor-pointer hover:bg-white/80 transition-colors duration-300">
-            <div className="flex items-center mb-4 md:mb-0">
-              <div className="w-12 h-12 bg-ieee-orange rounded-full flex items-center justify-center mr-6 shrink-0 shadow-lg shadow-ieee-orange/30 group-hover:scale-110 transition-transform duration-300">
+          {/* Box 6: Innovation Alley (Spans half width) */}
+          <div className="md:col-span-3 lg:col-span-2 bg-white/70 backdrop-blur-xl border border-white/50 p-8 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-between gap-6 group cursor-pointer hover:bg-white/80 transition-colors duration-300">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-ieee-orange rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-ieee-orange/30 group-hover:scale-110 transition-transform duration-300">
                 <Lightbulb className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h4 className="text-lg font-bold font-heading text-ieee-black">
                   Innovation Alley
                 </h4>
-                <p className="text-ieee-gray text-sm">
-                  Discover the most disruptive startups in the Physical AI
-                  space.
+                <p className="text-ieee-gray text-sm mt-1">
+                  Discover the most disruptive startups in the Physical AI space.
                 </p>
               </div>
             </div>
@@ -137,6 +137,30 @@ export default function About() {
               <ArrowUpRight className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </div>
           </div>
+
+          {/* Box 7: Symposium Legacy (Spans half width) */}
+          <Link
+            href="/past-events"
+            className="md:col-span-3 lg:col-span-2 bg-linear-to-r from-ieee-blue/5 to-ieee-cyan/5 backdrop-blur-xl border border-ieee-blue/20 p-8 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.02)] flex flex-col justify-between gap-6 group hover:from-ieee-blue/10 hover:to-ieee-cyan/10 transition-all duration-300"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-ieee-blue rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-ieee-blue/20 group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h4 className="text-lg font-bold font-heading text-ieee-black">
+                  Our Symposium Legacy
+                </h4>
+                <p className="text-ieee-gray text-sm mt-1">
+                  Highlighting 2+ successful editions, 15+ distinguished research/industry speakers, and a legacy of cutting-edge AI discussions.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center text-ieee-blue font-bold text-sm uppercase tracking-wider group-hover:text-ieee-orange transition-colors">
+              Explore Past Events{" "}
+              <ArrowUpRight className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </div>
+          </Link>
         </div>
       </div>
     </section>

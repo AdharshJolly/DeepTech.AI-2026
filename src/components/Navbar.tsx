@@ -21,6 +21,7 @@ export default function Navbar() {
     { name: "Agenda", href: "/agenda" },
     { name: "Committee", href: "/committee" },
     { name: "Partners", href: "/#partners" },
+    { name: "Past Events", href: "/past-events" },
     { name: "Contact", href: "/contact" },
   ];
 
