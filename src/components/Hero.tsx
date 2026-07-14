@@ -6,39 +6,23 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 export default function Hero() {
   return (
     <section className="relative h-[calc(100vh-80px)] min-h-150 flex items-center justify-center overflow-hidden bg-transparent">
-      {/* Fluid Gradient Mesh Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60">
-        <motion.div
-          animate={{
-            x: [0, 100, -50, 0],
-            y: [0, -100, 50, 0],
-            scale: [1, 1.2, 0.9, 1],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-ieee-blue/40 blur-[120px] mix-blend-multiply"
-        />
-        <motion.div
-          animate={{
-            x: [0, -100, 50, 0],
-            y: [0, 100, -50, 0],
-            scale: [1, 1.3, 0.8, 1],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[20%] right-[-10%] w-[50%] h-[70%] rounded-full bg-ieee-cyan/30 blur-[120px] mix-blend-multiply"
-        />
-        <motion.div
-          animate={{
-            x: [0, 50, -100, 0],
-            y: [0, -50, 100, 0],
-            scale: [1, 1.1, 1.1, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[-20%] left-[20%] w-[70%] h-[50%] rounded-full bg-ieee-orange/20 blur-[120px] mix-blend-multiply"
-        />
+      {/* Loop Video Background with Readability Mask */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-80"
+        >
+          <source src="/models/Hero Background.mp4" type="video/mp4" />
+        </video>
+        {/* Soft blur & gradient overlay for text legibility and page blending */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/70 to-ieee-white backdrop-blur-[1px] z-1" />
 
         {/* Subtle dot matrix overlay to give it a cyber-physical feel */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-15 z-2"
           style={{
             backgroundImage: "radial-gradient(#00629B 1px, transparent 1px)",
             backgroundSize: "32px 32px",

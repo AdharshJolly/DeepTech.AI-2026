@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
@@ -9,6 +10,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { scrollY } = useScroll();
+  const pathname = usePathname();
+
+  const isHomepage = pathname === "/";
+  const activeScrolled = isScrolled || !isHomepage;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 20 && !isScrolled) setIsScrolled(true);
@@ -30,24 +35,28 @@ export default function Navbar() {
     <motion.div
       className="fixed top-0 left-0 w-full z-50 pointer-events-none flex justify-center"
       initial={{ paddingTop: "0rem" }}
-      animate={{ paddingTop: isScrolled ? "1rem" : "0rem" }}
+      animate={{ paddingTop: activeScrolled ? "1rem" : "0rem" }}
       transition={{ type: "spring", stiffness: 400, damping: 40 }}
     >
       <motion.nav
-        className="pointer-events-auto relative backdrop-blur-xl bg-white/60 border border-white/50"
+        className={`pointer-events-auto relative transition-colors duration-300 ${
+          activeScrolled
+            ? "backdrop-blur-xl bg-white/60 border border-white/50"
+            : "bg-transparent border-transparent"
+        }`}
         initial={{
           width: "100%",
           maxWidth: "100%",
           borderRadius: "0px",
-          boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+          boxShadow: "0 0px 0px rgba(0,0,0,0)",
         }}
         animate={{
-          width: isScrolled ? "95%" : "100%",
-          maxWidth: isScrolled ? "1280px" : "100%",
-          borderRadius: isScrolled ? "9999px" : "0px",
-          boxShadow: isScrolled
+          width: activeScrolled ? "95%" : "100%",
+          maxWidth: activeScrolled ? "1280px" : "100%",
+          borderRadius: activeScrolled ? "9999px" : "0px",
+          boxShadow: activeScrolled
             ? "0 8px 30px rgba(0,0,0,0.12)"
-            : "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+            : "0 0px 0px rgba(0,0,0,0)",
         }}
         transition={{ type: "spring", stiffness: 400, damping: 40 }}
       >
