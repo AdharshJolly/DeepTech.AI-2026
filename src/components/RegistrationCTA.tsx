@@ -49,11 +49,17 @@ export default function RegistrationCTA() {
 
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm font-bold tracking-widest text-ieee-gray/60 uppercase">
               <div className="flex items-center">
-                <Calendar className="w-4 h-4 mr-2 text-ieee-orange" aria-hidden="true" />
-                Nov 12-14, 2026
+                <Calendar
+                  className="w-4 h-4 mr-2 text-ieee-orange"
+                  aria-hidden="true"
+                />
+                Oct 30, 2026
               </div>
               <div className="flex items-center">
-                <Zap className="w-4 h-4 mr-2 text-ieee-cyan" aria-hidden="true" />
+                <Zap
+                  className="w-4 h-4 mr-2 text-ieee-cyan"
+                  aria-hidden="true"
+                />
                 Limited Seats Available
               </div>
             </div>
