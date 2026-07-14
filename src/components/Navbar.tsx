@@ -32,7 +32,7 @@ export default function Navbar() {
       transition={{ type: "spring", stiffness: 400, damping: 40 }}
     >
       <motion.nav
-        className="pointer-events-auto relative backdrop-blur-md bg-white/70 dark:bg-ieee-black/70 border border-white/20"
+        className="pointer-events-auto relative backdrop-blur-xl bg-white/60 border border-white/50"
         initial={{
           width: "100%",
           maxWidth: "100%",
@@ -109,8 +109,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             className={`md:hidden absolute w-full ${
               isScrolled
-                ? "top-[110%] left-0 backdrop-blur-md bg-white/70 dark:bg-ieee-black/70 border border-white/20 rounded-3xl shadow-2xl overflow-hidden"
-                : "top-full left-0 backdrop-blur-md bg-white/70 dark:bg-ieee-black/70 border-t border-white/20 shadow-lg"
+                ? "top-[110%] left-0 backdrop-blur-xl bg-white/60 border border-white/50 rounded-3xl shadow-[0_8px_32px_rgba(31,38,135,0.1)] overflow-hidden"
+                : "top-full left-0 backdrop-blur-xl bg-white/60 border-t border-white/50 shadow-lg"
             }`}
           >
             <div className="px-4 pt-4 pb-6 space-y-2">
