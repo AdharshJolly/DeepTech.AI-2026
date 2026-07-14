@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Users, Calendar } from "lucide-react";
+import { LayoutDashboard, Users, Calendar, Handshake } from "lucide-react";
 import SignOutButton from "@/components/admin/SignOutButton";
 
 export default async function AdminLayout({
@@ -21,6 +21,7 @@ export default async function AdminLayout({
     { name: "Speakers", href: "/admin/speakers", icon: Users },
     { name: "Committee", href: "/admin/committee", icon: Users },
     { name: "Agenda", href: "/admin/agenda", icon: Calendar },
+    { name: "Partners", href: "/admin/partners", icon: Handshake },
   ];
 
   return (

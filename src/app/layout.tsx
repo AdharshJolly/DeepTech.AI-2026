@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Montserrat, Open_Sans } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -49,9 +49,37 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${openSans.variable} h-full antialiased scroll-smooth`}
+      className={`${outfit.variable} ${inter.variable} h-full antialiased scroll-smooth`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Event",
+              name: "DeepTech.ai 2026",
+              description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
+              startDate: "2026-10-15T09:00:00+00:00",
+              endDate: "2026-10-17T17:00:00+00:00",
+              eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+              eventStatus: "https://schema.org/EventScheduled",
+              location: {
+                "@type": "Place",
+                name: "Convention Center",
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: "123 Main St",
+                  addressLocality: "Anytown",
+                  postalCode: "12345",
+                  addressCountry: "US"
+                }
+              }
+            })
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans bg-transparent text-ieee-black relative">
         <AppWrapper>{children}</AppWrapper>
       </body>
