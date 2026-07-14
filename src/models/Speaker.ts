@@ -7,6 +7,7 @@ const SpeakerSchema = new mongoose.Schema({
   bio: { type: String },
   imageUrl: { type: String },
   order: { type: Number, default: 0 },
+  isFeatured: { type: Boolean, default: false },
 }, { timestamps: true });
 
 export default mongoose.models.Speaker || mongoose.model('Speaker', SpeakerSchema);

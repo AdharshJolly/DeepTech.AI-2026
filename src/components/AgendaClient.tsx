@@ -78,10 +78,10 @@ export default function AgendaClient({ agendaItems }: { agendaItems: AgendaItem[
                 data-index={idx}
                 onClick={() => setActiveIndex(idx)}
                 onMouseEnter={() => setActiveIndex(idx)}
-                className={`text-left p-5 md:p-8 rounded-3xl transition-all duration-300 border relative group overflow-hidden ${
+                className={`text-left p-5 md:p-8 rounded-[2rem] transition-all duration-500 border relative group overflow-hidden ${
                   activeIndex === idx
-                    ? "bg-ieee-black text-white shadow-2xl border-ieee-black lg:translate-x-4 scale-[1.02]"
-                    : "bg-white text-ieee-black border-ieee-gray/10 hover:border-ieee-cyan/50 shadow-sm hover:shadow-md hover:scale-[1.01]"
+                    ? "bg-ieee-black text-white shadow-[0_20px_40px_rgba(0,181,226,0.2)] border-ieee-black lg:translate-x-4 scale-[1.02]"
+                    : "bg-white/60 backdrop-blur-md text-ieee-black border-white/80 hover:border-ieee-cyan/50 shadow-sm hover:shadow-lg hover:scale-[1.01]"
                 }`}
               >
                 {/* Subtle active state glow */}
@@ -111,10 +111,10 @@ export default function AgendaClient({ agendaItems }: { agendaItems: AgendaItem[
           {/* Right: Detailed View Window */}
           <div className="w-full lg:w-7/12 sticky top-32 z-10">
             {agendaItems.length > 0 && agendaItems[activeIndex] && (
-              <div className="bg-white rounded-3xl p-6 md:p-8 lg:p-12 border border-ieee-gray/10 shadow-2xl relative overflow-hidden min-h-[28rem] flex flex-col justify-center">
+              <div className="bg-white/60 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 lg:p-12 border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.05)] relative overflow-hidden min-h-[28rem] flex flex-col justify-center">
                 {/* Background Tech Accent */}
-                <div className="absolute -top-20 -right-20 w-64 h-64 bg-ieee-cyan/5 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-ieee-orange/5 rounded-full blur-3xl"></div>
+                <div className="absolute -top-20 -right-20 w-80 h-80 bg-ieee-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-ieee-orange/10 rounded-full blur-3xl pointer-events-none"></div>
 
                 <AnimatePresence mode="wait">
                   <motion.div

@@ -19,6 +19,7 @@ interface SpeakerItem {
   bio?: string;
   order?: number;
   imageUrl?: string;
+  isFeatured?: boolean;
 }
 
 export default function SpeakersManager() {
@@ -79,6 +80,8 @@ export default function SpeakersManager() {
         (form.elements.namedItem("order") as HTMLInputElement).value = (
           speaker.order || 0
         ).toString();
+        (form.elements.namedItem("isFeatured") as HTMLInputElement).checked = 
+          !!speaker.isFeatured;
       }
     }, 100);
   };
@@ -116,6 +119,7 @@ export default function SpeakersManager() {
       company: formData.get("company"),
       bio: formData.get("bio"),
       order: Number(formData.get("order")) || 0,
+      isFeatured: formData.get("isFeatured") === "on",
       imageUrl,
     };
 
@@ -213,6 +217,14 @@ export default function SpeakersManager() {
                       className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
                     />
                   </div>
+                  <label className="flex items-center gap-3 p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl cursor-pointer hover:bg-ieee-gray/10 transition-colors w-fit">
+                    <input
+                      name="isFeatured"
+                      type="checkbox"
+                      className="w-5 h-5 rounded border-gray-300 text-ieee-blue focus:ring-ieee-blue"
+                    />
+                    <span className="font-semibold text-ieee-black text-sm">Featured Speaker (Large Grid Card)</span>
+                  </label>
                   <textarea
                     name="bio"
                     placeholder="Bio"
@@ -320,6 +332,11 @@ export default function SpeakersManager() {
                   </td>
                   <td className="p-5 font-bold text-ieee-black text-lg">
                     {s.name}
+                    {s.isFeatured && (
+                      <span className="ml-3 text-xs font-bold bg-ieee-orange/10 text-ieee-orange px-2 py-1 rounded-full border border-ieee-orange/20 uppercase tracking-widest align-middle">
+                        Featured
+                      </span>
+                    )}
                   </td>
                   <td className="p-5 text-sm text-ieee-gray font-medium">
                     {s.role} <br />
