@@ -10,6 +10,13 @@
   --color-ieee-gray: #75787B;
   --color-ieee-black: #000000;
   --color-ieee-white: #FFFFFF;
+
+  --animate-marquee: marquee 25s linear infinite;
+  
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
 }
 
 :root {

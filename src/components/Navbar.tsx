@@ -32,32 +32,20 @@ export default function Navbar() {
       transition={{ type: "spring", stiffness: 400, damping: 40 }}
     >
       <motion.nav
-        className="pointer-events-auto backdrop-blur-xl relative"
+        className="pointer-events-auto relative backdrop-blur-md bg-white/70 dark:bg-ieee-black/70 border border-white/20"
         initial={{
           width: "100%",
           maxWidth: "100%",
           borderRadius: "0px",
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
           boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-          borderBottom: "1px solid rgba(117, 120, 123, 0.2)",
-          border: "0px solid rgba(117, 120, 123, 0.1)",
         }}
         animate={{
           width: isScrolled ? "95%" : "100%",
           maxWidth: isScrolled ? "1280px" : "100%",
           borderRadius: isScrolled ? "9999px" : "0px",
-          backgroundColor: isScrolled
-            ? "rgba(255, 255, 255, 0.85)"
-            : "rgba(255, 255, 255, 0.9)",
           boxShadow: isScrolled
             ? "0 8px 30px rgba(0,0,0,0.12)"
             : "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-          borderBottom: isScrolled
-            ? "1px solid transparent"
-            : "1px solid rgba(117, 120, 123, 0.2)",
-          border: isScrolled
-            ? "1px solid rgba(117, 120, 123, 0.1)"
-            : "0px solid transparent",
         }}
         transition={{ type: "spring", stiffness: 400, damping: 40 }}
       >
@@ -121,8 +109,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             className={`md:hidden absolute w-full ${
               isScrolled
-                ? "top-[110%] left-0 bg-white/95 backdrop-blur-2xl border border-ieee-gray/10 rounded-3xl shadow-2xl overflow-hidden"
-                : "top-full left-0 bg-ieee-white/95 backdrop-blur-xl border-t border-ieee-gray/10 shadow-lg"
+                ? "top-[110%] left-0 backdrop-blur-md bg-white/70 dark:bg-ieee-black/70 border border-white/20 rounded-3xl shadow-2xl overflow-hidden"
+                : "top-full left-0 backdrop-blur-md bg-white/70 dark:bg-ieee-black/70 border-t border-white/20 shadow-lg"
             }`}
           >
             <div className="px-4 pt-4 pb-6 space-y-2">
