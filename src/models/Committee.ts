@@ -2,11 +2,12 @@ import mongoose from 'mongoose';
 
 const CommitteeSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  role: { type: String, required: true },
-  affiliation: { type: String, required: true },
+  role: { type: String },
+  affiliation: { type: String },
+  linkedinUrl: { type: String },
   type: { 
     type: String, 
-    required: true,
+    default: 'organizing',
     enum: ['organizing', 'technical', 'advisory']
   },
   imageUrl: { type: String },

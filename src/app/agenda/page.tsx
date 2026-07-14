@@ -1,6 +1,10 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Agenda from '@/components/Agenda';
+import { isFeatureEnabled } from "@/lib/featureFlags";
+import ReleaseModal from "@/components/ReleaseModal";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Agenda | DeepTech.ai 2026",
@@ -8,10 +12,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/agenda" },
 };
 
-export default function AgendaPage() {
+export default async function AgendaPage() {
+  const isEnabled = await isFeatureEnabled("agenda");
+
+  if (!isEnabled) {
+    return (
+      <main className="flex-grow pt-20">
+        <ReleaseModal featureName="Agenda" />
+      </main>
+    );
+  }
+
   return (
     <main className="flex-grow pt-20">
       <Agenda />
     </main>
   );
 }
+

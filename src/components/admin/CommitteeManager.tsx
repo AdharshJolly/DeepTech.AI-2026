@@ -8,16 +8,16 @@ import {
   Edit2,
   Image as ImageIcon,
   X,
-  ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface CommitteeMember {
   _id: string;
   name: string;
-  role: string;
-  affiliation: string;
+  role?: string;
+  affiliation?: string;
   type: string;
+  linkedinUrl?: string;
   order?: number;
   imageUrl?: string;
 }
@@ -71,11 +71,11 @@ export default function CommitteeManager() {
         (form.elements.namedItem("name") as HTMLInputElement).value =
           member.name;
         (form.elements.namedItem("role") as HTMLInputElement).value =
-          member.role;
+          member.role || "";
         (form.elements.namedItem("affiliation") as HTMLInputElement).value =
-          member.affiliation;
-        (form.elements.namedItem("type") as HTMLSelectElement).value =
-          member.type;
+          member.affiliation || "";
+        (form.elements.namedItem("linkedinUrl") as HTMLInputElement).value =
+          member.linkedinUrl || "";
         (form.elements.namedItem("order") as HTMLInputElement).value = (
           member.order || 0
         ).toString();
@@ -112,9 +112,10 @@ export default function CommitteeManager() {
     const payload = {
       ...(editingId && { _id: editingId }),
       name: formData.get("name"),
-      role: formData.get("role"),
-      affiliation: formData.get("affiliation"),
-      type: formData.get("type"),
+      role: formData.get("role") || "",
+      affiliation: formData.get("affiliation") || "",
+      type: "organizing", // default type as requested
+      linkedinUrl: formData.get("linkedinUrl") || "",
       order: Number(formData.get("order")) || 0,
       imageUrl,
     };
@@ -141,7 +142,7 @@ export default function CommitteeManager() {
       <div className="flex justify-end">
         <button
           onClick={openAddModal}
-          className="bg-ieee-blue text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-ieee-blue/90 hover:scale-105 active:scale-95 transition-all shadow-md"
+          className="bg-ieee-blue text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-ieee-blue/90 hover:scale-105 active:scale-95 transition-all shadow-md animate-in fade-in"
         >
           <Plus className="w-5 h-5" /> Add Member
         </button>
@@ -188,49 +189,53 @@ export default function CommitteeManager() {
                   className="space-y-5"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <input
-                      name="name"
-                      placeholder="Name"
-                      required
-                      className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
-                    />
-                    <input
-                      name="role"
-                      placeholder="Role (e.g., Chair)"
-                      required
-                      className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
-                    />
-                    <input
-                      name="affiliation"
-                      placeholder="Affiliation"
-                      required
-                      className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
-                    />
-
-                    <div className="relative">
-                      <select
-                        name="type"
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Full Name *</label>
+                      <input
+                        name="name"
+                        placeholder="e.g. Dr. Jane Doe"
                         required
-                        className="w-full p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl appearance-none focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all cursor-pointer text-ieee-black"
-                      >
-                        <option value="">Select Committee Track</option>
-                        <option value="organizing">Organizing Committee</option>
-                        <option value="technical">
-                          Technical Program Committee
-                        </option>
-                        <option value="advisory">Advisory Board</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                        <ChevronDown className="w-5 h-5 text-ieee-gray" />
-                      </div>
+                        className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
+                      />
                     </div>
 
-                    <input
-                      name="order"
-                      type="number"
-                      placeholder="Order (e.g., 1)"
-                      className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full md:col-span-2"
-                    />
+                    <div>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Role (Optional)</label>
+                      <input
+                        name="role"
+                        placeholder="e.g. General Chair"
+                        className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Affiliation (Optional)</label>
+                      <input
+                        name="affiliation"
+                        placeholder="e.g. Stanford University"
+                        className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">LinkedIn Profile URL (Optional)</label>
+                      <input
+                        name="linkedinUrl"
+                        placeholder="e.g. https://linkedin.com/in/username"
+                        type="url"
+                        className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Display Order</label>
+                      <input
+                        name="order"
+                        type="number"
+                        placeholder="e.g. 1"
+                        className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
+                      />
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-5 p-4 rounded-2xl border border-dashed border-ieee-gray/20 bg-ieee-gray/5">
@@ -304,7 +309,7 @@ export default function CommitteeManager() {
                   Name
                 </th>
                 <th className="p-5 font-bold text-ieee-gray text-sm uppercase tracking-wider">
-                  Role & Track
+                  Details
                 </th>
                 <th className="p-5 font-bold text-ieee-gray text-sm uppercase tracking-wider text-right">
                   Actions
@@ -335,10 +340,12 @@ export default function CommitteeManager() {
                     {m.name}
                   </td>
                   <td className="p-5 text-sm text-ieee-gray font-medium">
-                    {m.role} •{" "}
-                    <span className="uppercase text-xs font-bold">
-                      {m.type}
-                    </span>
+                    {m.role || "Member"} {m.affiliation ? `• ${m.affiliation}` : ""}
+                    {m.linkedinUrl && (
+                      <span className="block text-xs text-ieee-blue mt-0.5 truncate max-w-xs">
+                        LinkedIn: {m.linkedinUrl}
+                      </span>
+                    )}
                   </td>
                   <td className="p-5 text-right">
                     <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

@@ -1,6 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
 import Speakers from "@/components/Speakers";
+import { isFeatureEnabled } from "@/lib/featureFlags";
+import ReleaseModal from "@/components/ReleaseModal";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Speakers | DeepTech.ai 2026",
@@ -8,10 +12,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/speakers" },
 };
 
-export default function SpeakersPage() {
+export default async function SpeakersPage() {
+  const isEnabled = await isFeatureEnabled("speakers");
+
+  if (!isEnabled) {
+    return (
+      <main className="grow pt-20">
+        <ReleaseModal featureName="Speakers" />
+      </main>
+    );
+  }
+
   return (
     <main className="grow pt-20">
       <Speakers />
     </main>
   );
 }
+
