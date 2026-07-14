@@ -103,7 +103,7 @@ export default function CommitteeManager() {
       const res = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imagePreview }),
+        body: JSON.stringify({ image: imagePreview, folder: "committee" }),
       });
       const data = await res.json();
       imageUrl = data.url;

@@ -99,7 +99,7 @@ export default function PartnersManager() {
       const res = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imagePreview }),
+        body: JSON.stringify({ image: imagePreview, folder: "partners" }),
       });
       const data = await res.json();
       logoUrl = data.url;

@@ -103,7 +103,7 @@ export default function SpeakersManager() {
       const res = await fetch("/api/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imagePreview }),
+        body: JSON.stringify({ image: imagePreview, folder: "speakers" }),
       });
       const data = await res.json();
       imageUrl = data.url;

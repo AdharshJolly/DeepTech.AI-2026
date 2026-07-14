@@ -3,14 +3,14 @@ import cloudinary from '@/lib/cloudinary';
 
 export async function POST(req: Request) {
   try {
-    const { image } = await req.json(); // Expecting a base64 encoded image string
+    const { image, folder = 'common' } = await req.json(); // Expecting a base64 encoded image string
 
     if (!image) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
     }
 
     const uploadResponse = await cloudinary.uploader.upload(image, {
-      folder: 'deeptech2026',
+      folder: `deeptech2026/${folder}`,
     });
 
     return NextResponse.json({ url: uploadResponse.secure_url }, { status: 200 });
