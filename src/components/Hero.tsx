@@ -46,12 +46,12 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-heading font-black text-ieee-black tracking-tighter mb-4 leading-none select-none">
+        <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] font-heading font-black text-ieee-black tracking-tighter mb-4 leading-none select-none">
           DeepTech
           <span className="text-transparent bg-clip-text bg-linear-to-br from-ieee-blue to-ieee-cyan">
             .ai
           </span>
-          <span className="block mt-2 text-4xl md:text-6xl text-ieee-gray font-light tracking-tight opacity-80">
+          <span className="block mt-2 text-3xl md:text-6xl text-ieee-gray font-light tracking-tight opacity-80">
             2026
           </span>
         </h1>
@@ -60,7 +60,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-          className="max-w-2xl mx-auto text-lg md:text-xl text-ieee-gray mb-10 font-medium leading-relaxed"
+          className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-ieee-gray mb-10 font-medium leading-relaxed px-4"
         >
           Bridging the gap between{" "}
           <span className="text-ieee-blue font-bold">digital intelligence</span>{" "}
@@ -72,18 +72,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-10 w-full px-4"
         >
-          <div className="flex items-center text-ieee-black bg-white/60 px-6 py-3 md:px-8 md:py-4 rounded-full backdrop-blur-xl border border-white/80 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
+          <div className="flex items-center justify-center text-ieee-black bg-white/60 px-5 py-3 md:px-8 md:py-4 rounded-full backdrop-blur-xl border border-white/80 text-xs sm:text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default w-full sm:w-auto">
             <Calendar
-              className="w-5 h-5 mr-3 text-ieee-orange"
+              className="w-4 h-4 sm:w-5 sm:h-5 mr-3 text-ieee-orange"
               aria-hidden="true"
             />
             <span className="tracking-wide">30 OCT 2026</span>
           </div>
-          <div className="flex items-center text-ieee-black bg-white/60 px-6 py-3 md:px-8 md:py-4 rounded-full backdrop-blur-xl border border-white/80 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
+          <div className="flex items-center justify-center text-ieee-black bg-white/60 px-5 py-3 md:px-8 md:py-4 rounded-full backdrop-blur-xl border border-white/80 text-xs sm:text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default w-full sm:w-auto">
             <MapPin
-              className="w-5 h-5 mr-3 text-ieee-cyan"
+              className="w-4 h-4 sm:w-5 sm:h-5 mr-3 text-ieee-cyan"
               aria-hidden="true"
             />
             <span className="tracking-wide">GE HEALTHCARE, BENGALURU</span>
