@@ -6,6 +6,8 @@ import connectToDatabase from "@/lib/db";
 import Committee from "@/models/Committee";
 import CommitteeTabs from "@/components/CommitteeTabs";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Committee | DeepTech.ai 2026",
   description:
