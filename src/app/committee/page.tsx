@@ -1,9 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import connectToDatabase from '@/lib/db';
 import Committee from '@/models/Committee';
 import CommitteeTabs from '@/components/CommitteeTabs';
+
+export const metadata: Metadata = {
+  title: "Committee | DeepTech.ai 2026",
+  description: "Meet the dedicated individuals driving the vision, technical excellence, and execution of DeepTech.ai 2026.",
+  alternates: { canonical: "/committee" },
+};
 
 export default async function CommitteePage() {
   await connectToDatabase();

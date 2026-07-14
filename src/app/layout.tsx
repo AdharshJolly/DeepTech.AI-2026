@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DeepTech.ai 2026 - The premier IEEE CS event for Physical AI and Robotics",
     description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
+    url: "https://deep-tech-ai-26.vercel.app",
+    siteName: "DeepTech.ai 2026",
     images: [
       {
         url: "/og-image.jpg",
@@ -29,6 +31,7 @@ export const metadata: Metadata = {
         alt: "DeepTech.ai 2026 Banner",
       },
     ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
@@ -36,6 +39,31 @@ export const metadata: Metadata = {
     title: "DeepTech.ai 2026 - The premier IEEE CS event for Physical AI and Robotics",
     description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
     images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  authors: [
+    { name: "IEEE Computer Society" },
+    { name: "Adharsh Jolly", url: "https://linkedin.com/in/adharsh-jolly" }
+  ],
+  creator: "Adharsh Jolly (https://github.com/AdharshJolly)",
+  generator: "Next.js",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
 };
 
@@ -53,6 +81,11 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <head>
+        {/* 
+          System Architecture and Development by Adharsh Jolly
+          GitHub: https://github.com/AdharshJolly
+          LinkedIn: https://linkedin.com/in/adharsh-jolly
+        */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
