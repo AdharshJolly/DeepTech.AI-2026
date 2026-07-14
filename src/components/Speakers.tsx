@@ -11,11 +11,14 @@ interface SpeakerItem {
   bio?: string;
   order?: number;
   imageUrl?: string;
+  isFeatured?: boolean;
 }
 
 export default async function Speakers() {
   await connectToDatabase();
-  const speakers = await Speaker.find().sort({ order: 1 }).lean();
+  const speakers = (await Speaker.find()
+    .sort({ order: 1 })
+    .lean()) as SpeakerItem[];
 
   return (
     <section
@@ -24,8 +27,8 @@ export default async function Speakers() {
     >
       {/* Decorative Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-ieee-blue/10 rounded-full blur-[150px]"></div>
-        <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-ieee-cyan/10 rounded-full blur-[150px]"></div>
+        <div className="absolute top-1/4 left-0 w-125 h-125 bg-ieee-blue/10 rounded-full blur-[150px]"></div>
+        <div className="absolute bottom-1/4 right-0 w-150 h-150 bg-ieee-cyan/10 rounded-full blur-[150px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +37,10 @@ export default async function Speakers() {
             Plenary Sessions & Technical Keynotes
           </p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black text-ieee-black tracking-tighter mt-4">
-            Distinguished <span className="text-transparent bg-clip-text bg-gradient-to-r from-ieee-blue to-ieee-cyan">Speakers</span>
+            Distinguished{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-ieee-blue to-ieee-cyan">
+              Speakers
+            </span>
           </h2>
           <p className="text-lg md:text-xl text-ieee-gray mt-6 max-w-2xl mx-auto leading-relaxed font-medium">
             Hear from the pioneers of physical AI, edge computing, and robotics
@@ -43,7 +49,7 @@ export default async function Speakers() {
         </div>
 
         {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-[400px] gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 auto-rows-100 gap-6 md:gap-8">
           {speakers.map((speaker: SpeakerItem, idx: number) => {
             // 1st item: Huge (2x2) if featured
             // The rest are 1x1 or 2x1. We'll make every 4th item span 2 cols to keep it asymmetrical if it's not featured, but for now let's just respect the featured flag.
@@ -53,8 +59,8 @@ export default async function Speakers() {
             const gridClass = isFeatured
               ? "sm:col-span-2 lg:col-span-2 row-span-2"
               : isWide
-              ? "sm:col-span-2 lg:col-span-2 row-span-1"
-              : "col-span-1 row-span-1";
+                ? "sm:col-span-2 lg:col-span-2 row-span-1"
+                : "col-span-1 row-span-1";
 
             return (
               <div
@@ -71,7 +77,7 @@ export default async function Speakers() {
                     unoptimized
                   />
                 ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-ieee-gray/20 to-ieee-black flex items-center justify-center">
+                  <div className="absolute inset-0 bg-linear-to-br from-ieee-gray/20 to-ieee-black flex items-center justify-center">
                     <div className="w-32 h-32 rounded-full border border-ieee-gray/20 border-dashed animate-[spin_30s_linear_infinite]"></div>
                     <span className="absolute text-ieee-gray/40 uppercase tracking-widest text-xs font-bold text-center px-4">
                       {speaker.name}
@@ -80,7 +86,7 @@ export default async function Speakers() {
                 )}
 
                 {/* Dark Gradient Overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
 
                 {/* Cyber-Corner Tech Accents */}
                 <div className="absolute top-8 left-8 w-8 h-8 border-t-2 border-l-2 border-ieee-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform -translate-x-4 -translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0"></div>
@@ -91,7 +97,7 @@ export default async function Speakers() {
                   <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl relative overflow-hidden shadow-2xl">
                     {/* Glowing highlight in the glass panel */}
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-ieee-blue/30 blur-2xl rounded-full pointer-events-none"></div>
-                    
+
                     <div className="relative z-10">
                       <div className="mb-3">
                         <span className="text-[10px] sm:text-xs font-bold tracking-widest text-white bg-ieee-orange border border-ieee-orange px-3 py-1 rounded-full uppercase shadow-lg">
@@ -99,7 +105,9 @@ export default async function Speakers() {
                         </span>
                       </div>
 
-                      <h3 className={`${isFeatured ? 'text-3xl md:text-4xl' : 'text-2xl'} font-heading font-black text-white mb-1 leading-tight`}>
+                      <h3
+                        className={`${isFeatured ? "text-3xl md:text-4xl" : "text-2xl"} font-heading font-black text-white mb-1 leading-tight`}
+                      >
                         {speaker.name}
                       </h3>
 

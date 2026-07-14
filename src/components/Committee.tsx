@@ -1,19 +1,30 @@
 import connectToDatabase from "@/lib/db";
 import CommitteeModel from "@/models/Committee";
-import CommitteeTabs from "./CommitteeTabs";
+import CommitteeTabs, {
+  CommitteeMember as CommitteeTabMember,
+} from "./CommitteeTabs";
+
+type CommitteeItem = Omit<CommitteeTabMember, "_id"> & {
+  _id: { toString(): string } | string;
+};
 
 export default async function Committee() {
   await connectToDatabase();
-  const committeeItems = await CommitteeModel.find().sort({ order: 1 }).lean();
+  const committeeItems = (await CommitteeModel.find()
+    .sort({ order: 1 })
+    .lean()) as CommitteeItem[];
 
   // Convert MongoDB _id (ObjectId) to string so it can be passed to Client Component
-  const serializedItems = committeeItems.map((item) => ({
+  const serializedItems: CommitteeTabMember[] = committeeItems.map((item) => ({
     ...item,
-    _id: (item._id as { toString(): string }).toString(),
+    _id: item._id.toString(),
   }));
 
   return (
-    <section id="committee" className="py-16 md:py-24 bg-transparent relative z-10">
+    <section
+      id="committee"
+      className="py-16 md:py-24 bg-transparent relative z-10"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="inline-flex items-center text-sm font-bold tracking-widest text-ieee-orange uppercase mb-4 border border-ieee-orange/30 bg-ieee-orange/5 px-4 py-2 rounded-full">
@@ -23,7 +34,7 @@ export default async function Committee() {
             Conference Committee
           </h2>
         </div>
-        <CommitteeTabs members={serializedItems as any} />
+        <CommitteeTabs members={serializedItems} />
       </div>
     </section>
   );

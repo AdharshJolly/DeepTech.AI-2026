@@ -41,7 +41,7 @@ export default function SponsorMarquee() {
         } else {
           setPartners(fallbackPartners);
         }
-      } catch (error) {
+      } catch {
         setPartners(fallbackPartners);
       }
     };

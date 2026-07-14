@@ -8,7 +8,6 @@ import {
   ArrowUpRight,
   Zap,
 } from "lucide-react";
-import Link from "next/link";
 
 export default function About() {
   return (
@@ -24,7 +23,7 @@ export default function About() {
           </h2>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-ieee-black tracking-tight mt-4">
             About The{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-ieee-blue to-ieee-cyan">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-ieee-blue to-ieee-cyan">
               Summit
             </span>
           </h3>
@@ -74,7 +73,7 @@ export default function About() {
           </div>
 
           {/* Box 3: Robotics (Spans 1x1) */}
-          <div className="md:col-span-1 lg:col-span-1 bg-gradient-to-br from-ieee-orange/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-orange/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
+          <div className="md:col-span-1 lg:col-span-1 bg-linear-to-br from-ieee-orange/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-orange/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
             <div className="w-14 h-14 bg-ieee-orange/20 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
               <Cpu className="w-7 h-7 text-ieee-orange" />
             </div>
@@ -87,7 +86,7 @@ export default function About() {
           </div>
 
           {/* Box 4: Hardware (Spans 1x1) */}
-          <div className="md:col-span-1 lg:col-span-1 bg-gradient-to-br from-ieee-cyan/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-cyan/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
+          <div className="md:col-span-1 lg:col-span-1 bg-linear-to-br from-ieee-cyan/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-cyan/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
             <div className="w-14 h-14 bg-ieee-cyan/20 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
               <Microchip className="w-7 h-7 text-ieee-cyan" />
             </div>

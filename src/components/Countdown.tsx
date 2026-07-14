@@ -11,10 +11,7 @@ export default function Countdown() {
     seconds: 0,
   });
 
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     const targetDate = new Date("2026-10-30T09:00:00+05:30").getTime();
 
     const interval = setInterval(() => {
@@ -45,8 +42,6 @@ export default function Countdown() {
     { label: "Seconds", value: timeLeft.seconds, color: "text-ieee-black" },
   ];
 
-  if (!mounted) return null;
-
   return (
     <section className="py-20 relative z-10 overflow-hidden bg-transparent">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -57,7 +52,7 @@ export default function Countdown() {
               className="relative flex flex-col items-center justify-center py-10 px-4 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-lg group hover:-translate-y-1 transition-transform duration-300"
             >
               {/* Subtle pulsing background behind the number */}
-              <motion.div 
+              <motion.div
                 key={block.value}
                 className="absolute inset-0 rounded-[2rem] bg-white/40 blur-xl -z-10"
                 initial={{ opacity: 0.2, scale: 0.95 }}
@@ -79,7 +74,7 @@ export default function Countdown() {
                   </motion.span>
                 </AnimatePresence>
               </div>
-              
+
               <span className="text-xs md:text-sm font-bold text-ieee-gray uppercase tracking-[0.2em] mt-4">
                 {block.label}
               </span>
