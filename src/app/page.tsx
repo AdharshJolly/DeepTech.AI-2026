@@ -12,10 +12,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 const Agenda = dynamic(() => import('@/components/Agenda'), { loading: () => <div className="h-32 flex items-center justify-center">Loading Agenda...</div> });
 const Speakers = dynamic(() => import('@/components/Speakers'), { loading: () => <div className="h-32 flex items-center justify-center">Loading Speakers...</div> });
-const Committee = dynamic(() => import('@/components/CommitteeTabs').catch(() => {
-  // If CommitteeTabs is not the exact file for Committee, fallback
-  return function Fallback() { return null; }
-}));
+const Committee = dynamic(() => import('@/components/Committee'));
 const SponsorMarquee = dynamic(() => import('@/components/SponsorMarquee'));
 
 export default function Home() {
