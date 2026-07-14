@@ -44,6 +44,7 @@ export default function CommitteeTabs({
                     src={member.imageUrl}
                     alt={member.name}
                     fill
+                    sizes="96px"
                     className="object-cover"
                   />
                 ) : (
