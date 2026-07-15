@@ -36,7 +36,7 @@ export default async function Speakers() {
           <p className="inline-flex items-center text-sm font-bold tracking-[0.2em] text-ieee-orange uppercase mb-6 border border-ieee-orange/30 bg-ieee-orange/5 px-6 py-2 rounded-full shadow-lg">
             Plenary Sessions & Technical Keynotes
           </p>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black text-ieee-black tracking-tighter mt-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-black text-ieee-black tracking-tighter mt-4">
             Distinguished{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-ieee-blue to-ieee-cyan">
               Speakers
@@ -93,8 +93,8 @@ export default async function Speakers() {
                 <div className="absolute bottom-8 right-8 w-8 h-8 border-b-2 border-r-2 border-ieee-orange opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0"></div>
 
                 {/* Glassmorphic Info Panel */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                  <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl relative overflow-hidden shadow-2xl">
+                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 lg:p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                  <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 md:p-6 rounded-2xl md:rounded-3xl relative overflow-hidden shadow-2xl">
                     {/* Glowing highlight in the glass panel */}
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-ieee-blue/30 blur-2xl rounded-full pointer-events-none"></div>
 
@@ -116,7 +116,7 @@ export default async function Speakers() {
                       </p>
 
                       {/* Hidden Social Links / Action */}
-                      <div className="flex items-center gap-3 mt-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 group-hover:mt-6 transition-all duration-500 border-t border-white/10 pt-0 group-hover:pt-4 overflow-hidden">
+                      <div className="flex items-center gap-3 mt-4 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 group-hover:mt-6 transition-all duration-500 border-t border-white/10 pt-0 group-hover:pt-4 overflow-hidden md:overflow-hidden max-md:!h-auto max-md:!opacity-100 max-md:!mt-4 max-md:!pt-4 max-md:border-t max-md:border-white/10">
                         <button className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 hover:bg-white/30 flex items-center justify-center transition-colors border border-white/10 cursor-pointer">
                           <Globe className="w-3.5 h-3.5 text-white" />
                         </button>

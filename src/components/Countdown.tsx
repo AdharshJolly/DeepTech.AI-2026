@@ -43,13 +43,13 @@ export default function Countdown() {
   ];
 
   return (
-    <section className="py-20 relative z-10 overflow-hidden bg-transparent">
+    <section className="py-12 md:py-20 relative z-10 overflow-hidden bg-transparent">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-8">
           {timeBlocks.map((block) => (
             <div
               key={block.label}
-              className="relative flex flex-col items-center justify-center py-10 px-4 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-lg group hover:-translate-y-1 transition-transform duration-300"
+              className="relative flex flex-col items-center justify-center py-4 sm:py-6 md:py-10 px-1 sm:px-3 md:px-4 rounded-xl sm:rounded-[1.5rem] md:rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-lg group hover:-translate-y-1 transition-transform duration-300"
             >
               {/* Subtle pulsing background behind the number */}
               <motion.div
@@ -60,7 +60,7 @@ export default function Countdown() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
               />
 
-              <div className="h-16 flex items-center justify-center overflow-hidden">
+              <div className="h-8 sm:h-12 md:h-16 flex items-center justify-center overflow-hidden">
                 <AnimatePresence mode="popLayout">
                   <motion.span
                     key={block.value}
@@ -68,14 +68,14 @@ export default function Countdown() {
                     animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                     exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className={`text-5xl md:text-6xl font-mono font-black tracking-tighter ${block.color}`}
+                    className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-mono font-black tracking-tighter ${block.color}`}
                   >
                     {String(block.value).padStart(2, "0")}
                   </motion.span>
                 </AnimatePresence>
               </div>
 
-              <span className="text-xs md:text-sm font-bold text-ieee-gray uppercase tracking-[0.2em] mt-4">
+              <span className="text-[9px] sm:text-xs md:text-sm font-bold text-ieee-gray uppercase tracking-[0.15em] sm:tracking-[0.2em] mt-2 sm:mt-4">
                 {block.label}
               </span>
             </div>

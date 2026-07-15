@@ -30,7 +30,7 @@ export default async function Committee() {
           <p className="inline-flex items-center text-sm font-bold tracking-widest text-ieee-orange uppercase mb-4 border border-ieee-orange/30 bg-ieee-orange/5 px-4 py-2 rounded-full">
             Behind the Scenes
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-ieee-black tracking-tight mt-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-heading font-black text-ieee-black tracking-tight mt-4">
             Conference Committee
           </h2>
         </div>

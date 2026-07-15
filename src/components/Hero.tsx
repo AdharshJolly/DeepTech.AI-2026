@@ -5,7 +5,7 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative h-[calc(100vh-80px)] min-h-150 flex items-center justify-center overflow-hidden bg-transparent">
+    <section className="relative h-[calc(100vh-80px)] min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden bg-transparent">
       {/* Loop Video Background with Readability Mask */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
@@ -22,15 +22,15 @@ export default function Hero() {
 
         {/* Subtle dot matrix overlay to give it a cyber-physical feel */}
         <div
-          className="absolute inset-0 opacity-15 z-2"
+          className="absolute inset-0 opacity-10 md:opacity-15 z-2"
           style={{
             backgroundImage: "radial-gradient(#00629B 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
+            backgroundSize: "24px 24px md:32px 32px",
           }}
         ></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center h-full pb-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center h-full pb-8">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}

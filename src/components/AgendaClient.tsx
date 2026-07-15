@@ -50,14 +50,14 @@ export default function AgendaClient({ agendaItems }: { agendaItems: AgendaItem[
   return (
     <section
       id="agenda"
-      className="py-12 md:py-16 bg-transparent relative z-10 min-h-200"
+      className="py-10 md:py-12 lg:py-16 bg-transparent relative z-10 min-h-[auto] md:min-h-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="inline-flex items-center text-sm font-bold tracking-widest text-ieee-orange uppercase mb-4 border border-ieee-orange/30 bg-ieee-orange/5 px-4 py-2 rounded-full">
             October 30, 2026
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-ieee-black tracking-tight mt-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-black text-ieee-black tracking-tight mt-4">
             Conference Agenda
           </h2>
         </div>
@@ -78,7 +78,7 @@ export default function AgendaClient({ agendaItems }: { agendaItems: AgendaItem[
                 data-index={idx}
                 onClick={() => setActiveIndex(idx)}
                 onMouseEnter={() => setActiveIndex(idx)}
-                className={`text-left p-5 md:p-8 rounded-[2rem] transition-all duration-500 border relative group overflow-hidden ${
+                className={`text-left p-4 md:p-5 lg:p-8 rounded-[1.5rem] md:rounded-[2rem] transition-all duration-500 border relative group overflow-hidden ${
                   activeIndex === idx
                     ? "bg-ieee-black text-white shadow-[0_20px_40px_rgba(0,181,226,0.2)] border-ieee-black lg:translate-x-4 scale-[1.02]"
                     : "bg-white/60 backdrop-blur-md text-ieee-black border-white/80 hover:border-ieee-cyan/50 shadow-sm hover:shadow-lg hover:scale-[1.01]"
@@ -111,7 +111,7 @@ export default function AgendaClient({ agendaItems }: { agendaItems: AgendaItem[
           {/* Right: Detailed View Window */}
           <div className="w-full lg:w-7/12 sticky top-32 z-10">
             {agendaItems.length > 0 && agendaItems[activeIndex] && (
-              <div className="bg-white/60 backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-8 lg:p-12 border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.05)] relative overflow-hidden min-h-[28rem] flex flex-col justify-center">
+              <div className="bg-white/60 backdrop-blur-2xl rounded-[2rem] md:rounded-[2.5rem] p-5 md:p-6 lg:p-8 xl:p-12 border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.05)] relative overflow-hidden min-h-[20rem] md:min-h-[28rem] flex flex-col justify-center">
                 {/* Background Tech Accent */}
                 <div className="absolute -top-20 -right-20 w-80 h-80 bg-ieee-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-ieee-orange/10 rounded-full blur-3xl pointer-events-none"></div>

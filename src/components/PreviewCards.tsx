@@ -6,11 +6,11 @@ import { motion } from "framer-motion";
 
 export default function PreviewCards() {
   return (
-    <section className="py-24 bg-transparent border-y border-ieee-gray/20 relative z-10">
+    <section className="py-16 md:py-24 bg-transparent border-y border-ieee-gray/20 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Speakers Card */}
-          <div className="relative bg-white/60 backdrop-blur-xl p-10 md:p-12 border border-white/80 rounded-[2.5rem] shadow-xl hover:shadow-[0_20px_50px_rgba(0,181,226,0.1)] transition-all duration-500 group overflow-hidden">
+          <div className="relative bg-white/60 backdrop-blur-xl p-6 md:p-10 lg:p-12 border border-white/80 rounded-[2rem] md:rounded-[2.5rem] shadow-xl hover:shadow-[0_20px_50px_rgba(0,181,226,0.1)] transition-all duration-500 group overflow-hidden">
             {/* Background floating icons on hover */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <motion.div
@@ -52,7 +52,7 @@ export default function PreviewCards() {
 
             <div className="relative z-10 h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-3xl lg:text-4xl font-heading font-black text-ieee-black mb-4 group-hover:text-ieee-blue transition-colors">
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black text-ieee-black mb-4 group-hover:text-ieee-blue transition-colors">
                   Distinguished Speakers
                 </h3>
                 <p className="text-ieee-gray mb-8 leading-relaxed font-medium">
@@ -73,7 +73,7 @@ export default function PreviewCards() {
           </div>
 
           {/* Agenda Card */}
-          <div className="relative bg-ieee-black p-10 md:p-12 border border-ieee-gray/10 rounded-[2.5rem] shadow-xl hover:shadow-[0_20px_50px_rgba(0,181,226,0.15)] transition-all duration-500 group overflow-hidden">
+          <div className="relative bg-ieee-black p-6 md:p-10 lg:p-12 border border-ieee-gray/10 rounded-[2rem] md:rounded-[2.5rem] shadow-xl hover:shadow-[0_20px_50px_rgba(0,181,226,0.15)] transition-all duration-500 group overflow-hidden">
             {/* Terminal data stream background */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700 overflow-hidden pointer-events-none flex flex-col font-mono text-[10px] sm:text-xs text-ieee-cyan leading-tight p-6">
               <motion.div
@@ -100,7 +100,7 @@ export default function PreviewCards() {
 
             <div className="relative z-10 h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-3xl lg:text-4xl font-heading font-black text-white mb-4 group-hover:text-ieee-cyan transition-colors">
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-black text-white mb-4 group-hover:text-ieee-cyan transition-colors">
                   Conference Agenda
                 </h3>
                 <p className="text-gray-400 mb-8 leading-relaxed font-medium">

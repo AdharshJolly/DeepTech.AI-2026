@@ -12,7 +12,7 @@ import {
 
 export default function About() {
   return (
-    <section id="about" className="py-24 relative overflow-hidden">
+    <section id="about" className="py-16 md:py-24 relative overflow-hidden">
       {/* Decorative blurred background elements for the glassmorphism to pop against */}
       <div className="absolute top-1/3 left-10 w-72 h-72 bg-ieee-blue/10 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-ieee-orange/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -22,7 +22,7 @@ export default function About() {
           <h2 className="text-sm font-bold tracking-widest text-ieee-orange uppercase mb-4 inline-flex items-center px-4 py-2 bg-ieee-orange/10 rounded-full border border-ieee-orange/20">
             <Zap className="w-4 h-4 mr-2" /> The Future is Physical
           </h2>
-          <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-ieee-black tracking-tight mt-4">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-heading font-black text-ieee-black tracking-tight mt-4">
             About The{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-ieee-blue to-ieee-cyan">
               Summit
@@ -33,15 +33,15 @@ export default function About() {
         {/* BENTO BOX GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 auto-rows-auto gap-6">
           {/* Box 1: Hero About (Spans 2x2) */}
-          <div className="md:col-span-2 lg:col-span-2 md:row-span-2 bg-white/60 backdrop-blur-xl border border-white/50 p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
+          <div className="md:col-span-2 lg:col-span-2 md:row-span-2 bg-white/60 backdrop-blur-xl border border-white/50 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden group hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] transition-all duration-500">
             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity duration-500 transform group-hover:scale-110">
               <Globe2 className="w-32 h-32 text-ieee-blue" />
             </div>
-            <h3 className="text-3xl lg:text-4xl font-heading font-bold text-ieee-black mb-6 leading-tight relative z-10">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-ieee-black mb-4 md:mb-6 leading-tight relative z-10">
               Bridging the gap between digital intelligence and physical
               systems.
             </h3>
-            <p className="text-ieee-gray leading-relaxed mb-8 relative z-10 text-lg">
+            <p className="text-ieee-gray leading-relaxed mb-6 md:mb-8 relative z-10 text-base md:text-lg">
               DeepTech.ai 2026 is the flagship IEEE Computer Society event
               bringing together leaders from across the ecosystem to explore how
               Artificial Intelligence is transforming robotics, hardware, and
@@ -60,12 +60,12 @@ export default function About() {
           </div>
 
           {/* Box 2: Why Physical AI (Spans 2x1) */}
-          <div className="md:col-span-2 lg:col-span-2 bg-ieee-black text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group hover:scale-[1.01] transition-transform duration-500">
+          <div className="md:col-span-2 lg:col-span-2 bg-ieee-black text-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl relative overflow-hidden group hover:scale-[1.01] transition-transform duration-500">
             <div className="absolute -top-10 -right-10 w-48 h-48 bg-ieee-cyan/20 rounded-full blur-3xl group-hover:bg-ieee-cyan/30 transition-all duration-500"></div>
-            <h3 className="text-2xl lg:text-3xl font-heading font-bold text-white mb-4 relative z-10">
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-heading font-bold text-white mb-3 md:mb-4 relative z-10">
               The next frontier is tangible.
             </h3>
-            <p className="text-gray-300 leading-relaxed relative z-10">
+            <p className="text-gray-300 leading-relaxed relative z-10 text-sm md:text-base">
               While generative AI has reshaped the digital landscape, the most
               profound transformations over the next decade will occur where AI
               intersects with the physical world, demanding rigorous engineering
@@ -74,42 +74,42 @@ export default function About() {
           </div>
 
           {/* Box 3: Robotics (Spans 1x1) */}
-          <div className="md:col-span-1 lg:col-span-1 bg-linear-to-br from-ieee-orange/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-orange/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
+          <div className="md:col-span-1 lg:col-span-1 bg-linear-to-br from-ieee-orange/10 to-transparent p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-ieee-orange/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
             <div className="w-14 h-14 bg-ieee-orange/20 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
               <Cpu className="w-7 h-7 text-ieee-orange" />
             </div>
-            <h4 className="text-xl font-bold font-heading text-ieee-black mb-3">
+            <h4 className="text-lg md:text-xl font-bold font-heading text-ieee-black mb-2 md:mb-3">
               Robotics & Automation
             </h4>
-            <p className="text-ieee-gray text-sm leading-relaxed">
+            <p className="text-ieee-gray text-xs md:text-sm leading-relaxed">
               Deep dive into next-gen control systems and autonomous robotics.
             </p>
           </div>
 
           {/* Box 4: Hardware (Spans 1x1) */}
-          <div className="md:col-span-1 lg:col-span-1 bg-linear-to-br from-ieee-cyan/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-cyan/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
+          <div className="md:col-span-1 lg:col-span-1 bg-linear-to-br from-ieee-cyan/10 to-transparent p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-ieee-cyan/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300">
             <div className="w-14 h-14 bg-ieee-cyan/20 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
               <Microchip className="w-7 h-7 text-ieee-cyan" />
             </div>
-            <h4 className="text-xl font-bold font-heading text-ieee-black mb-3">
+            <h4 className="text-lg md:text-xl font-bold font-heading text-ieee-black mb-2 md:mb-3">
               Hardware Intelligence
             </h4>
-            <p className="text-ieee-gray text-sm leading-relaxed">
+            <p className="text-ieee-gray text-xs md:text-sm leading-relaxed">
               Exploring edge AI, custom silicon, and embedded machine learning.
             </p>
           </div>
 
           {/* Box 5: Industrial (Spans 2x1) */}
-          <div className="md:col-span-3 lg:col-span-2 bg-linear-to-br from-ieee-blue/10 to-transparent p-8 rounded-[2.5rem] border border-ieee-blue/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-center">
+          <div className="md:col-span-3 lg:col-span-2 bg-linear-to-br from-ieee-blue/10 to-transparent p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-ieee-blue/20 shadow-lg group hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-center">
             <div className="flex items-start">
               <div className="w-14 h-14 bg-ieee-blue/20 rounded-2xl flex items-center justify-center mr-6 shrink-0 group-hover:rotate-12 transition-transform duration-300">
                 <Factory className="w-7 h-7 text-ieee-blue" />
               </div>
               <div>
-                <h4 className="text-xl font-bold font-heading text-ieee-black mb-2">
+                <h4 className="text-lg md:text-xl font-bold font-heading text-ieee-black mb-1 md:mb-2">
                   Industrial Applications
                 </h4>
-                <p className="text-ieee-gray text-sm leading-relaxed">
+                <p className="text-ieee-gray text-xs md:text-sm leading-relaxed">
                   Scaling physical AI across manufacturing, supply chain,
                   autonomous vehicles, and precision healthcare.
                 </p>
@@ -118,16 +118,16 @@ export default function About() {
           </div>
 
           {/* Box 6: Innovation Alley (Spans half width) */}
-          <div className="md:col-span-3 lg:col-span-2 bg-white/70 backdrop-blur-xl border border-white/50 p-8 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-between gap-6 group cursor-pointer hover:bg-white/80 transition-colors duration-300">
+          <div className="md:col-span-3 lg:col-span-2 bg-white/70 backdrop-blur-xl border border-white/50 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col justify-between gap-6 group cursor-pointer hover:bg-white/80 transition-colors duration-300">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-ieee-orange rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-ieee-orange/30 group-hover:scale-110 transition-transform duration-300">
                 <Lightbulb className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h4 className="text-lg font-bold font-heading text-ieee-black">
+                <h4 className="text-base md:text-lg font-bold font-heading text-ieee-black">
                   Innovation Alley
                 </h4>
-                <p className="text-ieee-gray text-sm mt-1">
+                <p className="text-ieee-gray text-xs md:text-sm mt-1">
                   Discover the most disruptive startups in the Physical AI space.
                 </p>
               </div>
@@ -141,17 +141,17 @@ export default function About() {
           {/* Box 7: Symposium Legacy (Spans half width) */}
           <Link
             href="/past-events"
-            className="md:col-span-3 lg:col-span-2 bg-linear-to-r from-ieee-blue/5 to-ieee-cyan/5 backdrop-blur-xl border border-ieee-blue/20 p-8 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.02)] flex flex-col justify-between gap-6 group hover:from-ieee-blue/10 hover:to-ieee-cyan/10 transition-all duration-300"
+            className="md:col-span-3 lg:col-span-2 bg-linear-to-r from-ieee-blue/5 to-ieee-cyan/5 backdrop-blur-xl border border-ieee-blue/20 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.02)] flex flex-col justify-between gap-6 group hover:from-ieee-blue/10 hover:to-ieee-cyan/10 transition-all duration-300"
           >
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-ieee-blue rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-ieee-blue/20 group-hover:scale-110 transition-transform duration-300">
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h4 className="text-lg font-bold font-heading text-ieee-black">
+                <h4 className="text-base md:text-lg font-bold font-heading text-ieee-black">
                   Our Symposium Legacy
                 </h4>
-                <p className="text-ieee-gray text-sm mt-1">
+                <p className="text-ieee-gray text-xs md:text-sm mt-1">
                   Highlighting 2+ successful editions, 15+ distinguished research/industry speakers, and a legacy of cutting-edge AI discussions.
                 </p>
               </div>

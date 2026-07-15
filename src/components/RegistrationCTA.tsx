@@ -2,9 +2,9 @@ import { Ticket, Calendar, Zap } from "lucide-react";
 
 export default function RegistrationCTA() {
   return (
-    <section className="py-32 bg-transparent relative z-10">
+    <section className="py-20 md:py-32 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative bg-ieee-black rounded-[3rem] overflow-hidden shadow-2xl p-10 md:p-20 text-center border border-white/10 group">
+        <div className="relative bg-ieee-black rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl p-8 md:p-10 lg:p-20 text-center border border-white/10 group">
           {/* Tech Glows */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-1/2 bg-ieee-cyan/20 blur-[100px] rounded-full pointer-events-none group-hover:bg-ieee-cyan/30 transition-colors duration-1000"></div>
           <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-ieee-orange/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-ieee-orange/20 transition-colors duration-1000"></div>
@@ -25,7 +25,7 @@ export default function RegistrationCTA() {
               <Ticket className="w-10 h-10 text-ieee-cyan" aria-hidden="true" />
             </div>
 
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black text-white tracking-tight mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-heading font-black text-white tracking-tight mb-6">
               Secure Your Spot <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-ieee-orange to-ieee-cyan">
                 in the Future.

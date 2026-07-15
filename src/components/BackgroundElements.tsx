@@ -18,19 +18,19 @@ export default function BackgroundElements() {
 
       {/* Abstract Tech Elements (Physical AI Theme) */}
       <div className="absolute top-[15%] left-[5%] opacity-[0.04] animate-[spin_60s_linear_infinite]">
-        <Cpu className="w-64 h-64 text-ieee-blue" strokeWidth={1} />
+        <Cpu className="w-32 h-32 md:w-64 md:h-64 text-ieee-blue" strokeWidth={1} />
       </div>
 
       <div className="absolute top-[40%] right-[10%] opacity-[0.04] animate-[spin_40s_linear_infinite_reverse]">
-        <Network className="w-96 h-96 text-ieee-cyan" strokeWidth={1} />
+        <Network className="w-48 h-48 md:w-96 md:h-96 text-ieee-cyan" strokeWidth={1} />
       </div>
 
       <div className="absolute bottom-[15%] left-[15%] opacity-[0.04]">
-        <CircuitBoard className="w-80 h-80 text-ieee-orange" strokeWidth={1} />
+        <CircuitBoard className="w-40 h-40 md:w-80 md:h-80 text-ieee-orange" strokeWidth={1} />
       </div>
 
       <div className="absolute top-[70%] right-[30%] opacity-[0.03]">
-        <Hexagon className="w-64 h-64 text-ieee-black" strokeWidth={1} />
+        <Hexagon className="w-32 h-32 md:w-64 md:h-64 text-ieee-black" strokeWidth={1} />
       </div>
 
       {/* Geometric Accents */}

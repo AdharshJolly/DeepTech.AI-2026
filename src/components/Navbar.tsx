@@ -41,7 +41,7 @@ export default function Navbar() {
       <motion.nav
         className={`pointer-events-auto relative transition-colors duration-300 ${
           activeScrolled
-            ? "backdrop-blur-xl bg-white/60 border border-white/50"
+            ? "backdrop-blur-xl border border-white/50 max-md:bg-white max-md:border-ieee-gray/10 max-md:shadow-lg md:bg-white/60 md:border-white/50"
             : "bg-transparent border-transparent"
         }`}
         initial={{
@@ -106,7 +106,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-expanded={isOpen}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
-                className="text-ieee-gray hover:text-ieee-blue focus:outline-none bg-ieee-gray/5 p-2 rounded-full"
+                className="text-ieee-gray hover:text-ieee-blue focus:outline-none bg-ieee-gray/5 p-2.5 rounded-full active:bg-ieee-gray/10 transition-colors"
               >
                 {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
               </button>
@@ -120,22 +120,22 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             className={`md:hidden absolute w-full ${
               isScrolled
-                ? "top-[110%] left-0 backdrop-blur-xl bg-white/60 border border-white/50 rounded-3xl shadow-[0_8px_32px_rgba(31,38,135,0.1)] overflow-hidden"
-                : "top-full left-0 backdrop-blur-xl bg-white/60 border-t border-white/50 shadow-lg"
+                ? "top-[110%] left-0 md:backdrop-blur-xl md:bg-white/60 md:border md:border-white/50 max-md:bg-white max-md:border max-md:border-ieee-gray/10 max-md:shadow-xl rounded-3xl overflow-hidden"
+                : "top-full left-0 backdrop-blur-xl bg-white border-t border-ieee-gray/10 shadow-lg"
             }`}
           >
-            <div className="px-4 pt-4 pb-6 space-y-2">
+            <div className="px-4 pt-4 pb-6 space-y-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="block px-4 py-3 rounded-2xl text-base font-medium text-ieee-black bg-ieee-gray/5 hover:text-ieee-blue hover:bg-ieee-cyan/10 transition-colors"
+                  className="block px-4 py-3.5 rounded-2xl text-base font-medium text-ieee-black bg-ieee-gray/5 hover:text-ieee-blue hover:bg-ieee-cyan/10 transition-colors active:bg-ieee-cyan/15"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-4">
+              <div className="pt-3">
                 <button
                   aria-label="Registrations Coming Soon"
                   className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md"

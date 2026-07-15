@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-ieee-black text-ieee-white py-12 border-t-4 border-ieee-orange">
+    <footer className="bg-ieee-black text-ieee-white py-10 md:py-12 border-t-4 border-ieee-orange">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2 space-y-4">
@@ -14,7 +14,7 @@ export default function Footer() {
               The flagship IEEE Computer Society event exploring how Physical AI
               is transforming robotics, hardware, and industrial automation.
             </p>
-            <div className="pt-4 flex flex-wrap gap-8 items-center">
+            <div className="pt-4 flex flex-wrap gap-6 md:gap-8 items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/ieee_cs_bc.png"
