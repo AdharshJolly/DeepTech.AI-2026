@@ -1,12 +1,12 @@
-# DeepTech.ai 2026 🚀
+# DeepTech.AI 2026 🚀
 
 > The flagship IEEE Computer Society event exploring how Physical AI is transforming robotics, hardware, and industrial automation.
 
-![DeepTech.ai 2026](https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![DeepTech.AI 2026](https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 
-Welcome to the official repository for the **DeepTech.ai 2026** summit website, proudly organized by the **IEEE Computer Society Bangalore Chapter** and hosted at **GE Healthcare, Bengaluru**.
+Welcome to the official repository for the **DeepTech.AI 2026** summit website, proudly organized by the **IEEE Computer Society Bangalore Chapter** and hosted at **GE Healthcare, Bengaluru**.
 
 ## 🌟 Features
 

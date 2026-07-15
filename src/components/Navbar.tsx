@@ -73,7 +73,7 @@ export default function Navbar() {
                 aria-label="Home"
                 className="font-heading font-bold text-2xl text-ieee-blue tracking-tight"
               >
-                DeepTech<span className="text-ieee-orange">.ai</span>
+                DeepTech<span className="text-ieee-orange">.AI</span>
               </Link>
             </div>
 

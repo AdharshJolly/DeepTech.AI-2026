@@ -1,7 +1,7 @@
 import PartnersManager from "@/components/admin/PartnersManager";
 
 export const metadata = {
-  title: "Manage Partners | Admin DeepTech.ai",
+  title: "Manage Partners | Admin DeepTech.AI",
 };
 
 export default function AdminPartnersPage() {

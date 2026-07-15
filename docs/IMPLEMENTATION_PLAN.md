@@ -1,6 +1,6 @@
 # Implementation Plan & Multi-Agent Reasoning
 
-This document outlines the multi-agent rationale for the DeepTech.ai 2026 web platform.
+This document outlines the multi-agent rationale for the DeepTech.AI 2026 web platform.
 
 ## Agent Perspectives
 

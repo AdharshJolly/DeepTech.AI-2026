@@ -42,7 +42,7 @@ export default function InnovationAlley() {
           </h2>
           <p className="text-lg md:text-xl text-ieee-gray max-w-3xl mx-auto leading-relaxed">
             Where code meets machinery. Innovation Alley is the dedicated
-            physical hub of DeepTech.ai where theoretical models are brought to
+            physical hub of DeepTech.AI where theoretical models are brought to
             life through interactive hardware, startup showcases, and live
             demonstrations.
           </p>

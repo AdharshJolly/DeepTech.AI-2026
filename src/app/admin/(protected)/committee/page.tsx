@@ -1,7 +1,7 @@
 import CommitteeManager from "@/components/admin/CommitteeManager";
 
 export const metadata = {
-  title: "Manage Committee | Admin DeepTech.ai",
+  title: "Manage Committee | Admin DeepTech.AI",
 };
 
 export default function AdminCommitteePage() {

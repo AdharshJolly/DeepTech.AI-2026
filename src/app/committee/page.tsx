@@ -9,9 +9,9 @@ import CommitteeTabs from "@/components/CommitteeTabs";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Committee | DeepTech.ai 2026",
+  title: "Committee | DeepTech.AI 2026",
   description:
-    "Meet the dedicated individuals driving the vision, technical excellence, and execution of DeepTech.ai 2026.",
+    "Meet the dedicated individuals driving the vision, technical excellence, and execution of DeepTech.AI 2026.",
   alternates: { canonical: "/committee" },
 };
 
@@ -41,7 +41,7 @@ export default async function CommitteePage() {
           </h1>
           <p className="text-lg text-ieee-gray mt-6 max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-3 duration-500 delay-100">
             Meet the dedicated individuals driving the vision, technical
-            excellence, and execution of DeepTech.ai 2026.
+            excellence, and execution of DeepTech.AI 2026.
           </p>
         </div>
 

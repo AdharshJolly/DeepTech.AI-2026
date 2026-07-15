@@ -1,7 +1,7 @@
 import SpeakersManager from "@/components/admin/SpeakersManager";
 
 export const metadata = {
-  title: "Manage Speakers | Admin DeepTech.ai",
+  title: "Manage Speakers | Admin DeepTech.AI",
 };
 
 export default function AdminSpeakersPage() {

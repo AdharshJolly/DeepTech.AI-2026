@@ -1,4 +1,4 @@
-# DeepTech.ai 2026 — Master Project Constitution
+# DeepTech.AI 2026 — Master Project Constitution
 
 ### Single Source of Truth for Design, Development, Content & Brand
 
@@ -40,7 +40,7 @@
 
 ### Event Name
 
-**DeepTech.ai 2026**
+**DeepTech.AI 2026**
 
 ### Theme
 
@@ -48,11 +48,11 @@
 
 ### Purpose
 
-DeepTech.ai is envisioned as a flagship IEEE Computer Society event focused on Physical AI.
+DeepTech.AI is envisioned as a flagship IEEE Computer Society event focused on Physical AI.
 
 ### Mission
 
-DeepTech.ai aims to bridge the gap between digital intelligence and physical systems by bringing together industry leaders, researchers, startups, and students to explore how Artificial Intelligence is transforming robotics, hardware, industrial automation, and cyber-physical systems.
+DeepTech.AI aims to bridge the gap between digital intelligence and physical systems by bringing together industry leaders, researchers, startups, and students to explore how Artificial Intelligence is transforming robotics, hardware, industrial automation, and cyber-physical systems.
 
 ### Vision
 
@@ -84,7 +84,7 @@ These values are **FINAL** and must never be modified unless the organizers expl
 
 | Field        | Value                                                                       |
 | ------------ | --------------------------------------------------------------------------- |
-| Event Name   | DeepTech.ai                                                                 |
+| Event Name   | DeepTech.AI                                                                 |
 | Theme        | Physical AI                                                                 |
 | Date         | 30 October 2026                                                             |
 | Duration     | 9:00 AM – 6:00 PM (Full-day)                                                |
@@ -99,7 +99,7 @@ These values are **FINAL** and must never be modified unless the organizers expl
 
 ### Organizer's Framing (verbatim intent, from Amal Sir's briefing)
 
-> "The event, titled DeepTech.ai, aims to bridge the gap between digital intelligence and physical systems. We are bringing together leaders from across the ecosystem to explore how AI is transforming robotics, hardware, and industrial automation."
+> "The event, titled DeepTech.AI, aims to bridge the gap between digital intelligence and physical systems. We are bringing together leaders from across the ecosystem to explore how AI is transforming robotics, hardware, and industrial automation."
 
 ### Industry Leadership
 
@@ -139,7 +139,7 @@ This section captures how the brief was gathered, for traceability.
 
 ## 5. Inspiration & Precedent
 
-### Past DeepTech.ai Editions (for continuity/tone reference — do not copy content or design verbatim)
+### Past DeepTech.AI Editions (for continuity/tone reference — do not copy content or design verbatim)
 
 - https://ieeecsbangalore.org/deeptech-ai/
 - https://cs.ieeebangalore.org/deep-tech-ai-2023/
@@ -220,7 +220,7 @@ The following logos **MUST** appear somewhere appropriate on the site:
 
 Each primary color also has approved tints at 80% / 60% / 40% / 20% for UI states (hover, disabled, backgrounds, etc).
 
-> **Note on alternate palettes:** The brand guide also defines a "Bright Color Palette" (red, orange, yellow, green, dark green, purple, teal, blue, cyan, white) and a "Dark Color Palette" (darker variants of the same hues) for broader IEEE CS marketing use. **DeepTech.ai should use only the Primary Color Palette above**, per the organizer's explicit instruction to "keep the IEEE CS colour theme" — the bright/dark extended palettes are not part of this project's approved palette unless organizers say otherwise.
+> **Note on alternate palettes:** The brand guide also defines a "Bright Color Palette" (red, orange, yellow, green, dark green, purple, teal, blue, cyan, white) and a "Dark Color Palette" (darker variants of the same hues) for broader IEEE CS marketing use. **DeepTech.AI should use only the Primary Color Palette above**, per the organizer's explicit instruction to "keep the IEEE CS colour theme" — the bright/dark extended palettes are not part of this project's approved palette unless organizers say otherwise.
 
 - Only official IEEE Computer Society colors should dominate the design.
 - Accent colors from the wider IEEE palette may be used sparingly, if at all — default to the six primary colors above.
@@ -309,7 +309,7 @@ Canonical homepage section order (per Constitution Section 11):
 
 1. Hero
 2. Countdown
-3. About DeepTech.ai
+3. About DeepTech.AI
 4. Why Physical AI
 5. Event Highlights
 6. Speakers
@@ -517,10 +517,10 @@ The architecture should be future-proofed to support:
 
 - Official **IEEE Computer Society Brand Identity & Graphic Style Guide** — incorporated for typography, colors, logo usage, and branding rules.
 - Organizer briefing thread with Amal Sir, IEEE CS Execom (WhatsApp, 11–12 July 2026).
-- Past DeepTech.ai edition pages: `ieeecsbangalore.org/deeptech-ai/`, `cs.ieeebangalore.org/deep-tech-ai-2023/`.
+- Past DeepTech.AI edition pages: `ieeecsbangalore.org/deeptech-ai/`, `cs.ieeebangalore.org/deep-tech-ai-2023/`.
 - Reference/inspiration sites: `deeptechsummit.eu`, `onegiantleap.com`, `physicalaiconference.com`, `machinasummit.com`, `mashup.day/robotics-physical-ai`.
 - All prior project documents (`00`–`09`) and the original `DeepTech_AI_2026_AI_Design_Development_Constitution.md`, superseded by this consolidated file.
 
 ---
 
-_End of Master Constitution. This file supersedes all individual source documents listed above for the purposes of ongoing AI-assisted and human development on DeepTech.ai 2026._
+_End of Master Constitution. This file supersedes all individual source documents listed above for the purposes of ongoing AI-assisted and human development on DeepTech.AI 2026._

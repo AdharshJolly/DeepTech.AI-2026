@@ -42,7 +42,7 @@ export default function About() {
               systems.
             </h3>
             <p className="text-ieee-gray leading-relaxed mb-6 md:mb-8 relative z-10 text-base md:text-lg">
-              DeepTech.ai 2026 is the flagship IEEE Computer Society event
+              DeepTech.AI 2026 is the flagship IEEE Computer Society event
               bringing together leaders from across the ecosystem to explore how
               Artificial Intelligence is transforming robotics, hardware, and
               industrial automation.

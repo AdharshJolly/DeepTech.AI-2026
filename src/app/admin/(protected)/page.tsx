@@ -21,7 +21,7 @@ export default async function AdminDashboard() {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-heading font-black text-ieee-black mb-2">Dashboard Overview</h1>
-      <p className="text-ieee-gray mb-8">Welcome to the DeepTech.ai 2026 Admin Panel.</p>
+      <p className="text-ieee-gray mb-8">Welcome to the DeepTech.AI 2026 Admin Panel.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {stats.map((stat) => {

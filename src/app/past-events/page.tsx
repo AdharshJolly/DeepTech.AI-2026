@@ -6,7 +6,7 @@ import Image from "next/image";
 import { MapPin, Users, BookOpen, Sparkles, Calendar } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Past Events | DeepTech.ai 2026",
+  title: "Past Events | DeepTech.AI 2026",
   description:
     "Explore the legacy, core highlights, notable speakers, and photos from the previous annual symposiums of the IEEE Computer Society Bangalore Chapter.",
   alternates: { canonical: "/past-events" },

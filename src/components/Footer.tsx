@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2 space-y-4">
             <h2 className="font-heading font-bold text-2xl tracking-tight">
-              DeepTech<span className="text-ieee-orange">.ai</span> 2026
+              DeepTech<span className="text-ieee-orange">.AI</span> 2026
             </h2>
             <p className="text-ieee-gray text-sm max-w-sm">
               The flagship IEEE Computer Society event exploring how Physical AI

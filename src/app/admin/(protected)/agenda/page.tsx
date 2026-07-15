@@ -1,7 +1,7 @@
 import AgendaManager from "@/components/admin/AgendaManager";
 
 export const metadata = {
-  title: "Manage Agenda | Admin DeepTech.ai",
+  title: "Manage Agenda | Admin DeepTech.AI",
 };
 
 export default function AdminAgendaPage() {

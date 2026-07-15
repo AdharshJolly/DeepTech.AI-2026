@@ -15,20 +15,20 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://deep-tech-ai-26.vercel.app"),
-  title: "DeepTech.ai 2026 - The premier IEEE CS event for Physical AI and Robotics",
-  description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
+  title: "DeepTech.AI 2026 - The premier IEEE CS event for Physical AI and Robotics",
+  description: "DeepTech.AI 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
   keywords: ["DeepTech", "AI", "Physical AI", "Robotics", "IEEE CS", "Conference", "2026"],
   openGraph: {
-    title: "DeepTech.ai 2026 - The premier IEEE CS event for Physical AI and Robotics",
-    description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
+    title: "DeepTech.AI 2026 - The premier IEEE CS event for Physical AI and Robotics",
+    description: "DeepTech.AI 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
     url: "https://deep-tech-ai-26.vercel.app",
-    siteName: "DeepTech.ai 2026",
+    siteName: "DeepTech.AI 2026",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "DeepTech.ai 2026 Banner",
+        alt: "DeepTech.AI 2026 Banner",
       },
     ],
     locale: "en_US",
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DeepTech.ai 2026 - The premier IEEE CS event for Physical AI and Robotics",
-    description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
+    title: "DeepTech.AI 2026 - The premier IEEE CS event for Physical AI and Robotics",
+    description: "DeepTech.AI 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -93,8 +93,8 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Event",
-              name: "DeepTech.ai 2026",
-              description: "DeepTech.ai 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
+              name: "DeepTech.AI 2026",
+              description: "DeepTech.AI 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
               startDate: "2026-10-15T09:00:00+00:00",
               endDate: "2026-10-17T17:00:00+00:00",
               eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
