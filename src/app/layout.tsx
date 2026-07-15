@@ -68,6 +68,7 @@ export const metadata: Metadata = {
 };
 
 import AppWrapper from "@/components/AppWrapper";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export default function RootLayout({
   children,
@@ -82,6 +83,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <GoogleAnalytics />
         {/* 
           System Architecture and Development by Adharsh Jolly
           GitHub: https://github.com/AdharshJolly
