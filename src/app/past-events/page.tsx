@@ -14,6 +14,7 @@ import {
   Trophy,
   Mic2,
   Layers,
+  Camera,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -35,6 +36,7 @@ interface PastEvent {
   topics: string[];
   keynoteSpeakers: PastSpeaker[];
   stats: { label: string; value: string; icon: React.ReactNode }[];
+  gallery?: { src: string; alt: string }[];
 }
 
 const events: PastEvent[] = [
@@ -109,6 +111,12 @@ const events: PastEvent[] = [
         value: "200+",
         icon: <Users className="w-5 h-5" />,
       },
+    ],
+    gallery: [
+      { src: "/images/DeepTech-2025/01.jpg", alt: "Panel discussion at DeepTech.AI 2025" },
+      { src: "/images/DeepTech-2025/02.JPG", alt: "AI Agents panel with industry leaders" },
+      { src: "/images/DeepTech-2025/03.jpg", alt: "Speakers and organizers at CHRIST University" },
+      { src: "/images/DeepTech-2025/04.JPG", alt: "Full auditorium group photo" },
     ],
   },
   {
@@ -449,6 +457,34 @@ export default function PastEventsPage() {
                                 </div>
                               </div>
                             </div>
+
+                            {/* Photo Gallery */}
+                            {event.gallery && event.gallery.length > 0 && (
+                              <div className="mt-6">
+                                <h3 className="text-sm font-bold text-ieee-black uppercase tracking-wider flex items-center gap-2 mb-4">
+                                  <Camera className="w-4 h-4 text-ieee-orange" />
+                                  Event Moments
+                                </h3>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                  {event.gallery.map((photo, i) => (
+                                    <div
+                                      key={i}
+                                      className="relative aspect-square rounded-xl overflow-hidden border border-ieee-gray/10 shadow-sm group cursor-pointer"
+                                    >
+                                      <Image
+                                        src={photo.src}
+                                        alt={photo.alt}
+                                        fill
+                                        sizes="(max-width: 768px) 50vw, 250px"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                        unoptimized
+                                      />
+                                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </motion.div>
                       )}
