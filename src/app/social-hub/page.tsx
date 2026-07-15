@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
 import { Share2, Award, Trophy, Sparkles, Heart, MessageSquare, Send, CheckCircle, Zap } from "lucide-react";
 
 interface LeaderboardUser {
@@ -175,8 +174,6 @@ export default function SocialHubPage() {
 
   return (
     <main className="min-h-screen bg-ieee-white flex flex-col pt-24 relative overflow-hidden">
-      <Navbar />
-
       {/* Grid Accents */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute top-1/4 left-5 w-96 h-96 bg-ieee-blue/5 rounded-full blur-[120px]" />
@@ -612,7 +609,6 @@ export default function SocialHubPage() {
         )}
       </section>
 
-      <Footer />
     </main>
   );
 }
