@@ -201,10 +201,12 @@ const legacyStats = [
 ];
 
 export default function PastEventsPage() {
-  const [expandedYear, setExpandedYear] = useState<string | null>(events[0].year);
+  const [expandedYears, setExpandedYears] = useState<string[]>(events.map((e) => e.year));
 
   const toggleYear = (year: string) => {
-    setExpandedYear(expandedYear === year ? null : year);
+    setExpandedYears((prev) =>
+      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
+    );
   };
 
   return (
@@ -277,7 +279,7 @@ export default function PastEventsPage() {
 
           <div className="space-y-6">
             {events.map((event, idx) => {
-              const isExpanded = expandedYear === event.year;
+              const isExpanded = expandedYears.includes(event.year);
 
               return (
                 <motion.div
