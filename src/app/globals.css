@@ -48,3 +48,12 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Hide scrollbar for speaker strip */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
