@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import { Share2, Award, Trophy, Sparkles, Heart, MessageSquare, Send, CheckCircle, Zap } from "lucide-react";
+import { event as gaEvent } from "@/lib/analytics";
 
 interface LeaderboardUser {
   rank: number;
@@ -147,6 +148,7 @@ export default function SocialHubPage() {
       });
 
       if (res.ok) {
+        gaEvent({ action: "quest_claim", category: "Social Hub", label: questId });
         localStorage.setItem("deeptech_social_email", email);
         const updatedClaims = [...claimedQuests, questId];
         localStorage.setItem(`claims_${email}`, JSON.stringify(updatedClaims));
@@ -294,7 +296,7 @@ export default function SocialHubPage() {
         <div className="flex justify-center mb-12">
           <div className="bg-ieee-gray/5 p-1.5 rounded-full border border-ieee-gray/10 flex items-center gap-2">
             <button
-              onClick={() => setActiveTab("quests")}
+              onClick={() => { setActiveTab("quests"); gaEvent({ action: "tab_switch", category: "Social Hub", label: "quests" }); }}
               className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
                 activeTab === "quests"
                   ? "bg-white text-ieee-blue shadow-md"
@@ -307,6 +309,7 @@ export default function SocialHubPage() {
               onClick={() => {
                 setActiveTab("wall");
                 fetchLiveFeed();
+                gaEvent({ action: "tab_switch", category: "Social Hub", label: "wall" });
               }}
               className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all ${
                 activeTab === "wall"
@@ -364,6 +367,7 @@ export default function SocialHubPage() {
                         href={quest.shareUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => gaEvent({ action: "quest_link_click", category: "Social Hub", label: quest.id })}
                         className={`w-full md:w-auto px-5 py-2.5 rounded-xl text-center text-sm font-bold transition-all shrink-0 ${
                           isCompleted
                             ? "bg-emerald-100 text-emerald-800 pointer-events-none cursor-default"

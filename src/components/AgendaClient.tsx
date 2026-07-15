@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Users, MapPin, Clock, Activity } from "lucide-react";
+import { event as gaEvent } from "@/lib/analytics";
 
 export interface AgendaItem {
   _id?: string;
@@ -76,7 +77,7 @@ export default function AgendaClient({ agendaItems }: { agendaItems: AgendaItem[
                   itemRefs.current[idx] = el;
                 }}
                 data-index={idx}
-                onClick={() => setActiveIndex(idx)}
+                onClick={() => { setActiveIndex(idx); gaEvent({ action: "agenda_select", category: "Agenda", label: agendaItems[idx]?.title || String(idx) }); }}
                 onMouseEnter={() => setActiveIndex(idx)}
                 className={`text-left p-4 md:p-5 lg:p-8 rounded-[1.5rem] md:rounded-[2rem] transition-all duration-500 border relative group overflow-hidden ${
                   activeIndex === idx

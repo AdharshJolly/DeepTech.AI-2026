@@ -18,6 +18,7 @@ import {
   BookOpen,
   ExternalLink,
 } from "lucide-react";
+import { event as gaEvent } from "@/lib/analytics";
 
 
 /* ────────────────────────────────────────
@@ -392,6 +393,7 @@ export default function PastEventsPage() {
   const openLightbox = useCallback(
     (images: { src: string; alt: string }[], index: number) => {
       setLightbox({ images, index });
+      gaEvent({ action: "gallery_open", category: "Past Events", label: images[index]?.alt || "" });
     },
     []
   );
@@ -636,6 +638,7 @@ export default function PastEventsPage() {
                       behavior: "smooth",
                       block: "start",
                     });
+                    gaEvent({ action: "timeline_navigate", category: "Past Events", label: event.year });
                   }}
                   className={`mobile-timeline-node flex flex-col items-center gap-2 shrink-0 ${
                     activeEdition === idx ? "opacity-100" : "opacity-40"

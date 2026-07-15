@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Sparkles, ArrowLeft, Lock } from "lucide-react";
+import { event as gaEvent } from "@/lib/analytics";
 
 interface ReleaseModalProps {
   featureName: string;
@@ -54,7 +55,7 @@ export default function ReleaseModal({ featureName }: ReleaseModalProps) {
 
           {/* Action Button */}
           <button
-            onClick={() => router.push("/")}
+            onClick={() => { gaEvent({ action: "release_modal_back", category: "Navigation", label: featureName }); router.push("/"); }}
             className="w-full flex items-center justify-center gap-2 bg-ieee-blue text-white rounded-2xl py-3 px-6 font-bold hover:bg-ieee-blue/95 transition-all shadow-lg hover:shadow-ieee-blue/20 hover:scale-[1.02] active:scale-[0.98]"
           >
             <ArrowLeft className="w-4 h-4" />

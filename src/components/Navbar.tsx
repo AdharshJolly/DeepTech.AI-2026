@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { event as gaEvent } from "@/lib/analytics";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -103,7 +104,7 @@ export default function Navbar() {
 
             <div className="md:hidden flex items-center">
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => { setIsOpen(!isOpen); gaEvent({ action: "menu_toggle", category: "Navigation", label: isOpen ? "close" : "open" }); }}
                 aria-expanded={isOpen}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 className="text-ieee-gray hover:text-ieee-blue focus:outline-none bg-ieee-gray/5 p-2.5 rounded-full active:bg-ieee-gray/10 transition-colors"

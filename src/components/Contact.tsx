@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { MapPin, ChevronRight, Send, CheckCircle2, AlertTriangle, Loader2 } from "lucide-react";
+import { event as gaEvent } from "@/lib/analytics";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -43,11 +44,13 @@ export default function Contact() {
             type: "warning",
             text: data.warning,
           });
+          gaEvent({ action: "contact_submit", category: "Form", label: "warning" });
         } else {
           setStatus({
             type: "success",
             text: "Your message has been successfully recorded in the Google Sheet. Thank you!",
           });
+          gaEvent({ action: "contact_submit", category: "Form", label: "success" });
         }
         setFormData({
           name: "",
@@ -61,12 +64,14 @@ export default function Contact() {
           type: "error",
           text: data.error || "Failed to submit enquiry. Please try again.",
         });
+        gaEvent({ action: "contact_submit", category: "Form", label: "error" });
       }
     } catch (err) {
       setStatus({
         type: "error",
         text: "A connection error occurred. Please check your network and try again.",
       });
+      gaEvent({ action: "contact_submit", category: "Form", label: "network_error" });
     } finally {
       setSubmitting(false);
     }
