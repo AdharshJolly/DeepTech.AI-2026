@@ -116,7 +116,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-transparent text-ieee-black relative">
+      <body className="min-h-full flex flex-col font-sans bg-transparent text-ieee-black relative" suppressHydrationWarning>
         <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
