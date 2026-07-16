@@ -5,7 +5,7 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative h-[calc(100vh-80px)] min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden bg-transparent">
+    <section className="relative h-[calc(100vh-80px)] min-h-125 md:min-h-150 flex items-center justify-center overflow-hidden bg-transparent">
       {/* Loop Video Background with Readability Mask */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
@@ -18,7 +18,7 @@ export default function Hero() {
           <source src="/models/Hero Background.mp4" type="video/mp4" />
         </video>
         {/* Soft blur & gradient overlay for text legibility and page blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/70 to-ieee-white backdrop-blur-[1px] z-1" />
+        <div className="absolute inset-0 bg-linear-to-b from-white/10 via-white/70 to-ieee-white backdrop-blur-[1px] z-1" />
 
         {/* Subtle dot matrix overlay to give it a cyber-physical feel */}
         <div
@@ -49,7 +49,7 @@ export default function Hero() {
         <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-8xl lg:text-[7rem] font-heading font-black text-ieee-black tracking-tighter mb-4 leading-none select-none">
           DeepTech
           <span className="text-transparent bg-clip-text bg-linear-to-br from-ieee-blue to-ieee-cyan">
-            .ai
+            .AI
           </span>
           <span className="block mt-2 text-3xl md:text-6xl text-ieee-gray font-light tracking-tight opacity-80">
             2026

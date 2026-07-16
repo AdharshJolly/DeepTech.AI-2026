@@ -6,8 +6,11 @@ const links = [
   { name: "LinkedIn", url: "https://www.linkedin.com/company/ieeecsbc/" },
   { name: "Instagram", url: "https://www.instagram.com/ieeecsbc" },
   { name: "Facebook", url: "https://www.facebook.com/ieeecsbsc/" },
-  { name: "Twitter", url: "https://twitter.com/ieeecsbs" },
-  { name: "YouTube", url: "https://www.youtube.com/channel/UCeBF0MYx2O2gq1_f6FeQFyQ" },
+  { name: "Twitter", url: "https://twitter.com/ieeecsbc" },
+  {
+    name: "YouTube",
+    url: "https://www.youtube.com/channel/UCeBF0MYx2O2gq1_f6FeQFyQ",
+  },
 ];
 
 export default function SocialLinks() {
