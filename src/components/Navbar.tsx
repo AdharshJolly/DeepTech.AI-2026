@@ -6,6 +6,18 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { event as gaEvent } from "@/lib/analytics";
+import MobileMenu from "./MobileMenu";
+
+const navLinks = [
+  { name: "About", href: "/#about" },
+  { name: "Speakers", href: "/speakers" },
+  { name: "Agenda", href: "/agenda" },
+  { name: "Committee", href: "/committee" },
+  { name: "Partners", href: "/#partners" },
+  { name: "Past Events", href: "/past-events" },
+  { name: "Social Hub", href: "/social-hub" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -21,16 +33,10 @@ export default function Navbar() {
     else if (latest <= 20 && isScrolled) setIsScrolled(false);
   });
 
-  const navLinks = [
-    { name: "About", href: "/#about" },
-    { name: "Speakers", href: "/speakers" },
-    { name: "Agenda", href: "/agenda" },
-    { name: "Committee", href: "/committee" },
-    { name: "Partners", href: "/#partners" },
-    { name: "Past Events", href: "/past-events" },
-    { name: "Social Hub", href: "/social-hub" },
-    { name: "Contact", href: "/contact" },
-  ];
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    gaEvent({ action: "menu_toggle", category: "Navigation", label: isOpen ? "close" : "open" });
+  };
 
   return (
     <motion.div
@@ -104,7 +110,7 @@ export default function Navbar() {
 
             <div className="md:hidden flex items-center">
               <button
-                onClick={() => { setIsOpen(!isOpen); gaEvent({ action: "menu_toggle", category: "Navigation", label: isOpen ? "close" : "open" }); }}
+                onClick={toggleMenu}
                 aria-expanded={isOpen}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 className="text-ieee-gray hover:text-ieee-blue focus:outline-none bg-ieee-gray/5 p-2.5 rounded-full active:bg-ieee-gray/10 transition-colors"
@@ -115,39 +121,12 @@ export default function Navbar() {
           </motion.div>
         </div>
 
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`md:hidden absolute w-full ${
-              isScrolled
-                ? "top-[110%] left-0 md:backdrop-blur-xl md:bg-white/60 md:border md:border-white/50 max-md:bg-white max-md:border max-md:border-ieee-gray/10 max-md:shadow-xl rounded-3xl overflow-hidden"
-                : "top-full left-0 backdrop-blur-xl bg-white border-t border-ieee-gray/10 shadow-lg"
-            }`}
-          >
-            <div className="px-4 pt-4 pb-6 space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block px-4 py-3.5 rounded-2xl text-base font-medium text-ieee-black bg-ieee-gray/5 hover:text-ieee-blue hover:bg-ieee-cyan/10 transition-colors active:bg-ieee-cyan/15"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="pt-3">
-                <button
-                  aria-label="Registrations Coming Soon"
-                  className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md"
-                  disabled
-                >
-                  Registrations Coming Soon
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
+        <MobileMenu
+          isOpen={isOpen}
+          isScrolled={isScrolled}
+          navLinks={navLinks}
+          onClose={() => setIsOpen(false)}
+        />
       </motion.nav>
     </motion.div>
   );

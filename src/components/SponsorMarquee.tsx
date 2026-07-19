@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
 interface Partner {
@@ -9,51 +8,11 @@ interface Partner {
   logoUrl: string;
 }
 
-export default function SponsorMarquee() {
-  const [partners, setPartners] = useState<Partner[]>([]);
+interface SponsorMarqueeProps {
+  partners: Partner[];
+}
 
-  useEffect(() => {
-    const fallbackPartners = [
-      {
-        id: "1",
-        name: "IEEE",
-        logoUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg",
-      },
-      {
-        id: "2",
-        name: "IEEE Computer Society",
-        logoUrl: "/images/ieee_cs_bc.png",
-      },
-      { id: "3", name: "GE Healthcare", logoUrl: "/images/GE_Healthcare.png" },
-      {
-        id: "4",
-        name: "IEEE CS 80th Anniversary",
-        logoUrl: "/images/IEEE-CS-80th-icon.png",
-      },
-    ];
-
-    const fetchPartners = async () => {
-      try {
-        const res = await fetch("/api/admin/partners");
-        if (res.ok) {
-          const data = await res.json();
-          if (data.length > 0) {
-            setPartners(data);
-          } else {
-            setPartners(fallbackPartners);
-          }
-        } else {
-          setPartners(fallbackPartners);
-        }
-      } catch {
-        setPartners(fallbackPartners);
-      }
-    };
-
-    fetchPartners();
-  }, []);
-
+export default function SponsorMarquee({ partners }: SponsorMarqueeProps) {
   if (partners.length === 0) return null;
 
   return (

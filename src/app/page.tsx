@@ -1,22 +1,44 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
-import Countdown from '@/components/Countdown';
 import About from '@/components/About';
+import Countdown from '@/components/Countdown';
+import PreviewCards from '@/components/PreviewCards';
+import InnovationAlley from '@/components/InnovationAlley';
 import Partners from '@/components/Partners';
 import RegistrationCTA from '@/components/RegistrationCTA';
-import InnovationAlley from '@/components/InnovationAlley';
 import ScrollReveal from '@/components/ScrollReveal';
-import PreviewCards from '@/components/PreviewCards';
+import SponsorMarquee from '@/components/SponsorMarquee';
+import connectToDatabase from '@/lib/db';
+import Partner from '@/models/Partner';
 
-const SponsorMarquee = dynamic(() => import('@/components/SponsorMarquee'));
+const fallbackPartners = [
+  { id: "1", name: "IEEE", logoUrl: "https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" },
+  { id: "2", name: "IEEE Computer Society", logoUrl: "/images/ieee_cs_bc.png" },
+  { id: "3", name: "GE Healthcare", logoUrl: "/images/GE_Healthcare.png" },
+  { id: "4", name: "IEEE CS 80th Anniversary", logoUrl: "/images/IEEE-CS-80th-icon.png" },
+];
 
-export default function Home() {
+async function getPartners() {
+  try {
+    await connectToDatabase();
+    const partners = await Partner.find().sort({ order: 1 });
+    if (partners.length > 0) {
+      return partners.map(p => ({ id: p._id.toString(), name: p.name, logoUrl: p.logoUrl }));
+    }
+    return fallbackPartners;
+  } catch {
+    return fallbackPartners;
+  }
+}
+
+export default async function Home() {
+  const partners = await getPartners();
+
   return (
     <main className="flex flex-col min-h-screen overflow-hidden">
       <Hero />
       <ScrollReveal>
-        <SponsorMarquee />
+        <SponsorMarquee partners={partners} />
       </ScrollReveal>
       <ScrollReveal>
         <About />
@@ -24,27 +46,18 @@ export default function Home() {
       <ScrollReveal>
         <Countdown />
       </ScrollReveal>
-      
-      {/* Previews for Speakers & Agenda */}
       <ScrollReveal>
         <PreviewCards />
       </ScrollReveal>
-
-      {/* Innovation Alley */}
       <ScrollReveal>
         <InnovationAlley />
       </ScrollReveal>
-      
-      {/* Partners */}
       <ScrollReveal>
         <Partners />
       </ScrollReveal>
-      
-      {/* Registration CTA */}
       <ScrollReveal>
         <RegistrationCTA />
       </ScrollReveal>
-      
     </main>
   );
 }

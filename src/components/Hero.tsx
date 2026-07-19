@@ -13,6 +13,7 @@ export default function Hero() {
           loop
           muted
           playsInline
+          preload="none"
           className="w-full h-full object-cover opacity-80"
         >
           <source src="/models/Hero Background.mp4" type="video/mp4" />
