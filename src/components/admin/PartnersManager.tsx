@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   Loader2,
   Trash2,
@@ -38,7 +39,14 @@ export default function PartnersManager() {
   };
 
   useEffect(() => {
-    fetchPartners();
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await fetch("/api/admin/partners");
+      const data = await res.json();
+      setPartners(data);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,12 +240,8 @@ export default function PartnersManager() {
                       />
                     </label>
                     {imagePreview && (
-                      <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-white shadow-md shrink-0 bg-white">
-                        <img
-                          src={imagePreview}
-                          alt="Preview"
-                          className="w-full h-full object-contain"
-                        />
+                      <div className="relative w-16 h-16 rounded-xl overflow-hidden border-2 border-white shadow-md shrink-0 bg-white">
+                        <Image src={imagePreview} alt="Preview" fill unoptimized className="object-contain" />
                       </div>
                     )}
                     {!imagePreview && (
@@ -305,12 +309,8 @@ export default function PartnersManager() {
                 >
                   <td className="p-5">
                     {p.logoUrl ? (
-                      <div className="w-16 h-10 bg-white rounded flex items-center justify-center shadow-sm p-1">
-                        <img
-                          src={p.logoUrl}
-                          alt={p.name}
-                          className="max-w-full max-h-full object-contain"
-                        />
+                      <div className="relative w-16 h-10 bg-white rounded flex items-center justify-center shadow-sm p-1">
+                        <Image src={p.logoUrl} alt={p.name} fill unoptimized className="object-contain" />
                       </div>
                     ) : (
                       <div className="w-16 h-10 rounded bg-ieee-gray/10 flex items-center justify-center">

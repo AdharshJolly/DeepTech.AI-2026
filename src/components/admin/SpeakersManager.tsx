@@ -1,6 +1,7 @@
 // fallow-ignore-file code-duplication
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   Loader2,
   Trash2,
@@ -41,7 +42,14 @@ export default function SpeakersManager() {
   };
 
   useEffect(() => {
-    fetchSpeakers();
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await fetch("/api/admin/speakers");
+      const data = await res.json();
+      setSpeakers(data);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -245,12 +253,8 @@ export default function SpeakersManager() {
                       />
                     </label>
                     {imagePreview && (
-                      <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md shrink-0">
-                        <img
-                          src={imagePreview}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md shrink-0">
+                        <Image src={imagePreview} alt="Preview" fill unoptimized className="object-cover" />
                       </div>
                     )}
                     {!imagePreview && (
@@ -318,11 +322,9 @@ export default function SpeakersManager() {
                 >
                   <td className="p-5">
                     {s.imageUrl ? (
-                      <img
-                        src={s.imageUrl}
-                        alt={s.name}
-                        className="w-12 h-12 rounded-full object-cover shadow-sm"
-                      />
+                      <div className="relative w-12 h-12 rounded-full">
+                        <Image src={s.imageUrl} alt={s.name} fill unoptimized className="rounded-full object-cover shadow-sm" />
+                      </div>
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-ieee-gray/10 flex items-center justify-center">
                         <ImageIcon className="w-5 h-5 text-ieee-gray/40" />

@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import {
   Share2,
   Award,
   Trophy,
-  Sparkles,
   Heart,
   MessageSquare,
   Send,
@@ -48,7 +47,7 @@ export default function SocialHubPage() {
   const [handle, setHandle] = useState<string>("");
   const [postUrl, setPostUrl] = useState<string>("");
 
-  const quests = [
+  const quests = useMemo(() => [
     {
       id: "quest-1",
       title: "The Announcer",
@@ -87,59 +86,55 @@ export default function SocialHubPage() {
       actionText: "Retweet on X",
       shareUrl: "https://twitter.com/ieeecsbc",
     },
-  ];
+  ], []);
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>([]);
   const [posts, setPosts] = useState<SocialPost[]>([]);
 
-  const fetchLiveFeed = async () => {
-    try {
-      const res = await fetch("/api/social/feed");
-      if (res.ok) {
-        const data = await res.json();
-        setPosts(data);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchLeaderboard = useCallback(async () => {
-    try {
-      const res = await fetch("/api/social/leaderboard");
-      if (res.ok) {
-        const data = await res.json();
-        setLeaderboard(data);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchLiveFeed();
-    fetchLeaderboard();
+    const init = async () => {
+      try {
+        const res = await fetch("/api/social/feed");
+        if (res.ok) {
+          const data = await res.json();
+          setPosts(data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
 
-    // Check localStorage for email and completed quests
-    const savedEmail = localStorage.getItem("deeptech_social_email");
-    if (savedEmail) {
-      setEmail(savedEmail);
-      const savedClaims = localStorage.getItem(`claims_${savedEmail}`);
-      if (savedClaims) {
-        try {
-          const parsed = JSON.parse(savedClaims);
-          setClaimedQuests(parsed);
-          const total = parsed.reduce((sum: number, qId: string) => {
-            const q = quests.find((item) => item.id === qId);
-            return sum + (q ? q.points : 0);
-          }, 0);
-          setUserPoints(total);
-        } catch {
-          // ignore
+      try {
+        const res = await fetch("/api/social/leaderboard");
+        if (res.ok) {
+          const data = await res.json();
+          setLeaderboard(data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+      // Check localStorage for email and completed quests
+      const savedEmail = localStorage.getItem("deeptech_social_email");
+      if (savedEmail) {
+        setEmail(savedEmail);
+        const savedClaims = localStorage.getItem(`claims_${savedEmail}`);
+        if (savedClaims) {
+          try {
+            const parsed = JSON.parse(savedClaims);
+            setClaimedQuests(parsed);
+            const total = parsed.reduce((sum: number, qId: string) => {
+              const q = quests.find((item) => item.id === qId);
+              return sum + (q ? q.points : 0);
+            }, 0);
+            setUserPoints(total);
+          } catch {
+            // ignore
+          }
         }
       }
-    }
-  }, [fetchLeaderboard]);
+    };
+    init();
+  }, [quests]);
 
   const handleQuestClaim = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -183,7 +178,15 @@ export default function SocialHubPage() {
         );
         setPostUrl("");
 
-        fetchLeaderboard();
+        try {
+          const res = await fetch("/api/social/leaderboard");
+          if (res.ok) {
+            const data = await res.json();
+            setLeaderboard(data);
+          }
+        } catch (err) {
+          console.error(err);
+        }
       } else {
         const errData = await res.json();
         alert(errData.error || "Failed to submit claim");
@@ -354,9 +357,17 @@ export default function SocialHubPage() {
               Quests & Leaderboard
             </button>
             <button
-              onClick={() => {
+              onClick={async () => {
                 setActiveTab("wall");
-                fetchLiveFeed();
+                try {
+                  const res = await fetch("/api/social/feed");
+                  if (res.ok) {
+                    const data = await res.json();
+                    setPosts(data);
+                  }
+                } catch (err) {
+                  console.error(err);
+                }
                 gaEvent({
                   action: "tab_switch",
                   category: "Social Hub",

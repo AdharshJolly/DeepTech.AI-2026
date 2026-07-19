@@ -33,7 +33,14 @@ export default function AgendaManager() {
   };
 
   useEffect(() => {
-    fetchAgenda();
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await fetch("/api/admin/agenda");
+      const data = await res.json();
+      setAgenda(data);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   const openAddModal = () => {

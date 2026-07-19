@@ -7,8 +7,9 @@ export async function GET() {
     await connectToDatabase();
     const submissions = await SocialSubmission.find().sort({ createdAt: -1 });
     return NextResponse.json(submissions);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -32,7 +33,8 @@ export async function PUT(req: Request) {
     }
 
     return NextResponse.json({ success: true, submission: updated });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

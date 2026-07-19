@@ -46,10 +46,11 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, submission: newSubmission });
-  } catch (error: any) {
-    if (error.code === 11000) {
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error && (error as { code: number }).code === 11000) {
       return NextResponse.json({ error: "Duplicate submission detected" }, { status: 400 });
     }
-    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

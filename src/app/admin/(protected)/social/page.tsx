@@ -27,22 +27,21 @@ export default function AdminSocialPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"pending" | "approved" | "rejected">("pending");
 
-  const fetchSubmissions = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/admin/social");
-      if (res.ok) {
-        const data = await res.json();
-        setSubmissions(data);
-      }
-    } catch (err) {
-      console.error("Failed to fetch social claims:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchSubmissions = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/admin/social");
+        if (res.ok) {
+          const data = await res.json();
+          setSubmissions(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch social claims:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchSubmissions();
   }, []);
 
@@ -84,7 +83,20 @@ export default function AdminSocialPage() {
           </p>
         </div>
         <button
-          onClick={fetchSubmissions}
+          onClick={async () => {
+            setLoading(true);
+            try {
+              const res = await fetch("/api/admin/social");
+              if (res.ok) {
+                const data = await res.json();
+                setSubmissions(data);
+              }
+            } catch (err) {
+              console.error("Failed to fetch social claims:", err);
+            } finally {
+              setLoading(false);
+            }
+          }}
           disabled={loading}
           className="flex items-center gap-2 bg-white border border-ieee-gray/10 hover:border-ieee-blue/20 text-ieee-gray hover:text-ieee-blue px-4 py-2.5 rounded-2xl text-sm font-semibold transition-all shadow-xs active:scale-95 disabled:opacity-50"
         >

@@ -66,7 +66,7 @@ export default function Contact() {
         });
         gaEvent({ action: "contact_submit", category: "Form", label: "error" });
       }
-    } catch (err) {
+    } catch {
       setStatus({
         type: "error",
         text: "A connection error occurred. Please check your network and try again.",

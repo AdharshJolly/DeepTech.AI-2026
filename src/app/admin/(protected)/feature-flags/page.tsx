@@ -16,23 +16,22 @@ export default function FeatureFlagsPage() {
   const [togglingId, setTogglingId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  const fetchFlags = async () => {
-    try {
-      const res = await fetch("/api/admin/feature-flags");
-      const data = await res.json();
-      if (res.ok) {
-        setFlags(data);
-      } else {
-        setMessage({ type: "error", text: data.error || "Failed to load feature flags" });
-      }
-    } catch (err) {
-      setMessage({ type: "error", text: "Connection error loading flags" });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchFlags = async () => {
+      try {
+        const res = await fetch("/api/admin/feature-flags");
+        const data = await res.json();
+        if (res.ok) {
+          setFlags(data);
+        } else {
+          setMessage({ type: "error", text: data.error || "Failed to load feature flags" });
+        }
+      } catch {
+        setMessage({ type: "error", text: "Connection error loading flags" });
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchFlags();
   }, []);
 
@@ -55,7 +54,7 @@ export default function FeatureFlagsPage() {
       } else {
         setMessage({ type: "error", text: updated.error || "Failed to update feature flag" });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: "error", text: "Connection error updating flag" });
     } finally {
       setTogglingId(null);

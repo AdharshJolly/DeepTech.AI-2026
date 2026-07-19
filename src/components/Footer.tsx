@@ -16,24 +16,15 @@ export default function Footer() {
               is transforming robotics, hardware, and industrial automation.
             </p>
             <div className="pt-4 flex flex-wrap gap-6 md:gap-8 items-center">
-              <img
-                src="/images/ieee_cs_bc.png"
-                alt="IEEE CS BC Logo"
-                loading="lazy"
-                className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
-              />
-              <img
-                src="/images/IEEE-CS-80th-icon.png"
-                alt="IEEE CS 80th Anniversary Logo"
-                loading="lazy"
-                className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
-              />
-              <img
-                src="/images/GE_Healthcare.png"
-                alt="GE Healthcare Logo"
-                loading="lazy"
-                className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
-              />
+              <div className="relative h-10 w-16">
+                <Image src="/images/ieee_cs_bc.png" alt="IEEE CS BC Logo" fill className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300" sizes="64px" loading="lazy" />
+              </div>
+              <div className="relative h-10 w-10">
+                <Image src="/images/IEEE-CS-80th-icon.png" alt="IEEE CS 80th Anniversary Logo" fill className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300" sizes="40px" loading="lazy" />
+              </div>
+              <div className="relative h-10 w-20">
+                <Image src="/images/GE_Healthcare.png" alt="GE Healthcare Logo" fill className="object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300" sizes="80px" loading="lazy" />
+              </div>
             </div>
           </div>
 

@@ -18,8 +18,9 @@ export async function GET() {
 
     const flags = await FeatureFlag.find();
     return NextResponse.json(flags);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -39,7 +40,8 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json(updatedFlag);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
