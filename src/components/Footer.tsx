@@ -16,22 +16,22 @@ export default function Footer() {
               is transforming robotics, hardware, and industrial automation.
             </p>
             <div className="pt-4 flex flex-wrap gap-6 md:gap-8 items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/ieee_cs_bc.png"
                 alt="IEEE CS BC Logo"
+                loading="lazy"
                 className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
               />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/IEEE-CS-80th-icon.png"
                 alt="IEEE CS 80th Anniversary Logo"
+                loading="lazy"
                 className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
               />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/GE_Healthcare.png"
                 alt="GE Healthcare Logo"
+                loading="lazy"
                 className="h-10 w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
               />
             </div>

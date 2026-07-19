@@ -41,7 +41,6 @@ export default function CommitteeManager() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchMembers();
   }, []);
 
@@ -190,7 +189,9 @@ export default function CommitteeManager() {
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Full Name *</label>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">
+                        Full Name *
+                      </label>
                       <input
                         name="name"
                         placeholder="e.g. Dr. Jane Doe"
@@ -200,7 +201,9 @@ export default function CommitteeManager() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Role (Optional)</label>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">
+                        Role (Optional)
+                      </label>
                       <input
                         name="role"
                         placeholder="e.g. General Chair"
@@ -209,7 +212,9 @@ export default function CommitteeManager() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Affiliation (Optional)</label>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">
+                        Affiliation (Optional)
+                      </label>
                       <input
                         name="affiliation"
                         placeholder="e.g. Stanford University"
@@ -218,7 +223,9 @@ export default function CommitteeManager() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">LinkedIn Profile URL (Optional)</label>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">
+                        LinkedIn Profile URL (Optional)
+                      </label>
                       <input
                         name="linkedinUrl"
                         placeholder="e.g. https://linkedin.com/in/username"
@@ -228,7 +235,9 @@ export default function CommitteeManager() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">Display Order</label>
+                      <label className="block text-sm font-semibold text-ieee-black mb-1.5">
+                        Display Order
+                      </label>
                       <input
                         name="order"
                         type="number"
@@ -251,7 +260,6 @@ export default function CommitteeManager() {
                     </label>
                     {imagePreview && (
                       <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md shrink-0">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={imagePreview}
                           alt="Preview"
@@ -324,7 +332,6 @@ export default function CommitteeManager() {
                 >
                   <td className="p-5">
                     {m.imageUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={m.imageUrl}
                         alt={m.name}
@@ -340,7 +347,8 @@ export default function CommitteeManager() {
                     {m.name}
                   </td>
                   <td className="p-5 text-sm text-ieee-gray font-medium">
-                    {m.role || "Member"} {m.affiliation ? `• ${m.affiliation}` : ""}
+                    {m.role || "Member"}{" "}
+                    {m.affiliation ? `• ${m.affiliation}` : ""}
                     {m.linkedinUrl && (
                       <span className="block text-xs text-ieee-blue mt-0.5 truncate max-w-xs">
                         LinkedIn: {m.linkedinUrl}

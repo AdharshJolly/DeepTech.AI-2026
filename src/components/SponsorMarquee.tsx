@@ -22,13 +22,15 @@ export default function SponsorMarquee({ partners }: SponsorMarqueeProps) {
           (partner, i) => (
             <div
               key={`${partner.id}-${i}`}
-              className="flex items-center justify-center h-10 md:h-14 opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 shrink-0"
+              className="relative h-10 md:h-14 w-20 md:w-28 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 shrink-0"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={partner.logoUrl}
                 alt={partner.name}
-                className="h-full w-auto object-contain"
+                fill
+                className="object-contain"
+                sizes="112px"
+                loading="lazy"
               />
             </div>
           ),

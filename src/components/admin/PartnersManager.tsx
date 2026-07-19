@@ -38,7 +38,6 @@ export default function PartnersManager() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchPartners();
   }, []);
 
@@ -106,9 +105,9 @@ export default function PartnersManager() {
     }
 
     if (!logoUrl) {
-        alert("Please upload a logo");
-        setUploading(false);
-        return;
+      alert("Please upload a logo");
+      setUploading(false);
+      return;
     }
 
     const payload = {
@@ -206,10 +205,12 @@ export default function PartnersManager() {
                       required
                       className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
                     >
-                        <option value="" disabled selected>Select Tier</option>
-                        <option value="Platinum">Platinum</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Silver">Silver</option>
+                      <option value="" disabled selected>
+                        Select Tier
+                      </option>
+                      <option value="Platinum">Platinum</option>
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
                     </select>
                     <input
                       name="order"
@@ -232,7 +233,6 @@ export default function PartnersManager() {
                     </label>
                     {imagePreview && (
                       <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-white shadow-md shrink-0 bg-white">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={imagePreview}
                           alt="Preview"
@@ -306,7 +306,6 @@ export default function PartnersManager() {
                   <td className="p-5">
                     {p.logoUrl ? (
                       <div className="w-16 h-10 bg-white rounded flex items-center justify-center shadow-sm p-1">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={p.logoUrl}
                           alt={p.name}

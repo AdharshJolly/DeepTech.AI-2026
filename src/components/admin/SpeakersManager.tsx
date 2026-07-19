@@ -41,7 +41,6 @@ export default function SpeakersManager() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchSpeakers();
   }, []);
 
@@ -80,7 +79,7 @@ export default function SpeakersManager() {
         (form.elements.namedItem("order") as HTMLInputElement).value = (
           speaker.order || 0
         ).toString();
-        (form.elements.namedItem("isFeatured") as HTMLInputElement).checked = 
+        (form.elements.namedItem("isFeatured") as HTMLInputElement).checked =
           !!speaker.isFeatured;
       }
     }, 100);
@@ -223,7 +222,9 @@ export default function SpeakersManager() {
                       type="checkbox"
                       className="w-5 h-5 rounded border-gray-300 text-ieee-blue focus:ring-ieee-blue"
                     />
-                    <span className="font-semibold text-ieee-black text-sm">Featured Speaker (Large Grid Card)</span>
+                    <span className="font-semibold text-ieee-black text-sm">
+                      Featured Speaker (Large Grid Card)
+                    </span>
                   </label>
                   <textarea
                     name="bio"
@@ -245,7 +246,6 @@ export default function SpeakersManager() {
                     </label>
                     {imagePreview && (
                       <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md shrink-0">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={imagePreview}
                           alt="Preview"
@@ -318,7 +318,6 @@ export default function SpeakersManager() {
                 >
                   <td className="p-5">
                     {s.imageUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={s.imageUrl}
                         alt={s.name}

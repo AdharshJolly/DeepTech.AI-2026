@@ -16,10 +16,6 @@ export default function FeatureFlagsPage() {
   const [togglingId, setTogglingId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  useEffect(() => {
-    fetchFlags();
-  }, []);
-
   const fetchFlags = async () => {
     try {
       const res = await fetch("/api/admin/feature-flags");
@@ -35,6 +31,10 @@ export default function FeatureFlagsPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchFlags();
+  }, []);
 
   const handleToggle = async (flag: FeatureFlag) => {
     setTogglingId(flag._id);
