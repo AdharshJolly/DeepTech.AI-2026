@@ -8,6 +8,7 @@ import {
   Calendar,
   MapPin,
   Loader2,
+  X,
 } from "lucide-react";
 import { event as gaEvent } from "@/lib/analytics";
 
@@ -16,6 +17,7 @@ interface FormErrors {
   email?: string;
   organization?: string;
   jobTitle?: string;
+  whyAttend?: string;
 }
 
 export default function RegistrationForm() {
@@ -24,12 +26,11 @@ export default function RegistrationForm() {
   const [phone, setPhone] = useState("");
   const [organization, setOrganization] = useState("");
   const [jobTitle, setJobTitle] = useState("");
+  const [whyAttend, setWhyAttend] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState<{
-    type: "success" | "error";
-    message: string;
-  } | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -45,6 +46,9 @@ export default function RegistrationForm() {
     if (!jobTitle || jobTitle.trim().length < 2) {
       newErrors.jobTitle = "Please enter your job title";
     }
+    if (!whyAttend || whyAttend.trim().length < 10) {
+      newErrors.whyAttend = "Please tell us why you want to attend (min 10 characters)";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -54,7 +58,7 @@ export default function RegistrationForm() {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setStatus(null);
+    setServerError(null);
 
     try {
       const res = await fetch("/api/register", {
@@ -66,6 +70,7 @@ export default function RegistrationForm() {
           phone,
           organization,
           jobTitle,
+          whyAttend,
         }),
       });
 
@@ -77,27 +82,19 @@ export default function RegistrationForm() {
           category: "Registration",
           label: email,
         });
-        setStatus({
-          type: "success",
-          message: "Registration confirmed! We'll see you at DeepTech.AI 2026.",
-        });
+        setShowSuccess(true);
         setFullName("");
         setEmail("");
         setPhone("");
         setOrganization("");
         setJobTitle("");
+        setWhyAttend("");
         setErrors({});
       } else {
-        setStatus({
-          type: "error",
-          message: data.error || "Failed to register. Please try again.",
-        });
+        setServerError(data.error || "Failed to register. Please try again.");
       }
     } catch {
-      setStatus({
-        type: "error",
-        message: "Network error. Please check your connection and try again.",
-      });
+      setServerError("Network error. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -134,20 +131,10 @@ export default function RegistrationForm() {
 
       {/* Form */}
       <div className="bg-white rounded-3xl p-8 md:p-10 border border-ieee-gray/10 shadow-sm">
-        {status && (
-          <div
-            className={`p-4 rounded-2xl mb-6 flex items-center gap-3 text-sm font-semibold ${
-              status.type === "success"
-                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                : "bg-red-50 text-red-700 border border-red-200"
-            }`}
-          >
-            {status.type === "success" ? (
-              <CheckCircle className="w-5 h-5 shrink-0" />
-            ) : (
-              <AlertCircle className="w-5 h-5 shrink-0" />
-            )}
-            {status.message}
+        {serverError && (
+          <div className="p-4 rounded-2xl mb-6 flex items-center gap-3 text-sm font-semibold bg-red-50 text-red-700 border border-red-200">
+            <AlertCircle className="w-5 h-5 shrink-0" />
+            {serverError}
           </div>
         )}
 
@@ -261,6 +248,29 @@ export default function RegistrationForm() {
             </div>
           </div>
 
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
+              Why do you want to attend DeepTech.AI 2026? *
+            </label>
+            <textarea
+              placeholder="Tell us about your goals — networking, learning about Physical AI, exploring partnerships, career opportunities, etc."
+              value={whyAttend}
+              onChange={(e) => {
+                setWhyAttend(e.target.value);
+                setErrors((prev) => ({ ...prev, whyAttend: undefined }));
+              }}
+              rows={4}
+              className={`w-full bg-ieee-gray/5 border rounded-2xl px-4 py-3.5 text-sm text-ieee-black focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all resize-none ${
+                errors.whyAttend ? "border-red-400" : "border-ieee-gray/10"
+              }`}
+            />
+            {errors.whyAttend && (
+              <p className="text-xs text-red-500 font-medium">
+                {errors.whyAttend}
+              </p>
+            )}
+          </div>
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -285,6 +295,57 @@ export default function RegistrationForm() {
           IEEE Computer Society Bangalore Chapter.
         </p>
       </div>
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowSuccess(false)}
+          />
+          <div className="relative bg-white rounded-3xl p-8 md:p-10 max-w-lg w-full shadow-2xl text-center">
+            <button
+              onClick={() => setShowSuccess(false)}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-ieee-gray/10 transition-colors"
+            >
+              <X className="w-5 h-5 text-ieee-gray" />
+            </button>
+
+            <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-8 h-8 text-emerald-600" />
+            </div>
+
+            <h3 className="text-2xl font-bold font-heading text-ieee-black mb-3">
+              Response Recorded!
+            </h3>
+
+            <p className="text-ieee-gray text-sm leading-relaxed mb-4">
+              Thank you for registering for DeepTech.AI 2026.
+            </p>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 text-sm text-amber-800">
+              <p>
+                Please note that submitting this form does{" "}
+                <strong>not</strong> mean confirmed access to the event.
+                Selected participants will be informed via email regarding
+                further information.
+              </p>
+            </div>
+
+            <p className="text-xs text-ieee-gray mb-6">
+              We look forward to seeing you at GE Healthcare, Bengaluru on{" "}
+              <strong className="text-ieee-black">October 30, 2026</strong>.
+            </p>
+
+            <button
+              onClick={() => setShowSuccess(false)}
+              className="w-full py-3 rounded-xl text-sm font-bold text-white bg-ieee-blue hover:bg-ieee-blue/90 transition-colors"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

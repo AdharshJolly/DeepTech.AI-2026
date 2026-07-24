@@ -28,10 +28,15 @@ const RegistrationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    whyAttend: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     status: {
       type: String,
-      enum: ["confirmed", "cancelled"],
-      default: "confirmed",
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
     },
   },
   { timestamps: true }
