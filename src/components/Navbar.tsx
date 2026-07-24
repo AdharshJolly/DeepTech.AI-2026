@@ -121,18 +121,22 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <motion.button
-                aria-label="Registrations Coming Soon"
-                className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80"
-                initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
-                animate={{
-                  padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
-                  fontSize: isScrolled ? "0.8rem" : "0.875rem",
-                }}
-                disabled
+              <Link
+                href="/register"
+                className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide inline-flex items-center"
+                aria-label="Register for DeepTech.AI 2026"
               >
-                Registrations Coming Soon
-              </motion.button>
+                <motion.span
+                  className="inline-block"
+                  initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
+                  animate={{
+                    padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
+                    fontSize: isScrolled ? "0.8rem" : "0.875rem",
+                  }}
+                >
+                  Register
+                </motion.span>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}

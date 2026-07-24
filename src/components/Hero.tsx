@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -96,20 +97,20 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
         >
-          <button
-            disabled
-            aria-label="Registrations Coming Soon"
-            className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 bg-ieee-black rounded-full shadow-2xl hover:shadow-[0_0_40px_rgba(0,181,226,0.4)] disabled:opacity-80 disabled:cursor-not-allowed uppercase tracking-[0.2em] text-xs overflow-hidden"
+          <Link
+            href="/register"
+            className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 bg-ieee-black rounded-full shadow-2xl hover:shadow-[0_0_40px_rgba(0,181,226,0.4)] uppercase tracking-[0.2em] text-xs overflow-hidden"
+            aria-label="Register for DeepTech.AI 2026"
           >
             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-ieee-blue/50 to-ieee-cyan/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
             <span className="relative flex items-center">
-              Registrations Coming Soon
+              Register Now
               <ArrowRight
-                className="w-4 h-4 ml-3 opacity-50"
+                className="w-4 h-4 ml-3 opacity-70 group-hover:translate-x-1 transition-transform"
                 aria-hidden="true"
               />
             </span>
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

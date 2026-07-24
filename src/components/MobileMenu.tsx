@@ -87,13 +87,14 @@ export default function MobileMenu({ isOpen, isScrolled, navLinks, onClose }: Mo
               custom={navLinks.length}
               className="pt-3"
             >
-              <button
-                aria-label="Registrations Coming Soon"
-                className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md"
-                disabled
+              <Link
+                href="/register"
+                className="block w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-md text-center hover:bg-ieee-orange/90 transition-colors"
+                onClick={onClose}
+                aria-label="Register for DeepTech.AI 2026"
               >
-                Registrations Coming Soon
-              </button>
+                Register
+              </Link>
             </motion.div>
           </div>
         </motion.div>
