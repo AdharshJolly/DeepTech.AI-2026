@@ -86,6 +86,10 @@ export default function FeatureFlagsPage() {
       title: "Past Events Page",
       desc: "Controls access to the /past-events page. When disabled, visitors see a 'Coming Soon' message about past event highlights.",
     },
+    "email-notifications": {
+      title: "Email Notifications",
+      desc: "Controls all outgoing emails (registration confirmations, approvals, rejections). When disabled, no emails are sent regardless of other flags.",
+    },
   };
 
   return (

@@ -7,6 +7,7 @@ const PUBLIC_FLAGS = [
   "social-hub",
   "committee",
   "past-events",
+  "email-notifications",
 ];
 
 export async function GET() {

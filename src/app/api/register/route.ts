@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import Registration from "@/models/Registration";
 import { sendRegistrationConfirmation } from "@/lib/email";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 
 export async function POST(req: Request) {
   try {
@@ -39,13 +40,16 @@ export async function POST(req: Request) {
       whyAttend: whyAttend.trim(),
     });
 
-    // Send confirmation email (fire-and-forget)
-    sendRegistrationConfirmation({
-      fullName: registration.fullName,
-      email: registration.email,
-      organization: registration.organization,
-      jobTitle: registration.jobTitle,
-    }).catch(() => {});
+    // Send confirmation email only if email notifications are enabled
+    const emailsEnabled = await isFeatureEnabled("email-notifications");
+    if (emailsEnabled) {
+      sendRegistrationConfirmation({
+        fullName: registration.fullName,
+        email: registration.email,
+        organization: registration.organization,
+        jobTitle: registration.jobTitle,
+      }).catch(() => {});
+    }
 
     return NextResponse.json({ success: true, registration });
   } catch (error: unknown) {

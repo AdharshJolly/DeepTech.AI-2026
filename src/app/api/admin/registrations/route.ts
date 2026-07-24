@@ -6,6 +6,7 @@ import {
   sendRegistrationApproved,
   sendRegistrationRejected,
 } from "@/lib/email";
+import { isFeatureEnabled } from "@/lib/featureFlags";
 
 export async function GET() {
   const { error } = await requirePermission("registrations", "read");
@@ -50,16 +51,19 @@ export async function PUT(req: Request) {
       );
     }
 
-    // Send email notification (fire-and-forget)
-    const emailData = {
-      fullName: updated.fullName,
-      email: updated.email,
-    };
+    // Send email notification only if enabled
+    const emailsEnabled = await isFeatureEnabled("email-notifications");
+    if (emailsEnabled) {
+      const emailData = {
+        fullName: updated.fullName,
+        email: updated.email,
+      };
 
-    if (status === "approved") {
-      sendRegistrationApproved(emailData).catch(() => {});
-    } else if (status === "rejected") {
-      sendRegistrationRejected(emailData).catch(() => {});
+      if (status === "approved") {
+        sendRegistrationApproved(emailData).catch(() => {});
+      } else if (status === "rejected") {
+        sendRegistrationRejected(emailData).catch(() => {});
+      }
     }
 
     return NextResponse.json({ success: true, registration: updated });
