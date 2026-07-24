@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import SocialSubmission from "@/models/SocialSubmission";
+import { QUEST_PLATFORMS } from "@/config/quests";
 
 export async function GET() {
   try {
@@ -10,31 +11,21 @@ export async function GET() {
       .sort({ updatedAt: -1 })
       .limit(30);
 
-    const QUEST_THEMES: Record<string, string> = {
-      "quest-1": "Announced registration and shared the official symposium flyer! 🚀",
-      "quest-2": "Tagged colleagues and invited them to attend the DeepTech summit! 🎯",
-      "quest-3": "Shared registration confirmation excitement! #DeepTechAI2026 💻",
-      "quest-4": "Amplified speaker keynotes and session announcements! 🔥"
-    };
-
-    const formattedPosts = submissions.map((sub) => {
-      let platform: "linkedin" | "instagram" | "twitter" | "facebook" = "linkedin";
-      if (sub.questId === "quest-2") platform = "instagram";
-      if (sub.questId === "quest-3" || sub.questId === "quest-4") platform = "twitter";
-
-      return {
-        id: sub._id.toString(),
-        user: sub.socialHandle.replace("@", ""),
-        handle: sub.socialHandle.startsWith("@") ? sub.socialHandle : `@${sub.socialHandle}`,
-        platform,
-        content: QUEST_THEMES[sub.questId] || "Shared event update on social timeline!",
-        time: "Verified",
-        likes: sub.points,
-        shares: 2,
-        avatar: sub.socialHandle.replace(/[^a-zA-Z]/g, "").substring(0, 2).toUpperCase() || "DT",
-        postUrl: sub.postUrl
-      };
-    });
+    const formattedPosts = submissions.map((sub) => ({
+      id: sub._id.toString(),
+      user: sub.socialHandle.replace("@", ""),
+      handle: sub.socialHandle.startsWith("@")
+        ? sub.socialHandle
+        : `@${sub.socialHandle}`,
+      platform: QUEST_PLATFORMS[sub.questId] || "linkedin",
+      content: "Shared on social media",
+      time: "Verified",
+      likes: sub.points,
+      avatar:
+        sub.socialHandle.replace(/[^a-zA-Z]/g, "").substring(0, 2).toUpperCase() ||
+        "DT",
+      postUrl: sub.postUrl,
+    }));
 
     return NextResponse.json(formattedPosts);
   } catch (error: unknown) {

@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import SocialSubmission from "@/models/SocialSubmission";
-
-const QUEST_POINTS: Record<string, number> = {
-  "quest-1": 50,
-  "quest-2": 70,
-  "quest-3": 100,
-  "quest-4": 40
-};
+import { QUEST_POINTS } from "@/config/quests";
 
 export async function POST(req: Request) {
   try {
