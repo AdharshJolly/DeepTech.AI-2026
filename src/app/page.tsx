@@ -8,10 +8,11 @@ import Partners from '@/components/Partners';
 import RegistrationCTA from '@/components/RegistrationCTA';
 import ScrollReveal from '@/components/ScrollReveal';
 import SponsorMarquee from '@/components/SponsorMarquee';
+import EventBanner from '@/components/EventBanner';
 import connectToDatabase from '@/lib/db';
 import Partner from '@/models/Partner';
 
-const fallbackPartners = [
+const permanentPartners = [
   { id: "1", name: "IEEE", logoUrl: "https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" },
   { id: "2", name: "IEEE Computer Society", logoUrl: "/images/ieee_cs_bc.png" },
   { id: "3", name: "GE Healthcare", logoUrl: "/images/GE_Healthcare.png" },
@@ -21,13 +22,11 @@ const fallbackPartners = [
 async function getPartners() {
   try {
     await connectToDatabase();
-    const partners = await Partner.find().sort({ order: 1 });
-    if (partners.length > 0) {
-      return partners.map(p => ({ id: p._id.toString(), name: p.name, logoUrl: p.logoUrl }));
-    }
-    return fallbackPartners;
+    const dbPartners = await Partner.find().sort({ order: 1 }).lean();
+    const mapped = dbPartners.map(p => ({ id: p._id.toString(), name: p.name, logoUrl: p.logoUrl }));
+    return [...permanentPartners, ...mapped];
   } catch {
-    return fallbackPartners;
+    return permanentPartners;
   }
 }
 
@@ -43,6 +42,7 @@ export default async function Home() {
       <ScrollReveal>
         <About />
       </ScrollReveal>
+      <EventBanner />
       <ScrollReveal>
         <Countdown />
       </ScrollReveal>

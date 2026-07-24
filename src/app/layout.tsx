@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     siteName: "DeepTech.AI 2026",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "DeepTech.AI 2026 Banner",
+        url: "/images/Banners/1254x1254.jpeg",
+        width: 1254,
+        height: 1254,
+        alt: "DeepTech.AI 2026 - Where Digital Intelligence Meets the Physical World",
       },
     ],
     locale: "en_US",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DeepTech.AI 2026 - The premier IEEE CS event for Physical AI and Robotics",
     description: "DeepTech.AI 2026 is the flagship IEEE Computer Society event focused on Physical AI, bridging digital intelligence and physical systems.",
-    images: ["/og-image.jpg"],
+    images: ["/images/Banners/1600x639.jpeg"],
   },
   robots: {
     index: true,
