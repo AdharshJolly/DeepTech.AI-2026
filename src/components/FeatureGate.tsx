@@ -22,13 +22,10 @@ export default function FeatureGate({
   useEffect(() => {
     const checkFlag = async () => {
       try {
-        const res = await fetch("/api/admin/feature-flags");
+        const res = await fetch("/api/feature-flags/public");
         if (res.ok) {
-          const flags = await res.json();
-          const flag = flags.find(
-            (f: { key: string; enabled: boolean }) => f.key === flagKey
-          );
-          setEnabled(flag?.enabled ?? false);
+          const data = await res.json();
+          setEnabled(data[flagKey] ?? false);
         } else {
           setEnabled(false);
         }

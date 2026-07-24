@@ -18,7 +18,7 @@ export default function EventBanner() {
           src="/images/Banners/1254x1254.jpeg"
           alt="DeepTech.AI 2026 - Where Digital Intelligence Meets the Physical World"
           fill
-          sizes="100vw"
+          sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 768px) calc(100vw - 48px), (max-width: 1024px) calc(100vw - 64px), 1280px"
           className="object-cover"
           priority
         />
@@ -29,7 +29,7 @@ export default function EventBanner() {
           src="/images/Banners/1600x639.jpeg"
           alt="DeepTech.AI 2026 - Where Digital Intelligence Meets the Physical World"
           fill
-          sizes="(max-width: 768px) 0px, 100vw"
+          sizes="(max-width: 768px) 0px, (max-width: 1024px) calc(100vw - 64px), 1280px"
           className="object-cover"
           priority
         />

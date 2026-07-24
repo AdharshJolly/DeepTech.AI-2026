@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import FeatureFlag from "@/models/FeatureFlag";
 
-const PUBLIC_FLAGS = ["registration"];
+const PUBLIC_FLAGS = [
+  "registration",
+  "social-hub",
+  "committee",
+  "past-events",
+];
 
 export async function GET() {
   try {
@@ -16,6 +21,11 @@ export async function GET() {
 
     return NextResponse.json(result);
   } catch {
-    return NextResponse.json({ registration: false });
+    return NextResponse.json({
+      registration: false,
+      "social-hub": false,
+      committee: false,
+      "past-events": false,
+    });
   }
 }
