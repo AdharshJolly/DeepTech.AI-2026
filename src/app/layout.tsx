@@ -68,6 +68,7 @@ export const metadata: Metadata = {
 };
 
 import AppWrapper from "@/components/AppWrapper";
+import Providers from "@/components/Providers";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export default function RootLayout({
@@ -117,7 +118,9 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-transparent text-ieee-black relative" suppressHydrationWarning>
-        <AppWrapper>{children}</AppWrapper>
+        <Providers>
+          <AppWrapper>{children}</AppWrapper>
+        </Providers>
       </body>
     </html>
   );

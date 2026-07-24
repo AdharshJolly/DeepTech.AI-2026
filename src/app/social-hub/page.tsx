@@ -11,6 +11,7 @@ import QuestCard from "@/components/social-hub/QuestCard";
 import ClaimForm from "@/components/social-hub/ClaimForm";
 import Leaderboard from "@/components/social-hub/Leaderboard";
 import SocialPostCard from "@/components/social-hub/SocialPostCard";
+import FeatureGate from "@/components/FeatureGate";
 
 interface LeaderboardUser {
   rank: number;
@@ -117,7 +118,12 @@ export default function SocialHubPage() {
   };
 
   return (
-    <main className="min-h-screen bg-ieee-white flex flex-col pt-24 relative overflow-hidden">
+    <FeatureGate
+      flagKey="social-hub"
+      title="Social Hub"
+      message="Get ready for exciting social challenges, quests, and prizes! Stay tuned for more fun updates."
+    >
+      <main className="min-h-screen bg-ieee-white flex flex-col pt-24 relative overflow-hidden">
       {/* Grid Accents */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div className="absolute top-1/4 left-5 w-96 h-96 bg-ieee-blue/5 rounded-full blur-[120px]" />
@@ -302,5 +308,6 @@ export default function SocialHubPage() {
         )}
       </section>
     </main>
+    </FeatureGate>
   );
 }

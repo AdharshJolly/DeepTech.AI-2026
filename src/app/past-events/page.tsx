@@ -17,6 +17,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { event as gaEvent } from "@/lib/analytics";
+import FeatureGate from "@/components/FeatureGate";
 
 
 /* ────────────────────────────────────────
@@ -461,6 +462,11 @@ export default function PastEventsPage() {
   }, []);
 
   return (
+    <FeatureGate
+      flagKey="past-events"
+      title="Past Events"
+      message="Past event highlights and memories are being curated. Check back for amazing stories from our previous editions!"
+    >
     <main className="min-h-screen bg-ieee-white relative">
       {/* ═══════════════════════════════════════
           HERO
@@ -708,6 +714,7 @@ export default function PastEventsPage() {
       </AnimatePresence>
 
     </main>
+    </FeatureGate>
   );
 }
 

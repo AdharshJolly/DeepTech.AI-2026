@@ -1,6 +1,19 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Ticket, Calendar, Zap } from "lucide-react";
+import Link from "next/link";
 
 export default function RegistrationCTA() {
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/feature-flags/public")
+      .then((res) => res.json())
+      .then((data) => setRegistrationOpen(data.registration ?? false))
+      .catch(() => {});
+  }, []);
+
   return (
     <section className="py-20 md:py-32 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,13 +51,23 @@ export default function RegistrationCTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-              <button
-                disabled
-                aria-label="Registrations Coming Soon"
-                className="group/btn relative inline-flex items-center justify-center px-10 py-5 font-bold text-ieee-black transition-all duration-300 bg-white rounded-full shadow-[0_0_40px_rgba(0,181,226,0.2)] uppercase tracking-widest text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Registrations Coming Soon
-              </button>
+              {registrationOpen ? (
+                <Link
+                  href="/register"
+                  className="group/btn relative inline-flex items-center justify-center px-10 py-5 font-bold text-ieee-black transition-all duration-300 bg-white rounded-full shadow-[0_0_40px_rgba(0,181,226,0.2)] uppercase tracking-widest text-sm hover:shadow-[0_0_60px_rgba(0,181,226,0.4)] hover:scale-105"
+                  aria-label="Register for DeepTech.AI 2026"
+                >
+                  Register Now
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  aria-label="Registrations Coming Soon"
+                  className="group/btn relative inline-flex items-center justify-center px-10 py-5 font-bold text-ieee-black transition-all duration-300 bg-white rounded-full shadow-[0_0_40px_rgba(0,181,226,0.2)] uppercase tracking-widest text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Registrations Coming Soon
+                </button>
+              )}
             </div>
 
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm font-bold tracking-widest text-ieee-gray/60 uppercase">

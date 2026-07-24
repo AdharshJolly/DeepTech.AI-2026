@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import connectToDatabase from "@/lib/db";
 import Committee from "@/models/Committee";
 import CommitteeTabs from "@/components/CommitteeTabs";
+import { isFeatureEnabled } from "@/lib/featureFlags";
+import ComingSoon from "@/components/ComingSoon";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +17,17 @@ export const metadata: Metadata = {
 };
 
 export default async function CommitteePage() {
+  const isEnabled = await isFeatureEnabled("committee");
+
+  if (!isEnabled) {
+    return (
+      <ComingSoon
+        title="Committee"
+        message="Our committee page is being prepared. Meet the dedicated individuals driving the vision of DeepTech.AI 2026 — coming soon!"
+      />
+    );
+  }
+
   await connectToDatabase();
 
   // Fetch all committee members

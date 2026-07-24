@@ -1,5 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import connectToDatabase from "@/lib/db";
+import AdminUser from "@/models/AdminUser";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -10,17 +13,52 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (
-          credentials &&
-          credentials.email === process.env.ADMIN_EMAIL &&
-          credentials.password === process.env.ADMIN_PASSWORD
-        ) {
-          return { id: "1", name: "DeepTech Admin", email: credentials.email };
-        }
-        return null; // login failed
+        if (!credentials?.email || !credentials?.password) return null;
+
+        await connectToDatabase();
+        const user = await AdminUser.findOne({
+          email: credentials.email.toLowerCase(),
+        });
+
+        if (!user) return null;
+
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (!isValid) return null;
+
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          permissions: user.permissions,
+          mustChangePassword: user.mustChangePassword,
+        };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role || "admin";
+        token.permissions = user.permissions || [];
+        token.mustChangePassword = user.mustChangePassword ?? true;
+        token.userId = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.role = token.role as string;
+        session.user.permissions = token.permissions as { section: string; actions: string[] }[];
+        session.user.mustChangePassword = token.mustChangePassword as boolean;
+        session.user.userId = token.userId as string;
+      }
+      return session;
+    },
+  },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 Days

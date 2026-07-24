@@ -64,12 +64,32 @@ export default function FeatureFlagsPage() {
   const flagMetadata: Record<string, { title: string; desc: string }> = {
     speakers: {
       title: "Speakers Page",
-      desc: "Controls access to the /speakers page. When disabled, visitors see a 'yet to be published' popup and cannot view the speakers list."
+      desc: "Controls access to the /speakers page. When disabled, visitors see a 'Coming Soon' message about the speaker lineup.",
     },
     agenda: {
       title: "Agenda Page",
-      desc: "Controls access to the /agenda page. When disabled, visitors see a 'yet to be published' popup and cannot view the agenda/schedule."
-    }
+      desc: "Controls access to the /agenda page. When disabled, visitors see a 'Coming Soon' message about the agenda.",
+    },
+    registration: {
+      title: "Registration",
+      desc: "Controls the registration buttons across the site. When disabled, all buttons show 'Registrations Coming Soon'. When enabled, buttons link to the /register page.",
+    },
+    "social-hub": {
+      title: "Social Hub",
+      desc: "Controls access to the /social-hub page. When disabled, visitors see a 'Coming Soon' message about social challenges.",
+    },
+    committee: {
+      title: "Committee Page",
+      desc: "Controls access to the /committee page. When disabled, visitors see a 'Coming Soon' message.",
+    },
+    partners: {
+      title: "Partners Section",
+      desc: "Controls the partners section on the homepage. When disabled, the section shows a 'Coming Soon' message.",
+    },
+    "past-events": {
+      title: "Past Events Page",
+      desc: "Controls access to the /past-events page. When disabled, visitors see a 'Coming Soon' message about past event highlights.",
+    },
   };
 
   return (

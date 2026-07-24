@@ -21,11 +21,19 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [registrationOpen, setRegistrationOpen] = React.useState(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
 
   const isHomepage = pathname === "/";
   const activeScrolled = isScrolled || !isHomepage;
+
+  React.useEffect(() => {
+    fetch("/api/feature-flags/public")
+      .then((res) => res.json())
+      .then((data) => setRegistrationOpen(data.registration ?? false))
+      .catch(() => {});
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 20 && !isScrolled) setIsScrolled(true);
@@ -121,18 +129,35 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <motion.button
-                aria-label="Registrations Coming Soon"
-                className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide cursor-not-allowed opacity-80"
-                initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
-                animate={{
-                  padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
-                  fontSize: isScrolled ? "0.8rem" : "0.875rem",
-                }}
-                disabled
-              >
-                Registrations Coming Soon
-              </motion.button>
+              {registrationOpen ? (
+                <Link
+                  href="/register"
+                  className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide inline-flex items-center"
+                  aria-label="Register for DeepTech.AI 2026"
+                >
+                  <motion.span
+                    className="inline-block"
+                    initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
+                    animate={{
+                      padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
+                      fontSize: isScrolled ? "0.8rem" : "0.875rem",
+                    }}
+                  >
+                    Register
+                  </motion.span>
+                </Link>
+              ) : (
+                <motion.span
+                  className="bg-ieee-orange text-ieee-white rounded-full font-bold uppercase tracking-wide cursor-not-allowed opacity-80 inline-flex items-center"
+                  initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
+                  animate={{
+                    padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
+                    fontSize: isScrolled ? "0.8rem" : "0.875rem",
+                  }}
+                >
+                  Registrations Coming Soon
+                </motion.span>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -184,6 +209,7 @@ export default function Navbar() {
           isScrolled={isScrolled}
           navLinks={navLinks}
           onClose={() => setIsOpen(false)}
+          registrationOpen={registrationOpen}
         />
       </motion.nav>
     </motion.div>
