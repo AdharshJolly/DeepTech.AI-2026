@@ -12,7 +12,7 @@ export default function AppWrapper({ children }: { children: React.ReactNode }) 
   return (
     <>
       <BackgroundElements />
-      <Navbar />
+      <Navbar isAdmin={isAdmin} />
       <main className={!isAdmin ? "flex-grow pt-20" : "flex-grow flex flex-col h-screen pt-20 overflow-hidden"}>
         {children}
       </main>
