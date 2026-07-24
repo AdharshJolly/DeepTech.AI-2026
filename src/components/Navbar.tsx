@@ -18,15 +18,15 @@ const navLinks = [
   { name: "Contact", href: "/contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ isAdmin = false }: { isAdmin?: boolean }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [registrationOpen, setRegistrationOpen] = React.useState(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
 
-  const isHomepage = pathname === "/";
-  const activeScrolled = isScrolled || !isHomepage;
+  // On admin pages, never apply pill effect
+  const showPill = !isAdmin && isScrolled;
 
   React.useEffect(() => {
     fetch("/api/feature-flags/public")
@@ -54,12 +54,12 @@ export default function Navbar() {
     <motion.div
       className="fixed top-0 left-0 w-full z-50 pointer-events-none flex justify-center"
       initial={{ paddingTop: "0rem" }}
-      animate={{ paddingTop: activeScrolled ? "1rem" : "0rem" }}
+      animate={{ paddingTop: showPill ? "1rem" : "0rem" }}
       transition={{ type: "spring", stiffness: 400, damping: 40 }}
     >
       <motion.nav
         className={`pointer-events-auto relative transition-colors duration-300 ${
-          activeScrolled
+          showPill
             ? "backdrop-blur-xl border border-white/50 max-md:bg-white max-md:border-ieee-gray/10 max-md:shadow-lg md:bg-white/60 md:border-white/50"
             : "bg-transparent border-transparent"
         }`}
@@ -70,10 +70,10 @@ export default function Navbar() {
           boxShadow: "0 0px 0px rgba(0,0,0,0)",
         }}
         animate={{
-          width: activeScrolled ? "95%" : "100%",
-          maxWidth: activeScrolled ? "1280px" : "100%",
-          borderRadius: activeScrolled ? "9999px" : "0px",
-          boxShadow: activeScrolled
+          width: showPill ? "95%" : "100%",
+          maxWidth: showPill ? "1280px" : "100%",
+          borderRadius: showPill ? "9999px" : "0px",
+          boxShadow: showPill
             ? "0 8px 30px rgba(0,0,0,0.12)"
             : "0 0px 0px rgba(0,0,0,0)",
         }}
