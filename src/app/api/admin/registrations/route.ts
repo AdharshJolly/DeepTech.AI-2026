@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/permissions";
 import connectToDatabase from "@/lib/db";
 import Registration from "@/models/Registration";
+import {
+  sendRegistrationApproved,
+  sendRegistrationRejected,
+} from "@/lib/email";
 
 export async function GET() {
   const { error } = await requirePermission("registrations", "read");
@@ -12,7 +16,8 @@ export async function GET() {
     const registrations = await Registration.find().sort({ createdAt: -1 });
     return NextResponse.json(registrations);
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Internal server error";
+    const message =
+      err instanceof Error ? err.message : "Internal server error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
@@ -38,9 +43,29 @@ export async function PUT(req: Request) {
       { new: true }
     );
 
+    if (!updated) {
+      return NextResponse.json(
+        { error: "Registration not found" },
+        { status: 404 }
+      );
+    }
+
+    // Send email notification (fire-and-forget)
+    const emailData = {
+      fullName: updated.fullName,
+      email: updated.email,
+    };
+
+    if (status === "approved") {
+      sendRegistrationApproved(emailData).catch(() => {});
+    } else if (status === "rejected") {
+      sendRegistrationRejected(emailData).catch(() => {});
+    }
+
     return NextResponse.json({ success: true, registration: updated });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Internal server error";
+    const message =
+      err instanceof Error ? err.message : "Internal server error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

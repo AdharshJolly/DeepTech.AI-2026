@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import Registration from "@/models/Registration";
+import { sendRegistrationConfirmation } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -37,6 +38,14 @@ export async function POST(req: Request) {
       jobTitle: jobTitle.trim(),
       whyAttend: whyAttend.trim(),
     });
+
+    // Send confirmation email (fire-and-forget)
+    sendRegistrationConfirmation({
+      fullName: registration.fullName,
+      email: registration.email,
+      organization: registration.organization,
+      jobTitle: registration.jobTitle,
+    }).catch(() => {});
 
     return NextResponse.json({ success: true, registration });
   } catch (error: unknown) {
