@@ -9,7 +9,6 @@ const FLAGS = [
   "registration",
   "social-hub",
   "committee",
-  "partners",
   "past-events",
 ];
 

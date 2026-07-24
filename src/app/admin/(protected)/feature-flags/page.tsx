@@ -82,10 +82,6 @@ export default function FeatureFlagsPage() {
       title: "Committee Page",
       desc: "Controls access to the /committee page. When disabled, visitors see a 'Coming Soon' message.",
     },
-    partners: {
-      title: "Partners Section",
-      desc: "Controls the partners section on the homepage. When disabled, the section shows a 'Coming Soon' message.",
-    },
     "past-events": {
       title: "Past Events Page",
       desc: "Controls access to the /past-events page. When disabled, visitors see a 'Coming Soon' message about past event highlights.",
