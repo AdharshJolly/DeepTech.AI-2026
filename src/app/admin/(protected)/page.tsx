@@ -8,7 +8,6 @@ import { Users, Calendar, UserCheck, Handshake, Activity } from "lucide-react";
 import Link from "next/link";
 import EmailQuotaWidget from "@/components/admin/EmailQuotaWidget";
 import EmailSettings from "@/components/admin/EmailSettings";
-import EmailTemplates from "@/components/admin/EmailTemplates";
 
 export default async function AdminDashboard() {
   await connectToDatabase();
@@ -68,8 +67,6 @@ export default async function AdminDashboard() {
           </p>
         </div>
       </div>
-
-      <EmailTemplates />
     </div>
   );
 }
