@@ -11,6 +11,7 @@ const FLAGS = [
   "committee",
   "past-events",
   "email-notifications",
+  "partner-inquiry",
 ];
 
 export async function GET() {

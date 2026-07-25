@@ -106,3 +106,77 @@ export async function sendRegistrationRejected(registration: {
     `,
   });
 }
+
+// ── Partner Inquiry Emails ─────────────────────────────────────
+
+export async function sendPartnerInquiryConfirmation(partner: {
+  contactPerson: string;
+  workEmail: string;
+  organizationName: string;
+}) {
+  return sendEmail({
+    to: partner.workEmail,
+    subject: "Partnership Inquiry Received — DeepTech.AI 2026",
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+        <div style="background:linear-gradient(135deg,#FFA300,#f59e0b);padding:30px;border-radius:12px 12px 0 0;">
+          <h1 style="color:#fff;margin:0;font-size:24px;">Partnership Inquiry Received</h1>
+        </div>
+        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
+          <p style="color:#374151;font-size:16px;">Hi <strong>${partner.contactPerson}</strong>,</p>
+          <p style="color:#374151;font-size:16px;">Thank you for your interest in partnering with <strong>${partner.organizationName}</strong> for DeepTech.AI 2026!</p>
+          <p style="color:#374151;font-size:16px;">We've received your partnership inquiry and our team will review it shortly. We'll get back to you within <strong>3-5 business days</strong> to discuss collaboration opportunities.</p>
+          <p style="color:#6b7280;font-size:14px;">Best regards,<br>IEEE Computer Society Bangalore Chapter</p>
+        </div>
+      </div>
+    `,
+  });
+}
+
+export async function sendPartnerInquiryApproved(partner: {
+  contactPerson: string;
+  workEmail: string;
+  organizationName: string;
+}) {
+  return sendEmail({
+    to: partner.workEmail,
+    subject: "Partnership Approved — DeepTech.AI 2026",
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+        <div style="background:linear-gradient(135deg,#059669,#10b981);padding:30px;border-radius:12px 12px 0 0;">
+          <h1 style="color:#fff;margin:0;font-size:24px;">Partnership Approved!</h1>
+        </div>
+        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
+          <p style="color:#374151;font-size:16px;">Hi <strong>${partner.contactPerson}</strong>,</p>
+          <p style="color:#374151;font-size:16px;">Great news! Your partnership inquiry for <strong>${partner.organizationName}</strong> has been <strong style="color:#059669;">approved</strong>.</p>
+          <p style="color:#374151;font-size:16px;">Our partnerships team will reach out to you shortly to discuss the next steps and collaboration details.</p>
+          <p style="color:#6b7280;font-size:14px;">Best regards,<br>IEEE Computer Society Bangalore Chapter</p>
+        </div>
+      </div>
+    `,
+  });
+}
+
+export async function sendPartnerInquiryRejected(partner: {
+  contactPerson: string;
+  workEmail: string;
+  organizationName: string;
+}) {
+  return sendEmail({
+    to: partner.workEmail,
+    subject: "Partnership Update — DeepTech.AI 2026",
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+        <div style="background:linear-gradient(135deg,#6b7280,#9ca3af);padding:30px;border-radius:12px 12px 0 0;">
+          <h1 style="color:#fff;margin:0;font-size:24px;">Partnership Update</h1>
+        </div>
+        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
+          <p style="color:#374151;font-size:16px;">Hi <strong>${partner.contactPerson}</strong>,</p>
+          <p style="color:#374151;font-size:16px;">Thank you for your interest in partnering with <strong>${partner.organizationName}</strong> for DeepTech.AI 2026.</p>
+          <p style="color:#374151;font-size:16px;">Unfortunately, we are unable to proceed with this partnership at this time. If you have any questions, please contact us.</p>
+          <p style="color:#6b7280;font-size:14px;">Best regards,<br>IEEE Computer Society Bangalore Chapter</p>
+        </div>
+      </div>
+    `,
+  });
+}

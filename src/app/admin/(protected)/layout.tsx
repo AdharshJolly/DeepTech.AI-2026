@@ -20,6 +20,7 @@ const allNavItems = [
   { name: "Committee", href: "/admin/committee", icon: Users, section: "committee" },
   { name: "Agenda", href: "/admin/agenda", icon: Calendar, section: "agenda" },
   { name: "Partners", href: "/admin/partners", icon: Handshake, section: "partners" },
+  { name: "Partner Inquiries", href: "/admin/partner-inquiries", icon: Handshake, section: "partners" },
   { name: "Social Claims", href: "/admin/social", icon: Share2, section: "social" },
   { name: "Registrations", href: "/admin/registrations", icon: UserCheck, section: "registrations" },
   { name: "Feature Flags", href: "/admin/feature-flags", icon: ToggleLeft, section: "feature-flags" },

@@ -90,6 +90,10 @@ export default function FeatureFlagsPage() {
       title: "Email Notifications",
       desc: "Controls all outgoing emails (registration confirmations, approvals, rejections). When disabled, no emails are sent regardless of other flags.",
     },
+    "partner-inquiry": {
+      title: "Partner Inquiry Form",
+      desc: "Controls access to the /partner-inquiry page. When disabled, visitors see a 'Coming Soon' message about partnership opportunities.",
+    },
   };
 
   return (
