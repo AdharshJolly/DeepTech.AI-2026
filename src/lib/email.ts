@@ -123,10 +123,11 @@ const EMAIL_FOOTER = `
   <div style="margin-top:30px;padding-top:20px;border-top:1px solid #e5e7eb;">
     <p style="color:#9ca3af;font-size:12px;margin:0;">IEEE Computer Society Bangalore Chapter</p>
     <p style="color:#9ca3af;font-size:12px;margin:4px 0 0;">John F. Welch Technology Center (LFWTC), Bengaluru, India</p>
-    <p style="color:#9ca3af;font-size:12px;margin:4px 0 0;">
-      <a href="https://deeptech.ai" style="color:#00629B;text-decoration:none;">deeptech.ai</a> &nbsp;|&nbsp;
-      <a href="https://linkedin.com/company/ieeecsbc" style="color:#00629B;text-decoration:none;">LinkedIn</a> &nbsp;|&nbsp;
-      <a href="https://twitter.com/ieeecsbc" style="color:#00629B;text-decoration:none;">X (Twitter)</a>
+    <p style="color:#9ca3af;font-size:12px;margin:8px 0 0;">
+      <a href="https://www.linkedin.com/company/ieeecsbc/" style="color:#00629B;text-decoration:none;">LinkedIn</a> &nbsp;|&nbsp;
+      <a href="https://www.instagram.com/ieeecsbc" style="color:#00629B;text-decoration:none;">Instagram</a> &nbsp;|&nbsp;
+      <a href="https://twitter.com/ieeecsbc" style="color:#00629B;text-decoration:none;">X (Twitter)</a> &nbsp;|&nbsp;
+      <a href="https://www.youtube.com/channel/UCeBF0MYx2O2gq1_f6FeQFyQ" style="color:#00629B;text-decoration:none;">YouTube</a>
     </p>
   </div>
 `;
@@ -290,7 +291,7 @@ export async function sendRegistrationRejected(registration: {
           <div style="background:#F3F4F6;border:1px solid #E5E7EB;border-radius:8px;padding:16px;margin:20px 0;">
             <p style="color:#374151;font-size:14px;margin:0;">
               <strong>Alternative options:</strong><br/>
-              You may follow us on <a href="https://linkedin.com/company/ieeecsbc" style="color:#00629B;">LinkedIn</a> or <a href="https://twitter.com/ieeecsbc" style="color:#00629B;">X (Twitter)</a> for updates on future events and opportunities.
+              You may follow us on <a href="https://www.linkedin.com/company/ieeecsbc/" style="color:#00629B;">LinkedIn</a> or <a href="https://twitter.com/ieeecsbc" style="color:#00629B;">X (Twitter)</a> for updates on future events and opportunities.
             </p>
           </div>
 
@@ -430,7 +431,7 @@ export async function sendPartnerInquiryRejected(partner: {
           <div style="background:#F3F4F6;border:1px solid #E5E7EB;border-radius:8px;padding:16px;margin:20px 0;">
             <p style="color:#374151;font-size:14px;margin:0;">
               <strong>Stay Connected:</strong><br/>
-              We encourage you to follow us on <a href="https://linkedin.com/company/ieeecsbc" style="color:#00629B;">LinkedIn</a> for updates on future events and partnership opportunities.
+              We encourage you to follow us on <a href="https://www.linkedin.com/company/ieeecsbc/" style="color:#00629B;">LinkedIn</a> for updates on future events and partnership opportunities.
             </p>
           </div>
 
