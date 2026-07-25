@@ -16,9 +16,8 @@ export async function sendEmail(data: {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Email-Secret": EMAIL_SECRET || "",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ secret: EMAIL_SECRET, ...data }),
     });
 
     const result = await res.json();
