@@ -9,19 +9,23 @@ export async function GET() {
   if (error) return error;
 
   if (!APPS_SCRIPT_URL) {
-    return NextResponse.json({ quota: 100, remaining: 100, error: "Email service not configured" });
+    return NextResponse.json({ quota: 100, remaining: 100 });
   }
 
   try {
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret: EMAIL_SECRET, action: "getQuota" }),
-    });
+    const url = `${APPS_SCRIPT_URL}?action=getQuota&secret=${EMAIL_SECRET}`;
+    const res = await fetch(url);
+    const text = await res.text();
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    // Apps Script returns HTML wrapper around JSON, extract the JSON
+    const jsonMatch = text.match(/\{.*\}/s);
+    if (jsonMatch) {
+      const data = JSON.parse(jsonMatch[0]);
+      return NextResponse.json(data);
+    }
+
+    return NextResponse.json({ quota: 100, remaining: 100 });
   } catch {
-    return NextResponse.json({ quota: 100, remaining: 100, error: "Failed to fetch quota" });
+    return NextResponse.json({ quota: 100, remaining: 100 });
   }
 }
