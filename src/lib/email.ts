@@ -295,7 +295,7 @@ export async function sendRegistrationRejected(registration: {
           </div>
 
           <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            If you believe this is an error, please contact us at <a href="mailto:ieeecsbc@gmail.com" style="color:#00629B;">ieeecsbc@gmail.com</a>.
+            If you believe this is an error, please contact us at <a href="mailto:ieee.deeptech@gmail.com" style="color:#00629B;">ieee.deeptech@gmail.com</a>.
           </p>
 
           ${EMAIL_FOOTER}
@@ -435,7 +435,7 @@ export async function sendPartnerInquiryRejected(partner: {
           </div>
 
           <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            If you have any questions, please contact us at <a href="mailto:ieeecsbc@gmail.com" style="color:#00629B;">ieeecsbc@gmail.com</a>.
+            If you have any questions, please contact us at <a href="mailto:ieee.deeptech@gmail.com" style="color:#00629B;">ieee.deeptech@gmail.com</a>.
           </p>
 
           ${EMAIL_FOOTER}
