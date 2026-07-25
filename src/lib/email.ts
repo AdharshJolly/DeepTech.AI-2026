@@ -3,6 +3,7 @@ import EmailLog from "@/models/EmailLog";
 
 const APPS_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 const EMAIL_SECRET = process.env.GOOGLE_APPS_SCRIPT_SECRET;
+const ADMIN_CC_EMAIL = process.env.ADMIN_CC_EMAIL || "";
 const DAILY_LIMIT = 100;
 
 export async function sendEmail(data: {
@@ -10,11 +11,15 @@ export async function sendEmail(data: {
   subject: string;
   html: string;
   type?: string;
+  cc?: string;
 }): Promise<{ success: boolean; error?: string }> {
   if (!APPS_SCRIPT_URL) {
     console.warn("GOOGLE_APPS_SCRIPT_URL not configured, skipping email");
     return { success: false, error: "Email service not configured" };
   }
+
+  // Auto-CC admin on confirmation emails
+  const cc = data.cc || (data.type?.includes("confirmation") ? ADMIN_CC_EMAIL : "");
 
   try {
     const res = await fetch(APPS_SCRIPT_URL, {
@@ -22,7 +27,13 @@ export async function sendEmail(data: {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ secret: EMAIL_SECRET, to: data.to, subject: data.subject, html: data.html }),
+      body: JSON.stringify({
+        secret: EMAIL_SECRET,
+        to: data.to,
+        subject: data.subject,
+        html: data.html,
+        cc: cc || undefined,
+      }),
     });
 
     const result = await res.json();
@@ -78,6 +89,7 @@ export async function sendRegistrationConfirmation(registration: {
 }) {
   return sendEmail({
     to: registration.email,
+    type: "registration_confirmation",
     subject: "Registration Received — DeepTech.AI 2026",
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
@@ -156,6 +168,7 @@ export async function sendPartnerInquiryConfirmation(partner: {
 }) {
   return sendEmail({
     to: partner.workEmail,
+    type: "partner_inquiry_confirmation",
     subject: "Partnership Inquiry Received — DeepTech.AI 2026",
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
