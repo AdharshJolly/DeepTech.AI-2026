@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import Agenda from "@/components/Agenda";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import ComingSoon from "@/components/ComingSoon";
+import AgendaSkeleton from "@/components/skeleton/AgendaSkeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,9 @@ export default async function AgendaPage() {
 
   return (
     <main className="flex-grow pt-20">
-      <Agenda />
+      <Suspense fallback={<AgendaSkeleton />}>
+        <Agenda />
+      </Suspense>
     </main>
   );
 }

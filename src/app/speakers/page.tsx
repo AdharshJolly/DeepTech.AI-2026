@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import Speakers from "@/components/Speakers";
 import { isFeatureEnabled } from "@/lib/featureFlags";
 import ComingSoon from "@/components/ComingSoon";
+import SpeakersSkeleton from "@/components/skeleton/SpeakersSkeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,9 @@ export default async function SpeakersPage() {
 
   return (
     <main className="grow pt-20">
-      <Speakers />
+      <Suspense fallback={<SpeakersSkeleton />}>
+        <Speakers />
+      </Suspense>
     </main>
   );
 }
