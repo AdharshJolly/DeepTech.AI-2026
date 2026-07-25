@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Hexagon } from "lucide-react";
+import Link from "next/link";
+import { Hexagon, ArrowRight } from "lucide-react";
 
 export default function Partners() {
   return (
@@ -77,6 +78,27 @@ export default function Partners() {
               </span>
             </div>
           ))}
+        </div>
+
+        {/* Partner CTA Banner */}
+        <div className="mt-20 bg-linear-to-r from-ieee-blue to-ieee-cyan rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-size[2rem_2rem] pointer-events-none" />
+          <div className="relative z-10">
+            <h3 className="text-2xl md:text-3xl font-heading font-black mb-4">
+              Interested in Partnering with Us?
+            </h3>
+            <p className="text-white/80 max-w-xl mx-auto mb-8">
+              Join us as a sponsor, technology partner, or community collaborator
+              for DeepTech.AI 2026. Let&apos;s shape the future of Physical AI together.
+            </p>
+            <Link
+              href="/partner-inquiry"
+              className="inline-flex items-center gap-2 bg-white text-ieee-blue px-8 py-4 rounded-full font-bold text-sm hover:shadow-xl hover:scale-105 transition-all"
+            >
+              Become a Partner
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
