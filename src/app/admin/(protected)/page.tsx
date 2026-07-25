@@ -7,6 +7,7 @@ import PartnerInquiry from "@/models/PartnerInquiry";
 import { Users, Calendar, UserCheck, Handshake, Activity } from "lucide-react";
 import Link from "next/link";
 import EmailQuotaWidget from "@/components/admin/EmailQuotaWidget";
+import EmailSettings from "@/components/admin/EmailSettings";
 
 export default async function AdminDashboard() {
   await connectToDatabase();
@@ -54,14 +55,15 @@ export default async function AdminDashboard() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <EmailQuotaWidget />
+        <EmailSettings />
 
         <div className="bg-white p-6 rounded-3xl border border-ieee-gray/10 shadow-sm flex flex-col items-center justify-center text-center">
           <Activity className="w-12 h-12 text-ieee-gray/20 mb-4" />
           <h2 className="text-lg font-bold text-ieee-black mb-2">System Running Smoothly</h2>
           <p className="text-sm text-ieee-gray max-w-sm mx-auto">
-            All services are connected and operational. Navigate through the sidebar to manage your event.
+            All services are connected and operational.
           </p>
         </div>
       </div>

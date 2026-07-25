@@ -1,10 +1,20 @@
 import connectToDatabase from "@/lib/db";
 import EmailLog from "@/models/EmailLog";
+import SiteSettings from "@/models/SiteSettings";
 
 const APPS_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 const EMAIL_SECRET = process.env.GOOGLE_APPS_SCRIPT_SECRET;
-const ADMIN_CC_EMAIL = process.env.ADMIN_CC_EMAIL || "";
 const DAILY_LIMIT = 100;
+
+async function getAdminCcEmail(): Promise<string> {
+  try {
+    await connectToDatabase();
+    const setting = await SiteSettings.findOne({ key: "admin_cc_email" });
+    return setting?.value || "";
+  } catch {
+    return "";
+  }
+}
 
 export async function sendEmail(data: {
   to: string;
@@ -19,7 +29,10 @@ export async function sendEmail(data: {
   }
 
   // Auto-CC admin on confirmation emails
-  const cc = data.cc || (data.type?.includes("confirmation") ? ADMIN_CC_EMAIL : "");
+  let cc = data.cc;
+  if (!cc && data.type?.includes("confirmation")) {
+    cc = await getAdminCcEmail();
+  }
 
   try {
     const res = await fetch(APPS_SCRIPT_URL, {
