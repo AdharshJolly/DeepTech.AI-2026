@@ -1,11 +1,19 @@
 import { NextResponse } from "next/server";
-import { requirePermission } from "@/lib/permissions";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import connectToDatabase from "@/lib/db";
 import SiteSettings from "@/models/SiteSettings";
 
 export async function GET() {
-  const { error } = await requirePermission("feature-flags", "read");
-  if (error) return error;
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const user = session.user as unknown as { role: string };
+  if (user.role !== "superAdmin") {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
 
   try {
     await connectToDatabase();
@@ -20,8 +28,15 @@ export async function GET() {
 }
 
 export async function PUT(req: Request) {
-  const { error } = await requirePermission("feature-flags", "update");
-  if (error) return error;
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const user = session.user as unknown as { role: string };
+  if (user.role !== "superAdmin") {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
 
   try {
     await connectToDatabase();

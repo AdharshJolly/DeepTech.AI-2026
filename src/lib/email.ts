@@ -6,13 +6,20 @@ const APPS_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 const EMAIL_SECRET = process.env.GOOGLE_APPS_SCRIPT_SECRET;
 const DAILY_LIMIT = 100;
 
-async function getAdminCcEmail(): Promise<string> {
+async function getEmailSettings(): Promise<{ cc: string; bcc: string }> {
   try {
     await connectToDatabase();
-    const setting = await SiteSettings.findOne({ key: "admin_cc_email" });
-    return setting?.value || "";
+    const settings = await SiteSettings.find({
+      key: { $in: ["admin_cc_email", "admin_bcc_email"] },
+    });
+    const result = { cc: "", bcc: "" };
+    settings.forEach((s) => {
+      if (s.key === "admin_cc_email") result.cc = s.value;
+      if (s.key === "admin_bcc_email") result.bcc = s.value;
+    });
+    return result;
   } catch {
-    return "";
+    return { cc: "", bcc: "" };
   }
 }
 
@@ -22,16 +29,20 @@ export async function sendEmail(data: {
   html: string;
   type?: string;
   cc?: string;
+  bcc?: string;
 }): Promise<{ success: boolean; error?: string }> {
   if (!APPS_SCRIPT_URL) {
     console.warn("GOOGLE_APPS_SCRIPT_URL not configured, skipping email");
     return { success: false, error: "Email service not configured" };
   }
 
-  // Auto-CC admin on confirmation emails
+  // Auto-CC/BCC admin on confirmation emails
   let cc = data.cc;
-  if (!cc && data.type?.includes("confirmation")) {
-    cc = await getAdminCcEmail();
+  let bcc = data.bcc;
+  if (data.type?.includes("confirmation")) {
+    const settings = await getEmailSettings();
+    if (!cc) cc = settings.cc;
+    if (!bcc) bcc = settings.bcc;
   }
 
   try {
@@ -46,6 +57,7 @@ export async function sendEmail(data: {
         subject: data.subject,
         html: data.html,
         cc: cc || undefined,
+        bcc: bcc || undefined,
       }),
     });
 
