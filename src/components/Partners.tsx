@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Hexagon, ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function Partners() {
   return (
@@ -9,7 +9,7 @@ export default function Partners() {
       className="py-16 md:py-24 bg-transparent relative z-10 border-t border-ieee-gray/20"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <p className="inline-flex items-center text-sm font-bold tracking-widest text-ieee-blue uppercase mb-4 border border-ieee-blue/30 bg-ieee-blue/5 px-4 py-2 rounded-full">
             Supported By
           </p>
@@ -23,8 +23,7 @@ export default function Partners() {
         </div>
 
         {/* Organizers & Venue Partners */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-24 max-w-4xl mx-auto">
-          {/* Organizer */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-12 max-w-4xl mx-auto">
           <div className="flex flex-col items-center">
             <span className="text-xs font-bold tracking-widest text-ieee-gray/50 uppercase mb-6">
               Organized By
@@ -36,11 +35,12 @@ export default function Partners() {
                 width={200}
                 height={80}
                 style={{ width: "100%", height: "auto" }}
-                className="object-contain" priority />
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
 
-          {/* Venue */}
           <div className="flex flex-col items-center">
             <span className="text-xs font-bold tracking-widest text-ieee-gray/50 uppercase mb-6">
               Venue Partner
@@ -52,36 +52,15 @@ export default function Partners() {
                 width={200}
                 height={80}
                 style={{ width: "100%", height: "auto" }}
-                className="object-contain" priority />
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="h-px w-12 bg-ieee-gray/20"></div>
-          <h3 className="text-xs font-bold tracking-widest text-ieee-gray/40 uppercase">
-            Industry Partners
-          </h3>
-          <div className="h-px w-12 bg-ieee-gray/20"></div>
-        </div>
-
-        {/* General Partners Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div
-              key={i}
-              className="group relative bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col items-center justify-center min-h-32 md:min-h-40 hover:-translate-y-1"
-            >
-              <Hexagon className="w-10 h-10 text-ieee-gray/20 group-hover:text-ieee-blue transition-colors duration-500 mb-3" />
-              <span className="text-xs font-bold text-ieee-gray/40 uppercase tracking-widest group-hover:text-ieee-blue/80 transition-colors">
-                TBA
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Partner CTA Banner */}
-        <div className="mt-20 bg-linear-to-r from-ieee-blue to-ieee-cyan rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
+        {/* Partner CTA Banner — Under logos */}
+        <div className="mb-16 bg-linear-to-r from-ieee-blue to-ieee-cyan rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-size[2rem_2rem] pointer-events-none" />
           <div className="relative z-10">
             <h3 className="text-2xl md:text-3xl font-heading font-black mb-4">
@@ -100,8 +79,30 @@ export default function Partners() {
             </Link>
           </div>
         </div>
+
+        {/* Industry Partners — Coming Soon */}
+        <div className="relative rounded-3xl border border-ieee-gray/10 bg-ieee-gray/5 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span className="text-6xl md:text-8xl lg:text-9xl font-heading font-black text-ieee-gray/[0.04] uppercase tracking-widest select-none whitespace-nowrap">
+              Awaiting Disclosure
+            </span>
+          </div>
+          <div className="relative z-10 py-16 md:py-24 text-center">
+            <div className="inline-flex items-center gap-2 bg-ieee-orange/10 text-ieee-orange px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              Coming Soon
+            </div>
+            <h3 className="text-2xl md:text-3xl font-heading font-black text-ieee-black mb-4">
+              Industry Partners
+            </h3>
+            <p className="text-ieee-gray max-w-lg mx-auto">
+              We&apos;re finalizing partnerships with leading organizations in
+              Physical AI, robotics, and industrial automation. Stay tuned for
+              exciting announcements!
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
