@@ -23,6 +23,15 @@ async function getEmailSettings(): Promise<{ cc: string; bcc: string }> {
   }
 }
 
+function cleanEmailList(emails: string): string {
+  if (!emails) return "";
+  return emails
+    .split(",")
+    .map((e) => e.trim())
+    .filter((e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))
+    .join(",");
+}
+
 export async function sendEmail(data: {
   to: string;
   subject: string;
@@ -44,6 +53,10 @@ export async function sendEmail(data: {
     if (!cc) cc = settings.cc;
     if (!bcc) bcc = settings.bcc;
   }
+
+  // Clean and validate email lists
+  cc = cleanEmailList(cc || "");
+  bcc = cleanEmailList(bcc || "");
 
   try {
     const res = await fetch(APPS_SCRIPT_URL, {

@@ -101,33 +101,33 @@ export default function EmailSettings() {
         <div className="space-y-3">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
-              CC Email
+              CC Email(s)
             </label>
             <input
-              type="email"
+              type="text"
               value={ccEmail}
               onChange={(e) => setCcEmail(e.target.value)}
-              placeholder="admin@example.com"
+              placeholder="admin@example.com, team@example.com"
               className="w-full bg-ieee-gray/5 border border-ieee-gray/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ieee-blue"
             />
             <p className="text-xs text-ieee-gray">
-              Receives a copy of confirmation emails (visible to recipient).
+              Receives a copy of confirmation emails (visible to recipient). Separate multiple emails with commas.
             </p>
           </div>
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
-              BCC Email
+              BCC Email(s)
             </label>
             <input
-              type="email"
+              type="text"
               value={bccEmail}
               onChange={(e) => setBccEmail(e.target.value)}
-              placeholder="admin@example.com"
+              placeholder="admin@example.com, team@example.com"
               className="w-full bg-ieee-gray/5 border border-ieee-gray/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ieee-blue"
             />
             <p className="text-xs text-ieee-gray">
-              Receives a blind copy of confirmation emails (hidden from recipient).
+              Receives a blind copy of confirmation emails (hidden from recipient). Separate multiple emails with commas.
             </p>
           </div>
 
