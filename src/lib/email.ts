@@ -1,10 +1,15 @@
+import connectToDatabase from "@/lib/db";
+import EmailLog from "@/models/EmailLog";
+
 const APPS_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 const EMAIL_SECRET = process.env.GOOGLE_APPS_SCRIPT_SECRET;
+const DAILY_LIMIT = 100;
 
 export async function sendEmail(data: {
   to: string;
   subject: string;
   html: string;
+  type?: string;
 }): Promise<{ success: boolean; error?: string }> {
   if (!APPS_SCRIPT_URL) {
     console.warn("GOOGLE_APPS_SCRIPT_URL not configured, skipping email");
@@ -17,14 +22,49 @@ export async function sendEmail(data: {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ secret: EMAIL_SECRET, ...data }),
+      body: JSON.stringify({ secret: EMAIL_SECRET, to: data.to, subject: data.subject, html: data.html }),
     });
 
     const result = await res.json();
+
+    // Log successful send
+    if (result.success) {
+      try {
+        await connectToDatabase();
+        await EmailLog.create({
+          to: data.to,
+          subject: data.subject,
+          type: data.type || "unknown",
+        });
+      } catch {
+        // silently fail — don't block email flow
+      }
+    }
+
     return result;
   } catch (error) {
     console.error("Email send failed:", error);
     return { success: false, error: "Failed to send email" };
+  }
+}
+
+export async function getEmailStats() {
+  try {
+    await connectToDatabase();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const sentToday = await EmailLog.countDocuments({
+      sentAt: { $gte: today },
+    });
+
+    return {
+      sentToday,
+      remaining: Math.max(0, DAILY_LIMIT - sentToday),
+      limit: DAILY_LIMIT,
+    };
+  } catch {
+    return { sentToday: 0, remaining: DAILY_LIMIT, limit: DAILY_LIMIT };
   }
 }
 
