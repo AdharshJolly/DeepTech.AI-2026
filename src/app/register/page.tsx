@@ -24,7 +24,7 @@ export default async function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-ieee-white pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8">
       <RegistrationForm />
     </main>
   );

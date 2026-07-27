@@ -19,7 +19,6 @@ import {
 import { event as gaEvent } from "@/lib/analytics";
 import FeatureGate from "@/components/FeatureGate";
 
-
 /* ────────────────────────────────────────
    DATA
    ──────────────────────────────────────── */
@@ -205,12 +204,24 @@ const legacyStats = [
    HOOKS
    ──────────────────────────────────────── */
 
-/** Intersection Observer hook for reveal animations */
 function useReveal(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Immediately reveal if already within the viewport on mount
+    const rect = el.getBoundingClientRect();
+    const inViewport =
+      rect.top <
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom > 0;
+
+    if (inViewport) {
+      el.classList.add("visible");
+      return;
+    }
+
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -218,7 +229,7 @@ function useReveal(threshold = 0.15) {
           obs.unobserve(el);
         }
       },
-      { threshold }
+      { threshold },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -251,7 +262,7 @@ function useCountUp(end: number, duration = 1800, startOnView = true) {
           requestAnimationFrame(step);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -264,7 +275,15 @@ function useCountUp(end: number, duration = 1800, startOnView = true) {
    SUB-COMPONENTS
    ──────────────────────────────────────── */
 
-function MetricCard({ label, value, suffix }: { label: string; value: number; suffix: string }) {
+function MetricCard({
+  label,
+  value,
+  suffix,
+}: {
+  label: string;
+  value: number;
+  suffix: string;
+}) {
   const { ref, count } = useCountUp(value, 2000);
   return (
     <div ref={ref} className="group relative text-center px-6 py-8 md:py-10">
@@ -334,7 +353,10 @@ function Lightbox({
       onClick={onClose}
     >
       <button
-        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
         className="absolute top-6 right-6 z-[110] w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
         aria-label="Close lightbox"
       >
@@ -342,7 +364,10 @@ function Lightbox({
       </button>
 
       <button
-        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onPrev();
+        }}
         className="absolute left-4 md:left-8 z-[110] w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
         aria-label="Previous image"
       >
@@ -364,7 +389,10 @@ function Lightbox({
       </div>
 
       <button
-        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onNext();
+        }}
         className="absolute right-4 md:right-8 z-[110] w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
         aria-label="Next image"
       >
@@ -392,16 +420,18 @@ export default function PastEventsPage() {
   const openLightbox = useCallback(
     (images: { src: string; alt: string }[], index: number) => {
       setLightbox({ images, index });
-      gaEvent({ action: "gallery_open", category: "Past Events", label: images[index]?.alt || "" });
+      gaEvent({
+        action: "gallery_open",
+        category: "Past Events",
+        label: images[index]?.alt || "",
+      });
     },
-    []
+    [],
   );
   const closeLightbox = useCallback(() => setLightbox(null), []);
   const nextImage = useCallback(() => {
     setLightbox((prev) =>
-      prev
-        ? { ...prev, index: (prev.index + 1) % prev.images.length }
-        : null
+      prev ? { ...prev, index: (prev.index + 1) % prev.images.length } : null,
     );
   }, []);
   const prevImage = useCallback(() => {
@@ -409,10 +439,9 @@ export default function PastEventsPage() {
       prev
         ? {
             ...prev,
-            index:
-              (prev.index - 1 + prev.images.length) % prev.images.length,
+            index: (prev.index - 1 + prev.images.length) % prev.images.length,
           }
-        : null
+        : null,
     );
   }, []);
 
@@ -433,8 +462,6 @@ export default function PastEventsPage() {
   }, [lightbox, closeLightbox, nextImage, prevImage]);
 
   /* Reveal refs */
-  const heroRef = useReveal(0.1);
-  const metricsRef = useReveal(0.15);
   const timelineRef = useReveal(0.05);
 
   /* Active edition index for timeline */
@@ -447,13 +474,13 @@ export default function PastEventsPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const idx = editionRefs.current.indexOf(
-              entry.target as HTMLDivElement
+              entry.target as HTMLDivElement,
             );
             if (idx !== -1) setActiveEdition(idx);
           }
         });
       },
-      { threshold: 0.3, rootMargin: "-20% 0px -20% 0px" }
+      { threshold: 0.3, rootMargin: "-20% 0px -20% 0px" },
     );
     editionRefs.current.forEach((el) => {
       if (el) obs.observe(el);
@@ -467,253 +494,262 @@ export default function PastEventsPage() {
       title="Past Events"
       message="Past event highlights and memories are being curated. Check back for amazing stories from our previous editions!"
     >
-    <main className="min-h-screen bg-ieee-white relative">
-      {/* ═══════════════════════════════════════
+      <main className="min-h-screen relative">
+        {/* ═══════════════════════════════════════
           HERO
           ═══════════════════════════════════════ */}
-      <section className="hero-grid-bg relative pt-32 md:pt-40 pb-20 md:pb-28 px-5 md:px-10 lg:px-16">
-        {/* Subtle background accent */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-ieee-blue/[0.03] rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 -left-40 w-[400px] h-[400px] bg-ieee-orange/[0.03] rounded-full blur-[100px]" />
-        </div>
-
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div ref={heroRef} className="reveal">
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-ieee-orange">
-                <span className="w-6 h-px bg-ieee-orange" />
-                IEEE Computer Society Bangalore Chapter
-              </span>
-            </motion.div>
-
-            {/* Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 md:mt-8 text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-black text-ieee-black leading-[0.95] tracking-tight"
-            >
-              The{" "}
-              <span className="relative inline-block">
-                Legacy
-                <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-ieee-orange/40" />
-              </span>
-              <br />
-              of DeepTech
-              <span className="text-ieee-orange">.</span>AI
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="mt-6 md:mt-8 text-base md:text-lg lg:text-xl text-ieee-gray leading-relaxed max-w-2xl font-medium"
-            >
-              A retrospective journey through the flagship IEEE Computer Society
-              symposium — where groundbreaking research meets industry-defining
-              conversations on the future of artificial intelligence.
-            </motion.p>
+        <section className="hero-grid-bg relative pt-32 md:pt-40 pb-20 md:pb-28 px-5 md:px-10 lg:px-16">
+          {/* Subtle background accent */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-ieee-blue/[0.03] rounded-full blur-[100px]" />
+            <div className="absolute bottom-0 -left-40 w-[400px] h-[400px] bg-ieee-orange/[0.03] rounded-full blur-[100px]" />
           </div>
 
-          {/* ── Premium Metrics ── */}
-          <div
-            ref={metricsRef}
-            className="reveal mt-16 md:mt-24 grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-ieee-gray/10 border border-ieee-gray/10 rounded-none"
-          >
-            {legacyStats.map((stat, i) => (
-              <MetricCard
-                key={i}
-                label={stat.label}
-                value={stat.value}
-                suffix={stat.suffix}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section divider */}
-      <div className="section-divider mx-auto max-w-6xl" />
-
-      {/* ═══════════════════════════════════════
-          TIMELINE SPINE + EVENT CHAPTERS
-          ═══════════════════════════════════════ */}
-      <section className="relative px-5 md:px-10 lg:px-16 py-20 md:py-32">
-        <div className="max-w-6xl mx-auto">
-          {/* Timeline header */}
-          <div ref={timelineRef} className="reveal mb-16 md:mb-24">
-            <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-ieee-blue">
-              <span className="w-6 h-px bg-ieee-blue" />
-              Symposium Archive
-            </span>
-            <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-heading font-black text-ieee-black tracking-tight">
-              Through the Years
-            </h2>
-          </div>
-
-          {/* ── Desktop/Tablet: Vertical Timeline ── */}
-          <div className="hidden md:block relative">
-            {/* Thick timeline line */}
-            <div className="absolute left-[52px] lg:left-[60px] top-0 bottom-0 w-[2px] bg-ieee-gray/10">
-              {/* Animated progress */}
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div>
+              {/* Eyebrow */}
               <motion.div
-                className="absolute top-0 left-0 w-full bg-gradient-to-b from-ieee-blue via-ieee-cyan to-ieee-orange origin-top"
-                style={{ scaleY: 1 }}
-                initial={{ scaleY: 0 }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: false, margin: "-10% 0px" }}
-                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              />
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-ieee-orange">
+                  <span className="w-6 h-px bg-ieee-orange" />
+                  IEEE Computer Society Bangalore Chapter
+                </span>
+              </motion.div>
+
+              {/* Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.2,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="mt-6 md:mt-8 text-5xl md:text-7xl lg:text-[5.5rem] font-heading font-black text-ieee-black leading-[0.95] tracking-tight"
+              >
+                The{" "}
+                <span className="relative inline-block">
+                  Legacy
+                  <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-ieee-orange/40" />
+                </span>
+                <br />
+                of DeepTech
+                <span className="text-ieee-orange">.</span>AI
+              </motion.h1>
+
+              {/* Subtitle */}
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="mt-6 md:mt-8 text-base md:text-lg lg:text-xl text-ieee-gray leading-relaxed max-w-2xl font-medium"
+              >
+                A retrospective journey through the flagship IEEE Computer
+                Society symposium — where groundbreaking research meets
+                industry-defining conversations on the future of artificial
+                intelligence.
+              </motion.p>
             </div>
 
-            {/* Event chapters */}
-            <div className="space-y-24 md:space-y-32">
-              {events.map((event, idx) => (
-                <div
-                  key={event.year}
-                  ref={(el) => { editionRefs.current[idx] = el; }}
-                  className="relative"
-                >
-                  {/* Timeline node */}
-                  <div
-                    className={`absolute left-[28px] lg:left-[36px] top-0 w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 flex items-center justify-center z-10 transition-all duration-500 ${
-                      activeEdition === idx
-                        ? "bg-ieee-blue border-ieee-blue text-white shadow-lg shadow-ieee-blue/20 timeline-node-active"
-                        : "bg-white border-ieee-gray/20 text-ieee-gray"
-                    }`}
-                  >
-                    <span className="text-sm lg:text-base font-black font-heading">
-                      {event.year.slice(-2)}
-                    </span>
-                  </div>
+            {/* ── Premium Metrics ── */}
+            <div className="mt-16 md:mt-24 grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-ieee-gray/10 border border-ieee-gray/10 rounded-none">
+              {legacyStats.map((stat, i) => (
+                <MetricCard
+                  key={i}
+                  label={stat.label}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
 
-                  {/* Year label floating outside */}
-                  <div className="absolute left-[28px] lg:left-[36px] -top-10 w-12 lg:w-14 text-center">
-                    <span
-                      className={`text-xs font-bold tracking-widest transition-all duration-500 ${
+        {/* Section divider */}
+        <div className="section-divider mx-auto max-w-6xl" />
+
+        {/* ═══════════════════════════════════════
+          TIMELINE SPINE + EVENT CHAPTERS
+          ═══════════════════════════════════════ */}
+        <section className="relative px-5 md:px-10 lg:px-16 py-20 md:py-32">
+          <div className="max-w-6xl mx-auto">
+            {/* Timeline header */}
+            <div ref={timelineRef} className="reveal mb-16 md:mb-24">
+              <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-ieee-blue">
+                <span className="w-6 h-px bg-ieee-blue" />
+                Symposium Archive
+              </span>
+              <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-heading font-black text-ieee-black tracking-tight">
+                Through the Years
+              </h2>
+            </div>
+
+            {/* ── Desktop/Tablet: Vertical Timeline ── */}
+            <div className="hidden md:block relative">
+              {/* Thick timeline line */}
+              <div className="absolute left-[52px] lg:left-[60px] top-0 bottom-0 w-[2px] bg-ieee-gray/10">
+                {/* Animated progress */}
+                <motion.div
+                  className="absolute top-0 left-0 w-full bg-gradient-to-b from-ieee-blue via-ieee-cyan to-ieee-orange origin-top"
+                  style={{ scaleY: 1 }}
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: false, margin: "-10% 0px" }}
+                  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </div>
+
+              {/* Event chapters */}
+              <div className="space-y-24 md:space-y-32">
+                {events.map((event, idx) => (
+                  <div
+                    key={event.year}
+                    ref={(el) => {
+                      editionRefs.current[idx] = el;
+                    }}
+                    className="relative"
+                  >
+                    {/* Timeline node */}
+                    <div
+                      className={`absolute left-[28px] lg:left-[36px] top-0 w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 flex items-center justify-center z-10 transition-all duration-500 ${
                         activeEdition === idx
-                          ? "text-ieee-blue"
-                          : "text-ieee-gray/50"
+                          ? "bg-ieee-blue border-ieee-blue text-white shadow-lg shadow-ieee-blue/20 timeline-node-active"
+                          : "bg-white border-ieee-gray/20 text-ieee-gray"
                       }`}
                     >
+                      <span className="text-sm lg:text-base font-black font-heading">
+                        {event.year.slice(-2)}
+                      </span>
+                    </div>
+
+                    {/* Year label floating outside */}
+                    <div className="absolute left-[28px] lg:left-[36px] -top-10 w-12 lg:w-14 text-center">
+                      <span
+                        className={`text-xs font-bold tracking-widest transition-all duration-500 ${
+                          activeEdition === idx
+                            ? "text-ieee-blue"
+                            : "text-ieee-gray/50"
+                        }`}
+                      >
+                        {event.year}
+                      </span>
+                    </div>
+
+                    {/* Chapter content */}
+                    <div className="ml-20 lg:ml-24">
+                      <EventChapter
+                        event={event}
+                        index={idx}
+                        openLightbox={openLightbox}
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                {/* Future node */}
+                <div className="relative">
+                  <div className="absolute left-[28px] lg:left-[36px] top-0 w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-dashed border-ieee-orange/30 bg-ieee-orange/5 flex items-center justify-center z-10">
+                    <Sparkles className="w-5 h-5 text-ieee-orange" />
+                  </div>
+                  <div className="ml-20 lg:ml-24">
+                    <FutureCard />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Mobile: Horizontal Timeline + Stacked Chapters ── */}
+            <div className="md:hidden">
+              {/* Mobile horizontal timeline */}
+              <div className="mobile-timeline-scroll flex items-center gap-6 overflow-x-auto pb-6 mb-10 -mx-5 px-5">
+                {events.map((event, idx) => (
+                  <button
+                    key={event.year}
+                    onClick={() => {
+                      editionRefs.current[idx]?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                      gaEvent({
+                        action: "timeline_navigate",
+                        category: "Past Events",
+                        label: event.year,
+                      });
+                    }}
+                    className={`mobile-timeline-node flex flex-col items-center gap-2 shrink-0 ${
+                      activeEdition === idx ? "opacity-100" : "opacity-40"
+                    }`}
+                  >
+                    <div
+                      className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-black font-heading transition-all duration-300 ${
+                        activeEdition === idx
+                          ? "bg-ieee-blue border-ieee-blue text-white shadow-md shadow-ieee-blue/20"
+                          : "bg-white border-ieee-gray/20 text-ieee-gray"
+                      }`}
+                    >
+                      {event.year.slice(-2)}
+                    </div>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-ieee-gray">
                       {event.year}
                     </span>
-                  </div>
+                  </button>
+                ))}
 
-                  {/* Chapter content */}
-                  <div className="ml-20 lg:ml-24">
+                {/* Future node mobile */}
+                <div className="flex flex-col items-center gap-2 shrink-0 opacity-40">
+                  <div className="w-10 h-10 rounded-full border-2 border-dashed border-ieee-orange/30 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-ieee-orange" />
+                  </div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-ieee-gray">
+                    2026
+                  </span>
+                </div>
+
+                {/* Connecting line segments between nodes */}
+                <div className="absolute inset-x-0 top-5 h-0.5 bg-ieee-gray/10 -z-10 pointer-events-none" />
+              </div>
+
+              {/* Mobile stacked chapters */}
+              <div className="space-y-16">
+                {events.map((event, idx) => (
+                  <div
+                    key={event.year}
+                    ref={(el) => {
+                      editionRefs.current[idx] = el;
+                    }}
+                  >
                     <EventChapter
                       event={event}
                       index={idx}
                       openLightbox={openLightbox}
+                      mobile
                     />
                   </div>
-                </div>
-              ))}
-
-              {/* Future node */}
-              <div className="relative">
-                <div className="absolute left-[28px] lg:left-[36px] top-0 w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-dashed border-ieee-orange/30 bg-ieee-orange/5 flex items-center justify-center z-10">
-                  <Sparkles className="w-5 h-5 text-ieee-orange" />
-                </div>
-                <div className="ml-20 lg:ml-24">
-                  <FutureCard />
-                </div>
+                ))}
+                <FutureCard mobile />
               </div>
             </div>
           </div>
+        </section>
 
-          {/* ── Mobile: Horizontal Timeline + Stacked Chapters ── */}
-          <div className="md:hidden">
-            {/* Mobile horizontal timeline */}
-            <div className="mobile-timeline-scroll flex items-center gap-6 overflow-x-auto pb-6 mb-10 -mx-5 px-5">
-              {events.map((event, idx) => (
-                <button
-                  key={event.year}
-                  onClick={() => {
-                    editionRefs.current[idx]?.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                    gaEvent({ action: "timeline_navigate", category: "Past Events", label: event.year });
-                  }}
-                  className={`mobile-timeline-node flex flex-col items-center gap-2 shrink-0 ${
-                    activeEdition === idx ? "opacity-100" : "opacity-40"
-                  }`}
-                >
-                  <div
-                    className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-black font-heading transition-all duration-300 ${
-                      activeEdition === idx
-                        ? "bg-ieee-blue border-ieee-blue text-white shadow-md shadow-ieee-blue/20"
-                        : "bg-white border-ieee-gray/20 text-ieee-gray"
-                    }`}
-                  >
-                    {event.year.slice(-2)}
-                  </div>
-                  <span className="text-[10px] font-bold tracking-widest uppercase text-ieee-gray">
-                    {event.year}
-                  </span>
-                </button>
-              ))}
-
-              {/* Future node mobile */}
-              <div className="flex flex-col items-center gap-2 shrink-0 opacity-40">
-                <div className="w-10 h-10 rounded-full border-2 border-dashed border-ieee-orange/30 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-ieee-orange" />
-                </div>
-                <span className="text-[10px] font-bold tracking-widest uppercase text-ieee-gray">
-                  2026
-                </span>
-              </div>
-
-              {/* Connecting line segments between nodes */}
-              <div className="absolute inset-x-0 top-5 h-0.5 bg-ieee-gray/10 -z-10 pointer-events-none" />
-            </div>
-
-            {/* Mobile stacked chapters */}
-            <div className="space-y-16">
-              {events.map((event, idx) => (
-                <div
-                  key={event.year}
-                  ref={(el) => { editionRefs.current[idx] = el; }}
-                >
-                  <EventChapter
-                    event={event}
-                    index={idx}
-                    openLightbox={openLightbox}
-                    mobile
-                  />
-                </div>
-              ))}
-              <FutureCard mobile />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
+        {/* ═══════════════════════════════════════
           LIGHTBOX
           ═══════════════════════════════════════ */}
-      <AnimatePresence>
-        {lightbox && (
-          <Lightbox
-            images={lightbox.images}
-            index={lightbox.index}
-            onClose={closeLightbox}
-            onNext={nextImage}
-            onPrev={prevImage}
-          />
-        )}
-      </AnimatePresence>
-
-    </main>
+        <AnimatePresence>
+          {lightbox && (
+            <Lightbox
+              images={lightbox.images}
+              index={lightbox.index}
+              onClose={closeLightbox}
+              onNext={nextImage}
+              onPrev={prevImage}
+            />
+          )}
+        </AnimatePresence>
+      </main>
     </FeatureGate>
   );
 }
@@ -737,7 +773,10 @@ function EventChapter({
   const ref = useReveal(0.1);
 
   return (
-    <div ref={ref} className={`reveal ${is2025 ? "edition-tint-2025" : "edition-tint-2023"}`}>
+    <div
+      ref={ref}
+      className={`reveal ${is2025 ? "edition-tint-2025" : "edition-tint-2023"}`}
+    >
       {/* ── Chapter Header ── */}
       <div className="mb-8 md:mb-12">
         <div className="flex items-center gap-3 mb-4">
@@ -774,7 +813,9 @@ function EventChapter({
       )}
 
       {/* ── Content: Description + Metadata ── */}
-      <div className={`${mobile ? "" : "grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12"} mb-10 md:mb-14`}>
+      <div
+        className={`${mobile ? "" : "grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12"} mb-10 md:mb-14`}
+      >
         <div className={mobile ? "" : "lg:col-span-3"}>
           <p className="text-base md:text-lg text-ieee-gray leading-relaxed font-medium">
             {event.description}
@@ -830,7 +871,9 @@ function EventChapter({
           <BookOpen className="w-4 h-4" />
           Core Focus Areas
         </h3>
-        <div className={`${mobile ? "space-y-3" : "grid grid-cols-1 md:grid-cols-2 gap-3"}`}>
+        <div
+          className={`${mobile ? "space-y-3" : "grid grid-cols-1 md:grid-cols-2 gap-3"}`}
+        >
           {event.topics.map((topic, i) => (
             <div
               key={i}
@@ -896,7 +939,9 @@ function EventChapter({
                     unoptimized
                   />
                   <div className="gallery-caption absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-xs text-white font-medium">{photo.alt}</p>
+                    <p className="text-xs text-white font-medium">
+                      {photo.alt}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -923,7 +968,9 @@ function EventChapter({
                     unoptimized
                   />
                   <div className="gallery-caption absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-xs text-white font-medium">{photo.alt}</p>
+                    <p className="text-xs text-white font-medium">
+                      {photo.alt}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -938,7 +985,8 @@ function EventChapter({
           <EvolutionTransition
             fromYear={events[index + 1].year}
             fromTheme={
-              events[index + 1].topics[0].split(" ").slice(0, 4).join(" ") + "..."
+              events[index + 1].topics[0].split(" ").slice(0, 4).join(" ") +
+              "..."
             }
             toYear={event.year}
             toTheme={event.theme}
@@ -1019,7 +1067,8 @@ function FutureCard({ mobile = false }: { mobile?: boolean }) {
         </p>
         <p className="mt-3 text-sm md:text-base text-ieee-gray leading-relaxed max-w-lg">
           The next chapter in our story begins October 30, 2026 in Bengaluru.
-          Exploring the convergence of digital intelligence and physical systems.
+          Exploring the convergence of digital intelligence and physical
+          systems.
         </p>
         {!mobile && (
           <div className="mt-6 flex items-center gap-2 text-sm font-bold text-ieee-blue group">

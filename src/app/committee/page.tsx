@@ -40,7 +40,7 @@ export default async function CommitteePage() {
   }));
 
   return (
-    <main className="min-h-screen bg-ieee-white flex flex-col pt-24">
+    <main className="min-h-screen flex flex-col pt-24">
       <section className="grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-7xl font-heading font-black text-ieee-black tracking-tight animate-in fade-in slide-in-from-bottom-3 duration-500">
