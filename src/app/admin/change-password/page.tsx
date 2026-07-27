@@ -45,7 +45,7 @@ export default function ChangePasswordPage() {
       const data = await res.json();
 
       if (res.ok) {
-        await update();
+        await update({ mustChangePassword: false });
         router.push("/admin");
         router.refresh();
       } else {

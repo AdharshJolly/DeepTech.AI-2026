@@ -40,12 +40,17 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.role = user.role || "admin";
         token.permissions = user.permissions || [];
         token.mustChangePassword = user.mustChangePassword ?? true;
         token.userId = user.id;
+      }
+      if (trigger === "update" && session) {
+        if (session.mustChangePassword !== undefined) {
+          token.mustChangePassword = session.mustChangePassword;
+        }
       }
       return token;
     },

@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePermissions } from "@/hooks/usePermissions";
 
 interface SpeakerItem {
   _id: string;
@@ -24,6 +25,11 @@ interface SpeakerItem {
 }
 
 export default function SpeakersManager() {
+  const { hasPermission } = usePermissions();
+  const canCreate = hasPermission("speakers", "create");
+  const canUpdate = hasPermission("speakers", "update");
+  const canDelete = hasPermission("speakers", "delete");
+
   const [speakers, setSpeakers] = useState<SpeakerItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -149,14 +155,16 @@ export default function SpeakersManager() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
-        <button
-          onClick={openAddModal}
-          className="bg-ieee-blue text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-ieee-blue/90 hover:scale-105 active:scale-95 transition-all shadow-md"
-        >
-          <Plus className="w-5 h-5" /> Add Speaker
-        </button>
-      </div>
+      {canCreate && (
+        <div className="flex justify-end">
+          <button
+            onClick={openAddModal}
+            className="bg-ieee-blue text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-ieee-blue/90 hover:scale-105 active:scale-95 transition-all shadow-md"
+          >
+            <Plus className="w-5 h-5" /> Add Speaker
+          </button>
+        </div>
+      )}
 
       {/* Modal Form */}
       <AnimatePresence>
@@ -309,9 +317,11 @@ export default function SpeakersManager() {
                 <th className="p-5 font-bold text-ieee-gray text-sm uppercase tracking-wider">
                   Role / Company
                 </th>
-                <th className="p-5 font-bold text-ieee-gray text-sm uppercase tracking-wider text-right">
-                  Actions
-                </th>
+                {(canUpdate || canDelete) && (
+                  <th className="p-5 font-bold text-ieee-gray text-sm uppercase tracking-wider text-right">
+                    Actions
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -343,22 +353,28 @@ export default function SpeakersManager() {
                     {s.role} <br />
                     <span className="text-ieee-black/60">{s.company}</span>
                   </td>
-                  <td className="p-5 text-right">
-                    <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button
-                        onClick={() => handleEdit(s)}
-                        className="text-ieee-blue hover:bg-ieee-blue/10 p-2.5 rounded-xl transition-colors"
-                      >
-                        <Edit2 className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(s._id)}
-                        className="text-red-500 hover:bg-red-50 p-2.5 rounded-xl transition-colors"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </td>
+                  {(canUpdate || canDelete) && (
+                    <td className="p-5 text-right">
+                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {canUpdate && (
+                          <button
+                            onClick={() => handleEdit(s)}
+                            className="text-ieee-blue hover:bg-ieee-blue/10 p-2.5 rounded-xl transition-colors"
+                          >
+                            <Edit2 className="w-5 h-5" />
+                          </button>
+                        )}
+                        {canDelete && (
+                          <button
+                            onClick={() => handleDelete(s._id)}
+                            className="text-red-500 hover:bg-red-50 p-2.5 rounded-xl transition-colors"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))}
               {speakers.length === 0 && !loading && (
