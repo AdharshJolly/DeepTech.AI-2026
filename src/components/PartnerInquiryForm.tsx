@@ -7,6 +7,8 @@ import {
   AlertCircle,
   Handshake,
   Loader2,
+  X,
+  Lock,
 } from "lucide-react";
 import { event as gaEvent } from "@/lib/analytics";
 
@@ -41,6 +43,12 @@ export default function PartnerInquiryForm() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
+  // Password Modal State
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
   const toggleType = (type: string) => {
     setPartnershipTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
@@ -65,10 +73,25 @@ export default function PartnerInquiryForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleInitialSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    setShowPasswordModal(true);
+  };
 
+  const handleFinalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+
+    setPasswordError(null);
     setIsSubmitting(true);
     setServerError(null);
 
@@ -85,6 +108,7 @@ export default function PartnerInquiryForm() {
           collaborationNotes,
           website,
           additionalNotes,
+          password,
         }),
       });
 
@@ -96,6 +120,7 @@ export default function PartnerInquiryForm() {
           category: "Partners",
           label: organizationName,
         });
+        setShowPasswordModal(false);
         setShowSuccess(true);
       } else {
         setServerError(data.error || "Failed to submit inquiry");
@@ -131,7 +156,82 @@ export default function PartnerInquiryForm() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto relative">
+      {/* Password Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ieee-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button 
+              onClick={() => setShowPasswordModal(false)}
+              className="absolute top-6 right-6 text-ieee-gray hover:text-ieee-black transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            <div className="w-12 h-12 bg-ieee-blue/10 rounded-full flex items-center justify-center mb-6 text-ieee-blue">
+              <Lock className="w-6 h-6" />
+            </div>
+            
+            <h3 className="text-2xl font-bold font-heading text-ieee-black mb-2">
+              Set your Password
+            </h3>
+            <p className="text-ieee-gray text-sm mb-6 leading-relaxed">
+              Create a password to easily check the status of your partnership inquiry later.
+            </p>
+
+            <form onSubmit={handleFinalSubmit} className="space-y-4">
+              {passwordError && (
+                <div className="p-3 rounded-xl flex items-center gap-2 text-sm font-semibold bg-red-50 text-red-700 border border-red-200">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {passwordError}
+                </div>
+              )}
+              {serverError && (
+                <div className="p-3 rounded-xl flex items-center gap-2 text-sm font-semibold bg-red-50 text-red-700 border border-red-200">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {serverError}
+                </div>
+              )}
+              
+              <Field
+                label="Password"
+                type="password"
+                value={password}
+                onChange={setPassword}
+                placeholder="Minimum 6 characters"
+              />
+              <Field
+                label="Confirm Password"
+                type="password"
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                placeholder="Re-enter password"
+              />
+
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-linear-to-r from-ieee-blue to-ieee-cyan text-white py-3.5 rounded-2xl font-bold text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      Submit & Set Password
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center mb-10">
         <div className="inline-flex items-center gap-2 bg-ieee-orange/10 text-ieee-orange px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
@@ -160,7 +260,7 @@ export default function PartnerInquiryForm() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleInitialSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Field
               label="Organization Name"
@@ -245,25 +345,17 @@ export default function PartnerInquiryForm() {
             placeholder="Any additional information..."
           />
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-linear-to-r from-ieee-blue to-ieee-cyan text-white py-4 rounded-2xl font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
+            <button
+              type="submit"
+              className="w-full bg-linear-to-r from-ieee-blue to-ieee-cyan text-white py-4 rounded-2xl font-bold text-sm uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mt-2"
+            >
               <>
                 <Send className="w-4 h-4" />
                 Submit Inquiry
               </>
-            )}
-          </button>
-        </form>
-      </div>
+            </button>
+          </form>
+        </div>
     </div>
   );
 }

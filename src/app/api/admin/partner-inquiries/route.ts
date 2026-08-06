@@ -29,18 +29,26 @@ export async function PUT(req: Request) {
 
   try {
     await connectToDatabase();
-    const { id, status } = await req.json();
+    const { id, status, adminFeedback } = await req.json();
 
-    if (!id || !status || !["approved", "rejected"].includes(status)) {
+    if (!id) {
       return NextResponse.json(
-        { error: "Invalid parameters" },
+        { error: "Inquiry ID is required" },
         { status: 400 }
       );
     }
 
+    const updateData: { status?: string; adminFeedback?: string } = {};
+    if (status && ["pending", "approved", "rejected"].includes(status)) {
+      updateData.status = status;
+    }
+    if (adminFeedback !== undefined) {
+      updateData.adminFeedback = adminFeedback;
+    }
+
     const updated = await PartnerInquiry.findByIdAndUpdate(
       id,
-      { status },
+      { $set: updateData },
       { new: true }
     );
 
@@ -51,19 +59,21 @@ export async function PUT(req: Request) {
       );
     }
 
-    // Send email notification only if enabled
-    const emailsEnabled = await isFeatureEnabled("email-notifications");
-    if (emailsEnabled) {
-      const emailData = {
-        contactPerson: updated.contactPerson,
-        workEmail: updated.workEmail,
-        organizationName: updated.organizationName,
-      };
+    // Send email notification only if enabled and status was updated
+    if (status) {
+      const emailsEnabled = await isFeatureEnabled("email-notifications");
+      if (emailsEnabled) {
+        const emailData = {
+          contactPerson: updated.contactPerson,
+          workEmail: updated.workEmail,
+          organizationName: updated.organizationName,
+        };
 
-      if (status === "approved") {
-        sendPartnerInquiryApproved(emailData).catch(() => {});
-      } else if (status === "rejected") {
-        sendPartnerInquiryRejected(emailData).catch(() => {});
+        if (status === "approved") {
+          sendPartnerInquiryApproved(emailData).catch(() => {});
+        } else if (status === "rejected") {
+          sendPartnerInquiryRejected(emailData).catch(() => {});
+        }
       }
     }
 

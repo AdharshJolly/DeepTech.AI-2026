@@ -10,6 +10,8 @@ const PartnerInquirySchema = new mongoose.Schema(
     collaborationNotes: { type: String, required: true, trim: true },
     website: { type: String, trim: true, default: "" },
     additionalNotes: { type: String, trim: true, default: "" },
+    password: { type: String, required: true },
+    adminFeedback: { type: String, trim: true, default: "" },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

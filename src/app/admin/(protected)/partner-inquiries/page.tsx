@@ -24,6 +24,7 @@ interface PartnerInquiry {
   collaborationNotes: string;
   website: string;
   additionalNotes: string;
+  adminFeedback?: string;
   status: "pending" | "approved" | "rejected";
   createdAt: string;
 }
@@ -67,6 +68,24 @@ export default function AdminPartnerInquiriesPage() {
       if (res.ok) {
         setInquiries((prev) =>
           prev.map((i) => (i._id === id ? { ...i, status } : i))
+        );
+      }
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleUpdateFeedback = async (id: string, adminFeedback: string) => {
+    setUpdatingId(id);
+    try {
+      const res = await fetch("/api/admin/partner-inquiries", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, adminFeedback }),
+      });
+      if (res.ok) {
+        setInquiries((prev) =>
+          prev.map((i) => (i._id === id ? { ...i, adminFeedback } : i))
         );
       }
     } finally {
@@ -274,6 +293,8 @@ export default function AdminPartnerInquiriesPage() {
           {expandedId && (
             <ExpandedRow
               inquiry={inquiries.find((i) => i._id === expandedId)!}
+              onUpdateFeedback={handleUpdateFeedback}
+              isUpdating={updatingId === expandedId}
             />
           )}
         </div>
@@ -307,7 +328,17 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
-function ExpandedRow({ inquiry }: { inquiry: PartnerInquiry }) {
+function ExpandedRow({ 
+  inquiry, 
+  onUpdateFeedback,
+  isUpdating 
+}: { 
+  inquiry: PartnerInquiry;
+  onUpdateFeedback: (id: string, feedback: string) => void;
+  isUpdating: boolean;
+}) {
+  const [feedback, setFeedback] = useState(inquiry.adminFeedback || "");
+
   return (
     <div className="px-6 py-6 bg-ieee-gray/5 border-t border-ieee-gray/10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -356,7 +387,33 @@ function ExpandedRow({ inquiry }: { inquiry: PartnerInquiry }) {
               </div>
             </>
           )}
-          <div className="text-xs text-ieee-gray">
+
+          <div className="pt-2 border-t border-ieee-gray/10 mt-4">
+            <h4 className="text-xs font-bold text-ieee-black uppercase tracking-wider mb-2">
+              Admin Feedback (Visible to Partner)
+            </h4>
+            <div className="space-y-2">
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder="Enter feedback or updates for the partner..."
+                rows={3}
+                className="w-full bg-white border border-ieee-gray/20 rounded-xl px-4 py-3 text-sm text-ieee-black focus:outline-none focus:ring-2 focus:ring-ieee-blue font-medium resize-none transition-all"
+              />
+              <div className="flex justify-end">
+                <button
+                  onClick={() => onUpdateFeedback(inquiry._id, feedback)}
+                  disabled={isUpdating || feedback === (inquiry.adminFeedback || "")}
+                  className="px-4 py-2 bg-ieee-blue text-white text-xs font-bold rounded-xl hover:bg-ieee-blue/90 disabled:opacity-50 transition-colors flex items-center gap-2"
+                >
+                  {isUpdating ? <Loader2 className="w-3 h-3 animate-spin" /> : <CheckCircle className="w-3 h-3" />}
+                  Save Feedback
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-xs text-ieee-gray mt-4">
             Submitted on{" "}
             {new Date(inquiry.createdAt).toLocaleDateString("en-IN", {
               day: "numeric",
