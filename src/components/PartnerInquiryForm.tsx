@@ -271,7 +271,7 @@ export default function PartnerInquiryForm() {
             </div>
           </Link>
         ) : (
-          <Link href="/admin/login" className="flex items-center justify-between p-4 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl group hover:border-ieee-blue/30 transition-colors">
+          <Link href="/login" className="flex items-center justify-between p-4 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl group hover:border-ieee-blue/30 transition-colors">
             <div className="flex items-center gap-3 text-ieee-gray font-semibold text-sm group-hover:text-ieee-black transition-colors">
               <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-ieee-gray group-hover:text-ieee-blue transition-colors">
                 <Lock className="w-4 h-4" />

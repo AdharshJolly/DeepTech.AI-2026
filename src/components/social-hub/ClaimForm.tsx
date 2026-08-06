@@ -328,7 +328,7 @@ export default function ClaimForm({
             </div>
           </Link>
         ) : (
-          <Link href="/admin/login" className="flex items-center justify-between p-4 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl group hover:border-ieee-blue/30 transition-colors">
+          <Link href="/login" className="flex items-center justify-between p-4 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl group hover:border-ieee-blue/30 transition-colors">
             <div className="flex items-center gap-3 text-ieee-gray font-semibold text-sm group-hover:text-ieee-black transition-colors">
               <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-ieee-gray group-hover:text-ieee-blue transition-colors">
                 <Lock className="w-4 h-4" />
@@ -358,7 +358,7 @@ export default function ClaimForm({
             <AlertCircle className="w-4 h-4" /> 
             An account with this email exists.
           </div>
-          <Link href="/admin/login" className="px-3 py-1 bg-white rounded-lg shadow-sm text-ieee-black text-xs hover:bg-gray-50 transition-colors">
+          <Link href="/login" className="px-3 py-1 bg-white rounded-lg shadow-sm text-ieee-black text-xs hover:bg-gray-50 transition-colors">
             Log In Here
           </Link>
         </div>
@@ -369,7 +369,7 @@ export default function ClaimForm({
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4" /> {submitSuccess}
           </div>
-          <Link href="/admin/login" className="text-emerald-800 underline text-xs mt-1 ml-6">
+          <Link href="/login" className="text-emerald-800 underline text-xs mt-1 ml-6">
             Log in to your Social Dashboard
           </Link>
         </div>

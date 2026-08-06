@@ -1,6 +1,15 @@
 import connectToDatabase from "@/lib/db";
 import EmailLog from "@/models/EmailLog";
 import SiteSettings from "@/models/SiteSettings";
+import { render } from "@react-email/render";
+import React from "react";
+
+import RegistrationConfirmationEmail from "@/emails/RegistrationConfirmationEmail";
+import RegistrationApprovedEmail from "@/emails/RegistrationApprovedEmail";
+import RegistrationRejectedEmail from "@/emails/RegistrationRejectedEmail";
+import PartnerInquiryConfirmationEmail from "@/emails/PartnerInquiryConfirmationEmail";
+import PartnerInquiryApprovedEmail from "@/emails/PartnerInquiryApprovedEmail";
+import PartnerInquiryRejectedEmail from "@/emails/PartnerInquiryRejectedEmail";
 
 const APPS_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
 const EMAIL_SECRET = process.env.GOOGLE_APPS_SCRIPT_SECRET;
@@ -20,6 +29,18 @@ async function getEmailSettings(): Promise<{ cc: string; bcc: string }> {
     return result;
   } catch {
     return { cc: "", bcc: "" };
+  }
+}
+
+async function getGlobalEventSettings() {
+  try {
+    await connectToDatabase();
+    const settings = await SiteSettings.find();
+    const result: Record<string, string> = {};
+    settings.forEach((s) => (result[s.key] = s.value));
+    return result;
+  } catch {
+    return {};
   }
 }
 
@@ -45,14 +66,13 @@ export async function sendEmail(data: {
     return { success: false, error: "Email service not configured" };
   }
 
-  // Auto-CC/BCC admin on confirmation emails
+  // Auto-CC/BCC admin on emails
   let cc = data.cc;
   let bcc = data.bcc;
-  if (data.type?.includes("confirmation")) {
-    const settings = await getEmailSettings();
-    if (!cc) cc = settings.cc;
-    if (!bcc) bcc = settings.bcc;
-  }
+  
+  const settings = await getEmailSettings();
+  if (!cc) cc = settings.cc;
+  if (!bcc) bcc = settings.bcc;
 
   // Clean and validate email lists
   cc = cleanEmailList(cc || "");
@@ -119,103 +139,32 @@ export async function getEmailStats() {
 
 // ── Email Templates ──────────────────────────────────────────
 
-const EMAIL_FOOTER = `
-  <div style="margin-top:30px;padding-top:20px;border-top:1px solid #e5e7eb;">
-    <p style="color:#9ca3af;font-size:12px;margin:0;">IEEE Computer Society Bangalore Chapter</p>
-    <p style="color:#9ca3af;font-size:12px;margin:4px 0 0;">John F. Welch Technology Center (LFWTC), Bengaluru, India</p>
-    <p style="color:#9ca3af;font-size:12px;margin:8px 0 0;">
-      <a href="https://www.linkedin.com/company/ieeecsbc/" style="color:#00629B;text-decoration:none;">LinkedIn</a> &nbsp;|&nbsp;
-      <a href="https://www.instagram.com/ieeecsbc" style="color:#00629B;text-decoration:none;">Instagram</a> &nbsp;|&nbsp;
-      <a href="https://twitter.com/ieeecsbc" style="color:#00629B;text-decoration:none;">X (Twitter)</a> &nbsp;|&nbsp;
-      <a href="https://www.youtube.com/channel/UCeBF0MYx2O2gq1_f6FeQFyQ" style="color:#00629B;text-decoration:none;">YouTube</a>
-    </p>
-  </div>
-`;
-
-const EVENT_DETAILS_CARD = `
-  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:20px;margin:24px 0;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
-      <tr>
-        <td style="padding:8px 0;color:#6b7280;font-weight:600;width:30%;">Event</td>
-        <td style="padding:8px 0;color:#1f2937;">DeepTech.AI 2026 — Physical AI Summit</td>
-      </tr>
-      <tr>
-        <td style="padding:8px 0;color:#6b7280;font-weight:600;">Date</td>
-        <td style="padding:8px 0;color:#1f2937;">Friday, October 30, 2026</td>
-      </tr>
-      <tr>
-        <td style="padding:8px 0;color:#6b7280;font-weight:600;">Time</td>
-        <td style="padding:8px 0;color:#1f2937;">09:00 AM – 06:00 PM IST</td>
-      </tr>
-      <tr>
-        <td style="padding:8px 0;color:#6b7280;font-weight:600;">Venue</td>
-        <td style="padding:8px 0;color:#1f2937;">GE Healthcare<br/>John F. Welch Technology Center (LFWTC)<br/>Bengaluru, India</td>
-      </tr>
-    </table>
-  </div>
-`;
-
 export async function sendRegistrationConfirmation(registration: {
   fullName: string;
   email: string;
   organization: string;
   jobTitle: string;
 }) {
+  const settings = await getGlobalEventSettings();
+  const html = await render(
+    React.createElement(RegistrationConfirmationEmail, {
+      fullName: registration.fullName,
+      organization: registration.organization,
+      jobTitle: registration.jobTitle,
+      eventDate: settings.event_date,
+      eventTime: settings.event_time,
+      eventVenue: settings.event_venue,
+      urlLinkedin: settings.url_linkedin,
+      urlTwitter: settings.url_twitter,
+      urlInstagram: settings.url_instagram,
+    })
+  );
+
   return sendEmail({
     to: registration.email,
     type: "registration_confirmation",
     subject: "Your Registration for DeepTech.AI 2026 Has Been Received",
-    html: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;">
-        <div style="background:linear-gradient(135deg,#00629B 0%,#00B5E2 100%);padding:32px 30px;border-radius:12px 12px 0 0;">
-          <p style="color:rgba(255,255,255,0.8);font-size:12px;margin:0;letter-spacing:2px;text-transform:uppercase;">IEEE Computer Society Bangalore Chapter</p>
-          <h1 style="color:#fff;margin:12px 0 0;font-size:26px;font-weight:700;">DeepTech.AI 2026</h1>
-          <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:6px 0 0;">Physical AI Summit</p>
-        </div>
-
-        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="color:#374151;font-size:16px;margin:0 0 16px;">Dear <strong>${registration.fullName}</strong>,</p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            Thank you for registering for <strong>DeepTech.AI 2026</strong>, the flagship event by IEEE Computer Society Bangalore Chapter focused on Physical AI and robotics.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            We have received your registration and our team is reviewing your submission. You will receive a confirmation email once your registration has been approved.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            <strong>Registration Details:</strong>
-          </p>
-          <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;margin-bottom:20px;">
-            <tr>
-              <td style="padding:6px 0;color:#6b7280;width:35%;">Name</td>
-              <td style="padding:6px 0;color:#1f2937;">${registration.fullName}</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;color:#6b7280;">Organization</td>
-              <td style="padding:6px 0;color:#1f2937;">${registration.organization}</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;color:#6b7280;">Role</td>
-              <td style="padding:6px 0;color:#1f2937;">${registration.jobTitle}</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 0;color:#6b7280;">Status</td>
-              <td style="padding:6px 0;"><span style="background:#FEF3C7;color:#92400E;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;">Pending Review</span></td>
-            </tr>
-          </table>
-
-          ${EVENT_DETAILS_CARD}
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            If you have any questions, please don't hesitate to reach out to us.
-          </p>
-
-          ${EMAIL_FOOTER}
-        </div>
-      </div>
-    `,
+    html,
   });
 }
 
@@ -223,42 +172,24 @@ export async function sendRegistrationApproved(registration: {
   fullName: string;
   email: string;
 }) {
+  const settings = await getGlobalEventSettings();
+  const html = await render(
+    React.createElement(RegistrationApprovedEmail, {
+      fullName: registration.fullName,
+      ctaUrl: settings.cta_registration_calendar,
+      eventDate: settings.event_date,
+      eventTime: settings.event_time,
+      eventVenue: settings.event_venue,
+      urlLinkedin: settings.url_linkedin,
+      urlTwitter: settings.url_twitter,
+      urlInstagram: settings.url_instagram,
+    })
+  );
+
   return sendEmail({
     to: registration.email,
     subject: "Registration Confirmed — DeepTech.AI 2026",
-    html: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;">
-        <div style="background:linear-gradient(135deg,#059669 0%,#10b981 100%);padding:32px 30px;border-radius:12px 12px 0 0;">
-          <p style="color:rgba(255,255,255,0.8);font-size:12px;margin:0;letter-spacing:2px;text-transform:uppercase;">IEEE Computer Society Bangalore Chapter</p>
-          <h1 style="color:#fff;margin:12px 0 0;font-size:26px;font-weight:700;">Registration Confirmed</h1>
-          <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:6px 0 0;">Welcome to DeepTech.AI 2026</p>
-        </div>
-
-        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="color:#374151;font-size:16px;margin:0 0 16px;">Dear <strong>${registration.fullName}</strong>,</p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            We are pleased to inform you that your registration for <strong>DeepTech.AI 2026</strong> has been <strong style="color:#059669;">approved</strong>.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            You are now confirmed to attend the flagship IEEE CS Bangalore event on Physical AI, robotics, and industrial automation. Join us for an exciting day of keynotes, technical sessions, and networking with industry leaders.
-          </p>
-
-          ${EVENT_DETAILS_CARD}
-
-          <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:16px;margin:20px 0;">
-            <p style="color:#065F46;font-size:14px;margin:0;font-weight:600;">Please bring a valid photo ID for event check-in.</p>
-          </div>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            We look forward to welcoming you at GE Healthcare, Bengaluru.
-          </p>
-
-          ${EMAIL_FOOTER}
-        </div>
-      </div>
-    `,
+    html,
   });
 }
 
@@ -266,43 +197,20 @@ export async function sendRegistrationRejected(registration: {
   fullName: string;
   email: string;
 }) {
+  const settings = await getGlobalEventSettings();
+  const html = await render(
+    React.createElement(RegistrationRejectedEmail, {
+      fullName: registration.fullName,
+      urlLinkedin: settings.url_linkedin,
+      urlTwitter: settings.url_twitter,
+      contactEmail: settings.contact_email,
+    })
+  );
+
   return sendEmail({
     to: registration.email,
     subject: "Update on Your DeepTech.AI 2026 Registration",
-    html: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;">
-        <div style="background:linear-gradient(135deg,#4B5563 0%,#6B7280 100%);padding:32px 30px;border-radius:12px 12px 0 0;">
-          <p style="color:rgba(255,255,255,0.8);font-size:12px;margin:0;letter-spacing:2px;text-transform:uppercase;">IEEE Computer Society Bangalore Chapter</p>
-          <h1 style="color:#fff;margin:12px 0 0;font-size:26px;font-weight:700;">Registration Update</h1>
-          <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:6px 0 0;">DeepTech.AI 2026</p>
-        </div>
-
-        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="color:#374151;font-size:16px;margin:0 0 16px;">Dear <strong>${registration.fullName}</strong>,</p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            Thank you for your interest in <strong>DeepTech.AI 2026</strong>. We appreciate you taking the time to register for our event.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            After careful review, we regret to inform you that we are unable to accommodate your registration at this time due to limited capacity.
-          </p>
-
-          <div style="background:#F3F4F6;border:1px solid #E5E7EB;border-radius:8px;padding:16px;margin:20px 0;">
-            <p style="color:#374151;font-size:14px;margin:0;">
-              <strong>Alternative options:</strong><br/>
-              You may follow us on <a href="https://www.linkedin.com/company/ieeecsbc/" style="color:#00629B;">LinkedIn</a> or <a href="https://twitter.com/ieeecsbc" style="color:#00629B;">X (Twitter)</a> for updates on future events and opportunities.
-            </p>
-          </div>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            If you believe this is an error, please contact us at <a href="mailto:ieee.deeptech@gmail.com" style="color:#00629B;">ieee.deeptech@gmail.com</a>.
-          </p>
-
-          ${EMAIL_FOOTER}
-        </div>
-      </div>
-    `,
+    html,
   });
 }
 
@@ -313,44 +221,20 @@ export async function sendPartnerInquiryConfirmation(partner: {
   workEmail: string;
   organizationName: string;
 }) {
+  const settings = await getGlobalEventSettings();
+  const html = await render(
+    React.createElement(PartnerInquiryConfirmationEmail, {
+      contactPerson: partner.contactPerson,
+      organizationName: partner.organizationName,
+      urlWebsite: settings.url_website,
+    })
+  );
+
   return sendEmail({
     to: partner.workEmail,
     type: "partner_inquiry_confirmation",
     subject: "Partnership Inquiry Received — DeepTech.AI 2026",
-    html: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;">
-        <div style="background:linear-gradient(135deg,#FFA300 0%,#F59E0B 100%);padding:32px 30px;border-radius:12px 12px 0 0;">
-          <p style="color:rgba(255,255,255,0.8);font-size:12px;margin:0;letter-spacing:2px;text-transform:uppercase;">IEEE Computer Society Bangalore Chapter</p>
-          <h1 style="color:#fff;margin:12px 0 0;font-size:26px;font-weight:700;">Partnership Inquiry Received</h1>
-          <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:6px 0 0;">DeepTech.AI 2026</p>
-        </div>
-
-        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="color:#374151;font-size:16px;margin:0 0 16px;">Dear <strong>${partner.contactPerson}</strong>,</p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            Thank you for your interest in partnering with <strong>${partner.organizationName}</strong> for <strong>DeepTech.AI 2026</strong>.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            We have received your partnership inquiry and our partnerships team will review it thoroughly. You can expect to hear from us within <strong>3–5 business days</strong> to discuss potential collaboration opportunities.
-          </p>
-
-          <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:16px;margin:20px 0;">
-            <p style="color:#92400E;font-size:14px;margin:0;">
-              <strong>What happens next?</strong><br/>
-              Our team will assess your inquiry and reach out via email or phone to explore how we can collaborate for this flagship event.
-            </p>
-          </div>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            In the meantime, feel free to learn more about the event at <a href="https://deeptech.ai" style="color:#00629B;">deeptech.ai</a>.
-          </p>
-
-          ${EMAIL_FOOTER}
-        </div>
-      </div>
-    `,
+    html,
   });
 }
 
@@ -359,45 +243,21 @@ export async function sendPartnerInquiryApproved(partner: {
   workEmail: string;
   organizationName: string;
 }) {
+  const settings = await getGlobalEventSettings();
+  const html = await render(
+    React.createElement(PartnerInquiryApprovedEmail, {
+      contactPerson: partner.contactPerson,
+      ctaUrl: settings.cta_partner_login,
+      urlLinkedin: settings.url_linkedin,
+      urlTwitter: settings.url_twitter,
+      urlInstagram: settings.url_instagram,
+    })
+  );
+
   return sendEmail({
     to: partner.workEmail,
     subject: "Partnership Confirmed — DeepTech.AI 2026",
-    html: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;">
-        <div style="background:linear-gradient(135deg,#059669 0%,#10b981 100%);padding:32px 30px;border-radius:12px 12px 0 0;">
-          <p style="color:rgba(255,255,255,0.8);font-size:12px;margin:0;letter-spacing:2px;text-transform:uppercase;">IEEE Computer Society Bangalore Chapter</p>
-          <h1 style="color:#fff;margin:12px 0 0;font-size:26px;font-weight:700;">Partnership Confirmed</h1>
-          <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:6px 0 0;">DeepTech.AI 2026</p>
-        </div>
-
-        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="color:#374151;font-size:16px;margin:0 0 16px;">Dear <strong>${partner.contactPerson}</strong>,</p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            We are delighted to inform you that the partnership inquiry from <strong>${partner.organizationName}</strong> has been <strong style="color:#059669;">approved</strong>.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            Our partnerships team will be in touch with you shortly to finalize the collaboration details, including booth arrangements, branding opportunities, and event logistics.
-          </p>
-
-          <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:16px;margin:20px 0;">
-            <p style="color:#065F46;font-size:14px;margin:0;font-weight:600;">Next Steps:</p>
-            <ul style="color:#065F46;font-size:14px;margin:8px 0 0;padding-left:20px;">
-              <li>Partnership agreement review</li>
-              <li>Booth/sponsorship logistics</li>
-              <li>Branding and promotional material guidelines</li>
-            </ul>
-          </div>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            We are excited to have <strong>${partner.organizationName}</strong> as a partner for this landmark event.
-          </p>
-
-          ${EMAIL_FOOTER}
-        </div>
-      </div>
-    `,
+    html,
   });
 }
 
@@ -406,42 +266,19 @@ export async function sendPartnerInquiryRejected(partner: {
   workEmail: string;
   organizationName: string;
 }) {
+  const settings = await getGlobalEventSettings();
+  const html = await render(
+    React.createElement(PartnerInquiryRejectedEmail, {
+      contactPerson: partner.contactPerson,
+      organizationName: partner.organizationName,
+      urlLinkedin: settings.url_linkedin,
+      contactEmail: settings.contact_email,
+    })
+  );
+
   return sendEmail({
     to: partner.workEmail,
     subject: "Partnership Inquiry Update — DeepTech.AI 2026",
-    html: `
-      <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;padding:0;">
-        <div style="background:linear-gradient(135deg,#4B5563 0%,#6B7280 100%);padding:32px 30px;border-radius:12px 12px 0 0;">
-          <p style="color:rgba(255,255,255,0.8);font-size:12px;margin:0;letter-spacing:2px;text-transform:uppercase;">IEEE Computer Society Bangalore Chapter</p>
-          <h1 style="color:#fff;margin:12px 0 0;font-size:26px;font-weight:700;">Partnership Inquiry Update</h1>
-          <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:6px 0 0;">DeepTech.AI 2026</p>
-        </div>
-
-        <div style="background:#f9fafb;padding:30px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="color:#374151;font-size:16px;margin:0 0 16px;">Dear <strong>${partner.contactPerson}</strong>,</p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            Thank you for your interest in partnering with <strong>${partner.organizationName}</strong> for <strong>DeepTech.AI 2026</strong>.
-          </p>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 16px;">
-            After careful consideration, we regret to inform you that we are unable to proceed with this partnership at this time. Our partnership slots for this event have been finalized.
-          </p>
-
-          <div style="background:#F3F4F6;border:1px solid #E5E7EB;border-radius:8px;padding:16px;margin:20px 0;">
-            <p style="color:#374151;font-size:14px;margin:0;">
-              <strong>Stay Connected:</strong><br/>
-              We encourage you to follow us on <a href="https://www.linkedin.com/company/ieeecsbc/" style="color:#00629B;">LinkedIn</a> for updates on future events and partnership opportunities.
-            </p>
-          </div>
-
-          <p style="color:#374151;font-size:15px;line-height:1.7;margin:0 0 8px;">
-            If you have any questions, please contact us at <a href="mailto:ieee.deeptech@gmail.com" style="color:#00629B;">ieee.deeptech@gmail.com</a>.
-          </p>
-
-          ${EMAIL_FOOTER}
-        </div>
-      </div>
-    `,
+    html,
   });
 }

@@ -92,7 +92,7 @@ export default function AdminUsersPage() {
       role: "admin",
       permissions: SECTIONS.map((s) => ({
         section: s.id,
-        actions: ["read"],
+        actions: [],
       })),
     });
     setError(null);
@@ -107,7 +107,7 @@ export default function AdminUsersPage() {
       role: user.role,
       permissions: user.permissions.length > 0
         ? user.permissions
-        : SECTIONS.map((s) => ({ section: s.id, actions: ["read"] })),
+        : SECTIONS.map((s) => ({ section: s.id, actions: [] })),
     });
     setError(null);
     setShowModal(true);

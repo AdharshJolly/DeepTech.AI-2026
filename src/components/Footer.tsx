@@ -117,11 +117,11 @@ export default function Footer() {
             </Link>
             <span className="text-ieee-gray/30">|</span>
             {session ? (
-              <Link href="/admin/login" className="hover:text-ieee-cyan transition-colors font-bold text-ieee-cyan">
+              <Link href="/login" className="hover:text-ieee-cyan transition-colors font-bold text-ieee-cyan">
                 My Dashboard
               </Link>
             ) : (
-              <Link href="/admin/login" className="hover:text-ieee-white transition-colors">
+              <Link href="/login" className="hover:text-ieee-white transition-colors">
                 Portal Login
               </Link>
             )}

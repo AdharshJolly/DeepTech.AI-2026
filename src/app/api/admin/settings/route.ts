@@ -40,17 +40,16 @@ export async function PUT(req: Request) {
 
   try {
     await connectToDatabase();
-    const { key, value } = await req.json();
+    const body = await req.json();
+    const updates = Object.entries(body).map(async ([key, value]) => {
+      await SiteSettings.findOneAndUpdate(
+        { key },
+        { key, value: String(value) },
+        { upsert: true, new: true }
+      );
+    });
 
-    if (!key || value === undefined) {
-      return NextResponse.json({ error: "Key and value are required" }, { status: 400 });
-    }
-
-    await SiteSettings.findOneAndUpdate(
-      { key },
-      { key, value },
-      { upsert: true, new: true }
-    );
+    await Promise.all(updates);
 
     return NextResponse.json({ success: true });
   } catch (err: unknown) {

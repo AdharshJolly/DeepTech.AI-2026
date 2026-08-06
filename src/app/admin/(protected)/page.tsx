@@ -7,7 +7,6 @@ import PartnerInquiry from "@/models/PartnerInquiry";
 import { Users, Calendar, UserCheck, Handshake, Activity } from "lucide-react";
 import Link from "next/link";
 import EmailQuotaWidget from "@/components/admin/EmailQuotaWidget";
-import EmailSettings from "@/components/admin/EmailSettings";
 
 export default async function AdminDashboard() {
   await connectToDatabase();
@@ -57,7 +56,6 @@ export default async function AdminDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <EmailQuotaWidget />
-        <EmailSettings />
 
         <div className="bg-white p-6 rounded-3xl border border-ieee-gray/10 shadow-sm flex flex-col items-center justify-center text-center">
           <Activity className="w-12 h-12 text-ieee-gray/20 mb-4" />
