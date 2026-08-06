@@ -38,6 +38,10 @@ export default async function AdminLayout({
     redirect("/admin/login");
   }
 
+  if (session.user.role === "partner") {
+    redirect("/partner-dashboard");
+  }
+
   const user = session.user as unknown as {
     role: string;
     permissions?: { section: string; actions: string[] }[];

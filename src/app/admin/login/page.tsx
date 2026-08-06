@@ -7,7 +7,13 @@ export default async function LoginPage() {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    redirect("/admin");
+    if (session.user.role === "partner") {
+      redirect("/partner-dashboard");
+    } else if (session.user.role === "socialUser") {
+      redirect("/social-dashboard");
+    } else {
+      redirect("/admin");
+    }
   }
 
   return (
@@ -15,9 +21,9 @@ export default async function LoginPage() {
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 border border-ieee-gray/10">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-heading font-black text-ieee-blue">
-            DeepTech<span className="text-ieee-orange">.AI</span> Admin
+            DeepTech<span className="text-ieee-orange">.AI</span> Portal
           </h1>
-          <p className="text-ieee-gray mt-2">Sign in to manage the platform</p>
+          <p className="text-ieee-gray mt-2">Sign in to your dashboard</p>
         </div>
         <LoginForm />
       </div>

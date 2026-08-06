@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import connectToDatabase from "@/lib/db";
 import AdminUser from "@/models/AdminUser";
+import PartnerInquiry from "@/models/PartnerInquiry";
+import SocialUser from "@/models/SocialUser";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,26 +18,74 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) return null;
 
         await connectToDatabase();
-        const user = await AdminUser.findOne({
+        
+        // 1. Check AdminUser
+        const adminUser = await AdminUser.findOne({
           email: credentials.email.toLowerCase(),
         });
 
-        if (!user) return null;
+        if (adminUser) {
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            adminUser.password
+          );
+          if (isValid) {
+            return {
+              id: adminUser._id.toString(),
+              name: adminUser.name,
+              email: adminUser.email,
+              role: adminUser.role,
+              permissions: adminUser.permissions,
+              mustChangePassword: adminUser.mustChangePassword,
+            };
+          }
+        }
 
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-        if (!isValid) return null;
+        // 2. Check PartnerInquiry
+        const partner = await PartnerInquiry.findOne({
+          workEmail: credentials.email.toLowerCase(),
+        });
 
-        return {
-          id: user._id.toString(),
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          permissions: user.permissions,
-          mustChangePassword: user.mustChangePassword,
-        };
+        if (partner) {
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            partner.password
+          );
+          if (isValid) {
+            return {
+              id: partner._id.toString(),
+              name: partner.contactPerson,
+              email: partner.workEmail,
+              role: "partner",
+              permissions: [],
+              mustChangePassword: false,
+            };
+          }
+        }
+
+        // 3. Check SocialUser
+        const socialUser = await SocialUser.findOne({
+          email: credentials.email.toLowerCase(),
+        });
+
+        if (socialUser) {
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            socialUser.password
+          );
+          if (isValid) {
+            return {
+              id: socialUser._id.toString(),
+              name: socialUser.socialHandle,
+              email: socialUser.email,
+              role: "socialUser",
+              permissions: [],
+              mustChangePassword: false,
+            };
+          }
+        }
+
+        return null;
       },
     }),
   ],
