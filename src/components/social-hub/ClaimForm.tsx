@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Send, CheckCircle, Loader2 } from "lucide-react";
+import { Send, CheckCircle, Loader2, Lock, X, AlertCircle } from "lucide-react";
 import { event as gaEvent } from "@/lib/analytics";
 import { QUESTS } from "@/config/quests";
+import Link from "next/link";
 
 interface ClaimFormProps {
   claimedQuests: string[];
@@ -40,6 +41,13 @@ export default function ClaimForm({
   }>({ checking: false, taken: false });
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const urlDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Password Modal State
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [requiresLoginError, setRequiresLoginError] = useState(false);
 
   // Check database for claimed quests when email changes
   useEffect(() => {
@@ -133,13 +141,12 @@ export default function ClaimForm({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleInitialSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    setRequiresLoginError(false);
 
-    const quest = QUESTS.find((q) => q.id === questId);
-    if (!quest) return;
-
+    // Try a "dry-run" submission to see if it requires password/login
     setIsSubmitting(true);
     try {
       const res = await fetch("/api/social/submit", {
@@ -149,22 +156,16 @@ export default function ClaimForm({
       });
 
       if (res.ok) {
-        gaEvent({
-          action: "quest_claim",
-          category: "Social Hub",
-          label: questId,
-        });
-        onSuccess(questId);
-        setSubmitSuccess(
-          "Claim submitted! Points will appear once verified by our team."
-        );
-        setPostUrl("");
-        setErrors({});
-
-        setTimeout(() => setSubmitSuccess(null), 4000);
+        completeSuccess();
       } else {
         const errData = await res.json();
-        onToast(errData.error || "Failed to submit claim", "error");
+        if (errData.requiresPassword) {
+          setShowPasswordModal(true);
+        } else if (errData.requiresLogin) {
+          setRequiresLoginError(true);
+        } else {
+          onToast(errData.error || "Failed to submit claim", "error");
+        }
       }
     } catch {
       onToast("Network error submitting claim", "error");
@@ -173,8 +174,142 @@ export default function ClaimForm({
     }
   };
 
+  const handleFinalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+
+    setPasswordError(null);
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/social/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, socialHandle: handle, questId, postUrl, password }),
+      });
+
+      if (res.ok) {
+        setShowPasswordModal(false);
+        completeSuccess();
+      } else {
+        const errData = await res.json();
+        setPasswordError(errData.error || "Failed to submit claim");
+      }
+    } catch {
+      setPasswordError("Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const completeSuccess = () => {
+    gaEvent({
+      action: "quest_claim",
+      category: "Social Hub",
+      label: questId,
+    });
+    onSuccess(questId);
+    setSubmitSuccess(
+      "Claim submitted! You can now log in to your dashboard to check its status."
+    );
+    setPostUrl("");
+    setErrors({});
+    setPassword("");
+    setConfirmPassword("");
+
+    setTimeout(() => setSubmitSuccess(null), 6000);
+  };
+
   return (
-    <div className="bg-white rounded-4xl p-8 border border-ieee-gray/10 mt-12 space-y-6">
+    <div className="bg-white rounded-4xl p-8 border border-ieee-gray/10 mt-12 space-y-6 relative">
+      {/* Password Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ieee-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button 
+              onClick={() => setShowPasswordModal(false)}
+              className="absolute top-6 right-6 text-ieee-gray hover:text-ieee-black transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            
+            <div className="w-12 h-12 bg-ieee-cyan/10 rounded-full flex items-center justify-center mb-6 text-ieee-cyan">
+              <Lock className="w-6 h-6" />
+            </div>
+            
+            <h3 className="text-2xl font-bold font-heading text-ieee-black mb-2">
+              Set your Password
+            </h3>
+            <p className="text-ieee-gray text-sm mb-6 leading-relaxed">
+              Create a password to unlock your Social Dashboard and track your points!
+            </p>
+
+            <form onSubmit={handleFinalSubmit} className="space-y-4">
+              {passwordError && (
+                <div className="p-3 rounded-xl flex items-center gap-2 text-sm font-semibold bg-red-50 text-red-700 border border-red-200">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {passwordError}
+                </div>
+              )}
+              
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
+                  Password *
+                </label>
+                <input
+                  type="password"
+                  placeholder="Minimum 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl px-4 py-3.5 text-sm text-ieee-black focus:outline-none focus:ring-2 focus:ring-ieee-cyan font-semibold transition-all"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
+                  Confirm Password *
+                </label>
+                <input
+                  type="password"
+                  placeholder="Re-enter password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl px-4 py-3.5 text-sm text-ieee-black focus:outline-none focus:ring-2 focus:ring-ieee-cyan font-semibold transition-all"
+                />
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-linear-to-r from-ieee-blue to-ieee-cyan text-white py-3.5 rounded-2xl font-bold text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      Submit & Set Password
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <div>
         <h3 className="text-xl font-bold font-heading text-ieee-black">
           Claim Your Points
@@ -185,13 +320,30 @@ export default function ClaimForm({
         </p>
       </div>
 
-      {submitSuccess && (
-        <div className="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/20 text-emerald-700 text-sm font-bold flex items-center gap-2">
-          <CheckCircle className="w-4 h-4" /> {submitSuccess}
+      {requiresLoginError && (
+        <div className="p-4 rounded-xl bg-ieee-orange/15 border border-ieee-orange/20 text-ieee-orange text-sm font-bold flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-4 h-4" /> 
+            An account with this email exists.
+          </div>
+          <Link href="/admin/login" className="px-3 py-1 bg-white rounded-lg shadow-sm text-ieee-black text-xs hover:bg-gray-50 transition-colors">
+            Log In Here
+          </Link>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      {submitSuccess && (
+        <div className="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/20 text-emerald-700 text-sm font-bold flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-4 h-4" /> {submitSuccess}
+          </div>
+          <Link href="/admin/login" className="text-emerald-800 underline text-xs mt-1 ml-6">
+            Log in to your Social Dashboard
+          </Link>
+        </div>
+      )}
+
+      <form onSubmit={handleInitialSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
