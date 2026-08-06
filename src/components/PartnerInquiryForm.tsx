@@ -9,8 +9,11 @@ import {
   Loader2,
   X,
   Lock,
+  ArrowRight,
 } from "lucide-react";
 import { event as gaEvent } from "@/lib/analytics";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const PARTNERSHIP_TYPES = [
   "Sponsorship",
@@ -48,6 +51,8 @@ export default function PartnerInquiryForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  const { data: session } = useSession();
 
   const toggleType = (type: string) => {
     setPartnershipTypes((prev) =>
@@ -249,6 +254,35 @@ export default function PartnerInquiryForm() {
           share a few details about your organization, and our partnerships
           team will get in touch to discuss collaboration opportunities.
         </p>
+      </div>
+
+      {/* Dynamic Login Banner */}
+      <div className="mb-6">
+        {session && session.user.role === "partner" ? (
+          <Link href="/partner-dashboard" className="flex items-center justify-between p-4 bg-ieee-blue/5 border border-ieee-blue/20 rounded-2xl group hover:bg-ieee-blue/10 transition-colors">
+            <div className="flex items-center gap-3 text-ieee-black font-semibold text-sm">
+              <div className="w-8 h-8 rounded-full bg-ieee-blue/10 flex items-center justify-center text-ieee-blue">
+                <Handshake className="w-4 h-4" />
+              </div>
+              You are already logged in as a partner!
+            </div>
+            <div className="text-ieee-blue font-bold text-sm flex items-center gap-1">
+              Go to Dashboard <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        ) : (
+          <Link href="/admin/login" className="flex items-center justify-between p-4 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl group hover:border-ieee-blue/30 transition-colors">
+            <div className="flex items-center gap-3 text-ieee-gray font-semibold text-sm group-hover:text-ieee-black transition-colors">
+              <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-ieee-gray group-hover:text-ieee-blue transition-colors">
+                <Lock className="w-4 h-4" />
+              </div>
+              Already submitted an inquiry?
+            </div>
+            <div className="text-ieee-gray group-hover:text-ieee-blue font-bold text-sm transition-colors flex items-center gap-1">
+              Log in to check status <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        )}
       </div>
 
       {/* Form */}

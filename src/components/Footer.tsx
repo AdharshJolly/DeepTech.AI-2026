@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import SocialLinks from "./SocialLinks";
+import { useSession } from "next-auth/react";
 
 export default function Footer() {
+  const { data: session } = useSession();
   return (
     <footer className="bg-ieee-black text-ieee-white py-10 md:py-12 border-t-4 border-ieee-orange">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,6 +115,16 @@ export default function Footer() {
             <Link href="#" className="hover:text-ieee-white transition-colors">
               Terms of Service
             </Link>
+            <span className="text-ieee-gray/30">|</span>
+            {session ? (
+              <Link href="/admin/login" className="hover:text-ieee-cyan transition-colors font-bold text-ieee-cyan">
+                My Dashboard
+              </Link>
+            ) : (
+              <Link href="/admin/login" className="hover:text-ieee-white transition-colors">
+                Portal Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
