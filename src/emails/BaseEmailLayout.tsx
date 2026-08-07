@@ -7,11 +7,7 @@ import {
   Link,
   Preview,
   Tailwind,
-  Section,
-  Img,
-  Row,
-  Column,
-  Button
+  Section
 } from "@react-email/components";
 import * as React from "react";
 

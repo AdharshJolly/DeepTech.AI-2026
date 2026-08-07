@@ -5,7 +5,7 @@ import connectToDatabase from "@/lib/db";
 import SocialUser from "@/models/SocialUser";
 import SocialSubmission from "@/models/SocialSubmission";
 import { Zap, Activity, CheckCircle, Clock, XCircle, Share2 } from "lucide-react";
-import LogoutButton from "@/components/admin/LogoutButton";
+import SignOutButton from "@/components/admin/SignOutButton";
 import { QUESTS } from "@/config/quests";
 import Link from "next/link";
 
@@ -84,7 +84,7 @@ export default async function SocialDashboardPage() {
             >
               Submit New Post
             </Link>
-            <LogoutButton />
+            <SignOutButton />
           </div>
         </div>
 

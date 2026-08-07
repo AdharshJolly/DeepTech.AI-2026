@@ -1,6 +1,6 @@
 import * as React from "react";
 import BaseEmailLayout from "./BaseEmailLayout";
-import { Text, Section, Row, Column, Button, Img, Link } from "@react-email/components";
+import { Text, Section, Row, Column, Button } from "@react-email/components";
 
 interface RegistrationApprovedEmailProps {
   fullName: string;

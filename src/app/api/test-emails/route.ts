@@ -15,8 +15,7 @@ export async function GET() {
     // 1. Render Registration Approved Email
     const registrationHtml = await render(
       React.createElement(RegistrationApprovedEmail, {
-        fullName: "Adharsh Jolly",
-        qrCodeUrl: "",
+        fullName: "Adharsh Jolly"
       })
     );
 

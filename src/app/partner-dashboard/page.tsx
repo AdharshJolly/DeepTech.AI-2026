@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import connectToDatabase from "@/lib/db";
 import PartnerInquiry from "@/models/PartnerInquiry";
 import { Activity, FileText } from "lucide-react";
-import LogoutButton from "@/components/admin/LogoutButton";
+import SignOutButton from "@/components/admin/SignOutButton";
 import PartnerDetailsEditor from "@/components/PartnerDetailsEditor";
 
 export default async function PartnerDashboardPage() {
@@ -52,7 +52,7 @@ export default async function PartnerDashboardPage() {
               Welcome back, {inquiry.contactPerson} ({inquiry.organizationName})
             </p>
           </div>
-          <LogoutButton />
+          <SignOutButton />
         </div>
 
         {/* Status Card */}

@@ -118,7 +118,7 @@ export default function RegistrationConfirmationEmail({
       </Section>
 
       <Text className="text-gray-700 text-[15px] leading-[24px]">
-        If you have any questions, please don't hesitate to reach out to us.
+        If you have any questions, please don&apos;t hesitate to reach out to us.
       </Text>
     </BaseEmailLayout>
   );
