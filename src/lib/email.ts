@@ -247,6 +247,7 @@ export async function sendPartnerInquiryApproved(partner: {
   const html = await render(
     React.createElement(PartnerInquiryApprovedEmail, {
       contactPerson: partner.contactPerson,
+      organizationName: partner.organizationName,
       ctaUrl: settings.cta_partner_login,
       urlLinkedin: settings.url_linkedin,
       urlTwitter: settings.url_twitter,
