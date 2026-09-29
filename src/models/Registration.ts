@@ -33,6 +33,20 @@ const RegistrationSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    linkedIn: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    bio: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    isGovOrHealthcare: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

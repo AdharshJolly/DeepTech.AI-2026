@@ -5,11 +5,18 @@ import Registration from "@/models/Registration";
 export async function POST(req: Request) {
   try {
     await connectToDatabase();
-    const { fullName, email, phone, organization, jobTitle, whyAttend } = await req.json();
+    const { fullName, email, phone, organization, jobTitle, whyAttend, linkedIn, bio, isGovOrHealthcare } = await req.json();
 
     if (!fullName || !email || !organization || !jobTitle || !whyAttend) {
       return NextResponse.json(
         { error: "All required fields must be filled" },
+        { status: 400 }
+      );
+    }
+
+    if (isGovOrHealthcare && (!linkedIn || !bio)) {
+      return NextResponse.json(
+        { error: "LinkedIn and bio are required for government/healthcare professionals" },
         { status: 400 }
       );
     }
@@ -36,6 +43,9 @@ export async function POST(req: Request) {
       organization: organization.trim(),
       jobTitle: jobTitle.trim(),
       whyAttend: whyAttend.trim(),
+      linkedIn: linkedIn?.trim() || "",
+      bio: bio?.trim() || "",
+      isGovOrHealthcare: Boolean(isGovOrHealthcare),
     });
 
     return NextResponse.json({ success: true, registration });

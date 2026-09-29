@@ -18,6 +18,8 @@ interface FormErrors {
   organization?: string;
   jobTitle?: string;
   whyAttend?: string;
+  linkedIn?: string;
+  bio?: string;
 }
 
 export default function RegistrationForm() {
@@ -27,6 +29,10 @@ export default function RegistrationForm() {
   const [organization, setOrganization] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [whyAttend, setWhyAttend] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [bio, setBio] = useState("");
+  const [isGovOrHealthcare, setIsGovOrHealthcare] = useState(false);
+  
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -48,6 +54,14 @@ export default function RegistrationForm() {
     }
     if (!whyAttend || whyAttend.trim().length < 10) {
       newErrors.whyAttend = "Please tell us why you want to attend (min 10 characters)";
+    }
+    if (isGovOrHealthcare) {
+      if (!linkedIn || linkedIn.trim().length < 5) {
+        newErrors.linkedIn = "LinkedIn profile is required for government/healthcare professionals";
+      }
+      if (!bio || bio.trim().length < 10) {
+        newErrors.bio = "Bio is required for government/healthcare professionals (min 10 characters)";
+      }
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -71,6 +85,9 @@ export default function RegistrationForm() {
           organization,
           jobTitle,
           whyAttend,
+          linkedIn,
+          bio,
+          isGovOrHealthcare,
         }),
       });
 
@@ -89,6 +106,9 @@ export default function RegistrationForm() {
         setOrganization("");
         setJobTitle("");
         setWhyAttend("");
+        setLinkedIn("");
+        setBio("");
+        setIsGovOrHealthcare(false);
         setErrors({});
       } else {
         setServerError(data.error || "Failed to register. Please try again.");
@@ -248,7 +268,84 @@ export default function RegistrationForm() {
             </div>
           </div>
 
+          <div className="space-y-3 pt-2">
+            <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
+              Are you a government professional or healthcare provider?
+            </label>
+            <div className="flex gap-6">
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="govOrHealthcare"
+                  checked={isGovOrHealthcare === true}
+                  onChange={() => setIsGovOrHealthcare(true)}
+                  className="w-4 h-4 text-ieee-blue focus:ring-ieee-blue border-ieee-gray/30"
+                />
+                <span className="text-sm text-ieee-black font-medium group-hover:text-ieee-blue transition-colors">Yes</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="govOrHealthcare"
+                  checked={isGovOrHealthcare === false}
+                  onChange={() => {
+                    setIsGovOrHealthcare(false);
+                    setErrors((prev) => ({ ...prev, linkedIn: undefined, bio: undefined }));
+                  }}
+                  className="w-4 h-4 text-ieee-blue focus:ring-ieee-blue border-ieee-gray/30"
+                />
+                <span className="text-sm text-ieee-black font-medium group-hover:text-ieee-blue transition-colors">No</span>
+              </label>
+            </div>
+          </div>
+
           <div className="space-y-1.5">
+            <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
+              LinkedIn Profile {isGovOrHealthcare && <span className="text-red-500">*</span>}
+            </label>
+            <input
+              type="url"
+              placeholder="https://linkedin.com/in/username"
+              value={linkedIn}
+              onChange={(e) => {
+                setLinkedIn(e.target.value);
+                setErrors((prev) => ({ ...prev, linkedIn: undefined }));
+              }}
+              className={`w-full bg-ieee-gray/5 border rounded-2xl px-4 py-3.5 text-sm text-ieee-black focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all ${
+                errors.linkedIn ? "border-red-400" : "border-ieee-gray/10"
+              }`}
+            />
+            {errors.linkedIn && (
+              <p className="text-xs text-red-500 font-medium">
+                {errors.linkedIn}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
+              Brief Bio {isGovOrHealthcare && <span className="text-red-500">*</span>}
+            </label>
+            <textarea
+              placeholder="Paste your professional bio..."
+              value={bio}
+              onChange={(e) => {
+                setBio(e.target.value);
+                setErrors((prev) => ({ ...prev, bio: undefined }));
+              }}
+              rows={3}
+              className={`w-full bg-ieee-gray/5 border rounded-2xl px-4 py-3.5 text-sm text-ieee-black focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all resize-none ${
+                errors.bio ? "border-red-400" : "border-ieee-gray/10"
+              }`}
+            />
+            {errors.bio && (
+              <p className="text-xs text-red-500 font-medium">
+                {errors.bio}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-1.5 pt-2">
             <label className="text-xs font-bold text-ieee-black uppercase tracking-wider">
               Why do you want to attend DeepTech.AI 2026? *
             </label>
