@@ -13,7 +13,6 @@ interface MobileMenuProps {
   isScrolled: boolean;
   navLinks: NavLink[];
   onClose: () => void;
-  registrationOpen?: boolean;
 }
 
 const menuVariants = {
@@ -46,7 +45,7 @@ const linkVariants = {
   exit: { opacity: 0, x: -8, transition: { duration: 0.1 } },
 };
 
-export default function MobileMenu({ isOpen, isScrolled, navLinks, onClose, registrationOpen = false }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, isScrolled, navLinks, onClose }: MobileMenuProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -88,24 +87,16 @@ export default function MobileMenu({ isOpen, isScrolled, navLinks, onClose, regi
               custom={navLinks.length}
               className="pt-3"
             >
-              {registrationOpen ? (
-                <Link
-                  href="/register"
-                  className="block w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-md text-center hover:bg-ieee-orange/90 transition-colors"
-                  onClick={onClose}
-                  aria-label="Register for DeepTech.AI 2026"
-                >
-                  Register
-                </Link>
-              ) : (
-                <button
-                  aria-label="Registrations Coming Soon"
-                  className="w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest cursor-not-allowed opacity-80 shadow-md"
-                  disabled
-                >
-                  Registrations Coming Soon
-                </button>
-              )}
+              <Link
+                href="https://www.explara.com/e/b880283e49a227f5c867eb6f9a7489c8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-ieee-orange text-ieee-white px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-md text-center hover:bg-ieee-orange/90 transition-colors"
+                onClick={onClose}
+                aria-label="Register for DeepTech.AI 2026"
+              >
+                Register
+              </Link>
             </motion.div>
           </div>
         </motion.div>

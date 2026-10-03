@@ -31,6 +31,15 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/register',
+        destination: 'https://www.explara.com/e/b880283e49a227f5c867eb6f9a7489c8',
+        permanent: false, // Use false in case we want to change it later
+      },
+    ];
+  },
 };
 
 export default nextConfig;

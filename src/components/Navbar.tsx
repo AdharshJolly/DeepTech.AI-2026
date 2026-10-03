@@ -21,19 +21,11 @@ const navLinks = [
 export default function Navbar({ isAdmin = false }: { isAdmin?: boolean }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [registrationOpen, setRegistrationOpen] = React.useState(false);
   const { scrollY } = useScroll();
   const pathname = usePathname();
 
   // On admin pages, never apply pill effect
   const showPill = !isAdmin && isScrolled;
-
-  React.useEffect(() => {
-    fetch("/api/feature-flags/public")
-      .then((res) => res.json())
-      .then((data) => setRegistrationOpen(data.registration ?? false))
-      .catch(() => {});
-  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 20 && !isScrolled) setIsScrolled(true);
@@ -129,35 +121,24 @@ export default function Navbar({ isAdmin = false }: { isAdmin?: boolean }) {
                   </Link>
                 );
               })}
-              {registrationOpen ? (
-                <Link
-                  href="/register"
-                  className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide inline-flex items-center"
-                  aria-label="Register for DeepTech.AI 2026"
-                >
-                  <motion.span
-                    className="inline-block"
-                    initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
-                    animate={{
-                      padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
-                      fontSize: isScrolled ? "0.8rem" : "0.875rem",
-                    }}
-                  >
-                    Register
-                  </motion.span>
-                </Link>
-              ) : (
+              <Link
+                href="https://www.explara.com/e/b880283e49a227f5c867eb6f9a7489c8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-ieee-orange text-ieee-white rounded-full font-bold hover:bg-ieee-orange/90 transition-colors uppercase tracking-wide inline-flex items-center"
+                aria-label="Register for DeepTech.AI 2026"
+              >
                 <motion.span
-                  className="bg-ieee-orange text-ieee-white rounded-full font-bold uppercase tracking-wide cursor-not-allowed opacity-80 inline-flex items-center"
+                  className="inline-block"
                   initial={{ padding: "0.6rem 1.5rem", fontSize: "0.875rem" }}
                   animate={{
                     padding: isScrolled ? "0.5rem 1.25rem" : "0.6rem 1.5rem",
                     fontSize: isScrolled ? "0.8rem" : "0.875rem",
                   }}
                 >
-                  Registrations Coming Soon
+                  Register
                 </motion.span>
-              )}
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -209,7 +190,6 @@ export default function Navbar({ isAdmin = false }: { isAdmin?: boolean }) {
           isScrolled={isScrolled}
           navLinks={navLinks}
           onClose={() => setIsOpen(false)}
-          registrationOpen={registrationOpen}
         />
       </motion.nav>
     </motion.div>
