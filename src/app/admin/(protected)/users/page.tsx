@@ -19,7 +19,6 @@ const SECTIONS = [
   { id: "agenda", label: "Agenda" },
   { id: "partners", label: "Partners" },
   { id: "social", label: "Social Claims" },
-  { id: "registrations", label: "Registrations" },
   { id: "feature-flags", label: "Feature Flags" },
   { id: "users", label: "User Management" },
 ];

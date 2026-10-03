@@ -8,7 +8,6 @@ export type PermissionSection =
   | "agenda"
   | "partners"
   | "social"
-  | "registrations"
   | "feature-flags"
   | "users";
 

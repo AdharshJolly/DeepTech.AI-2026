@@ -4,9 +4,6 @@ import SiteSettings from "@/models/SiteSettings";
 import { render } from "@react-email/render";
 import React from "react";
 
-import RegistrationConfirmationEmail from "@/emails/RegistrationConfirmationEmail";
-import RegistrationApprovedEmail from "@/emails/RegistrationApprovedEmail";
-import RegistrationRejectedEmail from "@/emails/RegistrationRejectedEmail";
 import PartnerInquiryConfirmationEmail from "@/emails/PartnerInquiryConfirmationEmail";
 import PartnerInquiryApprovedEmail from "@/emails/PartnerInquiryApprovedEmail";
 import PartnerInquiryRejectedEmail from "@/emails/PartnerInquiryRejectedEmail";
@@ -138,83 +135,6 @@ export async function getEmailStats() {
 }
 
 // ── Email Templates ──────────────────────────────────────────
-
-export async function sendRegistrationConfirmation(registration: {
-  fullName: string;
-  email: string;
-  organization: string;
-  jobTitle: string;
-}) {
-  const settings = await getGlobalEventSettings();
-  const html = await render(
-    React.createElement(RegistrationConfirmationEmail, {
-      fullName: registration.fullName,
-      organization: registration.organization,
-      jobTitle: registration.jobTitle,
-      eventDate: settings.event_date,
-      eventTime: settings.event_time,
-      eventVenue: settings.event_venue,
-      urlLinkedin: settings.url_linkedin,
-      urlTwitter: settings.url_twitter,
-      urlInstagram: settings.url_instagram,
-    })
-  );
-
-  return sendEmail({
-    to: registration.email,
-    type: "registration_confirmation",
-    subject: "Your Registration for DeepTech.AI 2026 Has Been Received",
-    html,
-  });
-}
-
-export async function sendRegistrationApproved(registration: {
-  fullName: string;
-  email: string;
-}) {
-  const settings = await getGlobalEventSettings();
-  const html = await render(
-    React.createElement(RegistrationApprovedEmail, {
-      fullName: registration.fullName,
-      ctaUrl: settings.cta_registration_calendar,
-      eventDate: settings.event_date,
-      eventTime: settings.event_time,
-      eventVenue: settings.event_venue,
-      urlLinkedin: settings.url_linkedin,
-      urlTwitter: settings.url_twitter,
-      urlInstagram: settings.url_instagram,
-    })
-  );
-
-  return sendEmail({
-    to: registration.email,
-    subject: "Registration Confirmed — DeepTech.AI 2026",
-    html,
-  });
-}
-
-export async function sendRegistrationRejected(registration: {
-  fullName: string;
-  email: string;
-}) {
-  const settings = await getGlobalEventSettings();
-  const html = await render(
-    React.createElement(RegistrationRejectedEmail, {
-      fullName: registration.fullName,
-      urlLinkedin: settings.url_linkedin,
-      urlTwitter: settings.url_twitter,
-      contactEmail: settings.contact_email,
-    })
-  );
-
-  return sendEmail({
-    to: registration.email,
-    subject: "Update on Your DeepTech.AI 2026 Registration",
-    html,
-  });
-}
-
-// ── Partner Inquiry Emails ─────────────────────────────────────
 
 export async function sendPartnerInquiryConfirmation(partner: {
   contactPerson: string;

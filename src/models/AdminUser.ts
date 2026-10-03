@@ -11,7 +11,6 @@ const PermissionSchema = new mongoose.Schema(
         "agenda",
         "partners",
         "social",
-        "registrations",
         "feature-flags",
         "users",
       ],

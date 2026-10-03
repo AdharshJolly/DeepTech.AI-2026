@@ -2,9 +2,8 @@ import connectToDatabase from "@/lib/db";
 import Speaker from "@/models/Speaker";
 import Committee from "@/models/Committee";
 import Agenda from "@/models/Agenda";
-import Registration from "@/models/Registration";
 import PartnerInquiry from "@/models/PartnerInquiry";
-import { Users, Calendar, UserCheck, Handshake, Activity } from "lucide-react";
+import { Users, Calendar, Handshake, Activity } from "lucide-react";
 import Link from "next/link";
 import EmailQuotaWidget from "@/components/admin/EmailQuotaWidget";
 
@@ -14,8 +13,6 @@ export default async function AdminDashboard() {
   const speakersCount = await Speaker.countDocuments();
   const committeeCount = await Committee.countDocuments();
   const agendaCount = await Agenda.countDocuments();
-  const registrationsCount = await Registration.countDocuments();
-  const pendingRegistrations = await Registration.countDocuments({ status: "pending" });
   const partnerInquiriesCount = await PartnerInquiry.countDocuments();
   const pendingInquiries = await PartnerInquiry.countDocuments({ status: "pending" });
 
@@ -23,7 +20,6 @@ export default async function AdminDashboard() {
     { name: "Speakers", value: speakersCount, icon: Users, color: "text-ieee-orange", bg: "bg-ieee-orange/10", href: "/admin/speakers" },
     { name: "Committee", value: committeeCount, icon: Users, color: "text-ieee-blue", bg: "bg-ieee-blue/10", href: "/admin/committee" },
     { name: "Agenda Sessions", value: agendaCount, icon: Calendar, color: "text-ieee-cyan", bg: "bg-ieee-cyan/10", href: "/admin/agenda" },
-    { name: "Registrations", value: registrationsCount, icon: UserCheck, color: "text-emerald-600", bg: "bg-emerald-50", href: "/admin/registrations", badge: pendingRegistrations > 0 ? `${pendingRegistrations} pending` : undefined },
     { name: "Partner Inquiries", value: partnerInquiriesCount, icon: Handshake, color: "text-amber-600", bg: "bg-amber-50", href: "/admin/partner-inquiries", badge: pendingInquiries > 0 ? `${pendingInquiries} pending` : undefined },
   ];
 

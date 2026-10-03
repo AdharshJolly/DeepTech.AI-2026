@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendEmail } from "@/lib/email";
 import { render } from "@react-email/render";
-import RegistrationApprovedEmail from "@/emails/RegistrationApprovedEmail";
 import PartnerInquiryApprovedEmail from "@/emails/PartnerInquiryApprovedEmail";
 import React from "react";
 
@@ -12,20 +11,6 @@ export async function GET() {
   const targetEmail = "adharshjolly23@gmail.com";
 
   try {
-    // 1. Render Registration Approved Email
-    const registrationHtml = await render(
-      React.createElement(RegistrationApprovedEmail, {
-        fullName: "Adharsh Jolly"
-      })
-    );
-
-    await sendEmail({
-      to: targetEmail,
-      subject: "[TEST] Registration Confirmed — DeepTech.AI 2026",
-      html: registrationHtml,
-      type: "registration_confirmation",
-    });
-
     // 2. Render Partner Approved Email
     const partnerHtml = await render(
       React.createElement(PartnerInquiryApprovedEmail, {

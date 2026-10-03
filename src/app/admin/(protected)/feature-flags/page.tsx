@@ -70,10 +70,6 @@ export default function FeatureFlagsPage() {
       title: "Agenda Page",
       desc: "Controls access to the /agenda page. When disabled, visitors see a 'Coming Soon' message about the agenda.",
     },
-    registration: {
-      title: "Registration",
-      desc: "Controls the registration buttons across the site. When disabled, all buttons show 'Registrations Coming Soon'. When enabled, buttons link to the /register page.",
-    },
     "social-hub": {
       title: "Social Hub",
       desc: "Controls access to the /social-hub page. When disabled, visitors see a 'Coming Soon' message about social challenges.",
