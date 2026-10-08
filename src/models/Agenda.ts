@@ -9,7 +9,17 @@ const AgendaSchema = new mongoose.Schema({
   type: { 
     type: String, 
     required: true,
-    enum: ['keynote', 'panel', 'workshop', 'networking', 'break']
+    enum: [
+      'keynote',
+      'panel',
+      'workshop',
+      'networking',
+      'break',
+      'talk',
+      'spotlight',
+      'activity',
+      'closing',
+    ],
   },
   order: { type: Number, default: 0 },
 }, { timestamps: true });

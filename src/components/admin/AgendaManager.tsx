@@ -207,8 +207,12 @@ export default function AgendaManager() {
                         <option value="keynote">Keynote</option>
                         <option value="panel">Panel</option>
                         <option value="workshop">Workshop</option>
+                        <option value="talk">Technical Talk</option>
+                        <option value="spotlight">Spotlight</option>
+                        <option value="activity">Activity / Games</option>
                         <option value="networking">Networking</option>
-                        <option value="break">Break</option>
+                        <option value="break">Break / Meal</option>
+                        <option value="closing">Closing Remarks</option>
                       </select>
                       <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                         <ChevronDown className="w-5 h-5 text-ieee-gray" />
