@@ -8,8 +8,7 @@
     "lint": "eslint .",
     "prebuild": "eslint . --max-warnings 0",
     "build": "next build",
-    "start": "next start",
-    "seed:agenda": "node scripts/seed-agenda.js"
+    "start": "next start"
   },
   "dependencies": {
     "@react-email/components": "^1.0.12",
