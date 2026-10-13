@@ -2,10 +2,10 @@ import Skeleton from "./Skeleton";
 
 export default function SpeakersSkeleton() {
   return (
-    <section className="py-16 md:py-24 min-h-screen">
+    <section className="py-8 md:py-12 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Skeleton */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12">
           <Skeleton className="h-8 w-48 mx-auto mb-6 rounded-full" />
           <Skeleton className="h-12 w-64 mx-auto mb-4" />
           <Skeleton className="h-5 w-96 mx-auto" />

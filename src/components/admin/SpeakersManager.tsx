@@ -22,6 +22,7 @@ interface SpeakerItem {
   order?: number;
   imageUrl?: string;
   isFeatured?: boolean;
+  linkedinUrl?: string;
 }
 
 export default function SpeakersManager() {
@@ -90,6 +91,8 @@ export default function SpeakersManager() {
           speaker.company;
         (form.elements.namedItem("bio") as HTMLTextAreaElement).value =
           speaker.bio || "";
+        (form.elements.namedItem("linkedinUrl") as HTMLInputElement).value =
+          speaker.linkedinUrl || "";
         (form.elements.namedItem("order") as HTMLInputElement).value = (
           speaker.order || 0
         ).toString();
@@ -131,6 +134,7 @@ export default function SpeakersManager() {
       role: formData.get("role"),
       company: formData.get("company"),
       bio: formData.get("bio"),
+      linkedinUrl: String(formData.get("linkedinUrl") || "").trim(),
       order: Number(formData.get("order")) || 0,
       isFeatured: formData.get("isFeatured") === "on",
       imageUrl,
@@ -232,6 +236,14 @@ export default function SpeakersManager() {
                       className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
                     />
                   </div>
+                  <input
+                    name="linkedinUrl"
+                    type="url"
+                    placeholder="LinkedIn profile URL (optional, e.g. https://www.linkedin.com/in/name)"
+                    pattern="https?://(www\.)?linkedin\.com/.*"
+                    title="Enter a full LinkedIn URL starting with https://"
+                    className="p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full"
+                  />
                   <label className="flex items-center gap-3 p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl cursor-pointer hover:bg-ieee-gray/10 transition-colors w-fit">
                     <input
                       name="isFeatured"

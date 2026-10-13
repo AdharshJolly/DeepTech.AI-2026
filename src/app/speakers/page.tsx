@@ -27,10 +27,10 @@ export default async function SpeakersPage() {
   }
 
   return (
-    <main className="grow pt-20">
+    <div className="grow">
       <Suspense fallback={<SpeakersSkeleton />}>
         <Speakers />
       </Suspense>
-    </main>
+    </div>
   );
 }
