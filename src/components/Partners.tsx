@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function Partners() {
@@ -22,13 +21,13 @@ export default function Partners() {
           </p>
         </div>
 
-        {/* Organizers & Venue Partners */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-12 max-w-4xl mx-auto">
-          <div className="flex flex-col items-center">
+        {/* Organizers, Venue & Innovation Partners */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-10 mb-12 max-w-5xl mx-auto">
+          <div className="flex flex-col items-center w-full max-w-72">
             <span className="text-xs font-bold tracking-widest text-ieee-gray/50 uppercase mb-6">
               Organized By
             </span>
-            <div className="bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 w-full max-w-72 h-28 md:h-36 flex items-center justify-center">
+            <div className="bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 w-full h-28 md:h-36 flex items-center justify-center">
               <Image
                 src="/images/ieee_cs_bc.png"
                 alt="IEEE Computer Society Bangalore Chapter"
@@ -41,14 +40,31 @@ export default function Partners() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full max-w-72">
             <span className="text-xs font-bold tracking-widest text-ieee-gray/50 uppercase mb-6">
               Venue Partner
             </span>
-            <div className="bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 w-full max-w-72 h-28 md:h-36 flex items-center justify-center">
+            <div className="bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 w-full h-28 md:h-36 flex items-center justify-center">
               <Image
                 src="/images/GE_Healthcare.png"
                 alt="GE Healthcare"
+                width={200}
+                height={80}
+                style={{ width: "100%", height: "auto" }}
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center w-full max-w-72">
+            <span className="text-xs font-bold tracking-widest text-ieee-gray/50 uppercase mb-6">
+              Innovation Partner
+            </span>
+            <div className="bg-white p-5 md:p-8 rounded-3xl md:rounded-4xl border border-ieee-gray/10 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 w-full h-28 md:h-36 flex items-center justify-center">
+              <Image
+                src="/images/nasscom.png"
+                alt="Nasscom"
                 width={200}
                 height={80}
                 style={{ width: "100%", height: "auto" }}
@@ -70,13 +86,15 @@ export default function Partners() {
               Join us as a sponsor, technology partner, or community collaborator
               for DeepTech.AI 2026. Let&apos;s shape the future of Physical AI together.
             </p>
-            <Link
-              href="/partner-inquiry"
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeSJYgsH0F8V-gMbVxqWyGW_a5MjInMRFOchwwyAARvSAsGvg/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white text-ieee-blue px-8 py-4 rounded-full font-bold text-sm hover:shadow-xl hover:scale-105 transition-all"
             >
               Become a Partner
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         </div>
 

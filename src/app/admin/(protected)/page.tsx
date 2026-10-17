@@ -2,10 +2,19 @@ import connectToDatabase from "@/lib/db";
 import Speaker from "@/models/Speaker";
 import Committee from "@/models/Committee";
 import Agenda from "@/models/Agenda";
-import PartnerInquiry from "@/models/PartnerInquiry";
-import { Users, Calendar, Handshake, Activity } from "lucide-react";
+import { Users, Calendar, Activity } from "lucide-react";
 import Link from "next/link";
 import EmailQuotaWidget from "@/components/admin/EmailQuotaWidget";
+
+interface StatItem {
+  name: string;
+  value: number;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+  bg: string;
+  href: string;
+  badge?: string;
+}
 
 export default async function AdminDashboard() {
   await connectToDatabase();
@@ -13,14 +22,11 @@ export default async function AdminDashboard() {
   const speakersCount = await Speaker.countDocuments();
   const committeeCount = await Committee.countDocuments();
   const agendaCount = await Agenda.countDocuments();
-  const partnerInquiriesCount = await PartnerInquiry.countDocuments();
-  const pendingInquiries = await PartnerInquiry.countDocuments({ status: "pending" });
 
-  const stats = [
+  const stats: StatItem[] = [
     { name: "Speakers", value: speakersCount, icon: Users, color: "text-ieee-orange", bg: "bg-ieee-orange/10", href: "/admin/speakers" },
     { name: "Committee", value: committeeCount, icon: Users, color: "text-ieee-blue", bg: "bg-ieee-blue/10", href: "/admin/committee" },
     { name: "Agenda Sessions", value: agendaCount, icon: Calendar, color: "text-ieee-cyan", bg: "bg-ieee-cyan/10", href: "/admin/agenda" },
-    { name: "Partner Inquiries", value: partnerInquiriesCount, icon: Handshake, color: "text-amber-600", bg: "bg-amber-50", href: "/admin/partner-inquiries", badge: pendingInquiries > 0 ? `${pendingInquiries} pending` : undefined },
   ];
 
   return (
