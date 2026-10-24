@@ -56,3 +56,20 @@ export async function requirePermission(
 
   return { user };
 }
+
+export async function requireSuperAdmin(): Promise<{
+  error?: NextResponse;
+}> {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
+  }
+
+  const user = session.user as unknown as { role: string };
+  if (user.role !== "superAdmin") {
+    return { error: NextResponse.json({ error: "Forbidden" }, { status: 403 }) };
+  }
+
+  return {};
+}

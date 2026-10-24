@@ -7,7 +7,7 @@ export const QUESTS = [
       "Share the DeepTech.AI 2026 registration flyer on LinkedIn using #DeepTechAI2026.",
     actionText: "Share on LinkedIn",
     shareUrl:
-      "https://www.linkedin.com/sharing/share-offsite/?url=https://deeptech.ai",
+      "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fieeecsbangalore.org%2Fdeeptech%2F",
     platform: "linkedin" as const,
   },
   {
@@ -28,7 +28,7 @@ export const QUESTS = [
       "Post your excitement about attending or speaking at DeepTech.AI 2026 on X (formerly Twitter) with #DeepTechAI2026.",
     actionText: "Post on X",
     shareUrl:
-      "https://twitter.com/intent/tweet?text=I'm%20excited%20to%20attend%20%23DeepTechAI2026!%20Join%20me%20for%20the%20flagship%20symposium.%20https://deeptech.ai",
+      "https://twitter.com/intent/tweet?text=I'm%20excited%20to%20attend%20%23DeepTechAI2026!%20Join%20me%20for%20the%20flagship%20symposium.%20https%3A%2F%2Fieeecsbangalore.org%2Fdeeptech%2F",
     platform: "twitter" as const,
   },
   {

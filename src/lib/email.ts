@@ -32,7 +32,7 @@ async function getEmailSettings(): Promise<{ cc: string; bcc: string }> {
   }
 }
 
-async function getGlobalEventSettings() {
+export async function getGlobalEventSettings() {
   try {
     await connectToDatabase();
     const settings = await SiteSettings.find();
@@ -44,7 +44,7 @@ async function getGlobalEventSettings() {
   }
 }
 
-function cleanEmailList(emails: string): string {
+export function cleanEmailList(emails: string): string {
   if (!emails) return "";
   return emails
     .split(",")
@@ -54,12 +54,17 @@ function cleanEmailList(emails: string): string {
 }
 
 export async function sendEmail(data: {
-  to: string;
+  /** Omit only for BCC-only sends (the Apps Script accepts a missing `to`). */
+  to?: string;
   subject: string;
   html: string;
   type?: string;
   cc?: string;
   bcc?: string;
+  /** Skip the admin CC/BCC defaults from settings (caller controls copies). */
+  skipDefaultCopies?: boolean;
+  /** Skip the EmailLog entry (caller logs on its own). */
+  skipLog?: boolean;
 }): Promise<{ success: boolean; error?: string }> {
   if (!APPS_SCRIPT_URL) {
     console.warn("GOOGLE_APPS_SCRIPT_URL not configured, skipping email");
@@ -70,9 +75,11 @@ export async function sendEmail(data: {
   let cc = data.cc;
   let bcc = data.bcc;
   
-  const settings = await getEmailSettings();
-  if (!cc) cc = settings.cc;
-  if (!bcc) bcc = settings.bcc;
+  if (!data.skipDefaultCopies) {
+    const settings = await getEmailSettings();
+    if (!cc) cc = settings.cc;
+    if (!bcc) bcc = settings.bcc;
+  }
 
   // Clean and validate email lists
   cc = cleanEmailList(cc || "");
@@ -86,7 +93,7 @@ export async function sendEmail(data: {
       },
       body: JSON.stringify({
         secret: EMAIL_SECRET,
-        to: data.to,
+        to: data.to || undefined,
         subject: data.subject,
         html: data.html,
         cc: cc || undefined,
@@ -97,7 +104,7 @@ export async function sendEmail(data: {
     const result = await res.json();
 
     // Log successful send
-    if (result.success) {
+    if (result.success && !data.skipLog) {
       try {
         await connectToDatabase();
         await EmailLog.create({
@@ -180,6 +187,7 @@ export async function sendRegistrationApproved(registration: {
       eventDate: settings.event_date,
       eventTime: settings.event_time,
       eventVenue: settings.event_venue,
+      urlWebsite: settings.url_website,
       urlLinkedin: settings.url_linkedin,
       urlTwitter: settings.url_twitter,
       urlInstagram: settings.url_instagram,

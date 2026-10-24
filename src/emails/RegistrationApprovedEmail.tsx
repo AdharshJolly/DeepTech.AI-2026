@@ -1,6 +1,9 @@
 import * as React from "react";
 import BaseEmailLayout from "./BaseEmailLayout";
-import { Text, Section, Row, Column, Button } from "@react-email/components";
+import { Text, Section, Row, Column, Button, Link } from "@react-email/components";
+
+const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/place/Gate+3+-+John+F.+Welch+Technology+Center/@12.9720464,77.7267591,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae1300006b4d31:0xccab7b5cd494ac9a!8m2!3d12.9720464!4d77.7267591!16s%2Fg%2F11vzrgqm1b!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MTAxOS4wIKXMDSoASAFQAw%3D%3D";
 
 interface RegistrationApprovedEmailProps {
   fullName: string;
@@ -8,6 +11,8 @@ interface RegistrationApprovedEmailProps {
   eventDate?: string;
   eventTime?: string;
   eventVenue?: string;
+  mapsUrl?: string;
+  urlWebsite?: string;
   urlLinkedin?: string;
   urlTwitter?: string;
   urlInstagram?: string;
@@ -17,8 +22,10 @@ export default function RegistrationApprovedEmail({
   fullName = "Attendee",
   ctaUrl = "https://www.google.com/calendar/render?action=TEMPLATE&text=DeepTech.AI+2026",
   eventDate = "Friday, October 30, 2026",
-  eventTime = "09:00 AM – 06:00 PM IST",
+  eventTime = "08:30 AM – 05:00 PM IST",
   eventVenue = "GE Healthcare, John F. Welch Technology Center, Bengaluru",
+  mapsUrl = GOOGLE_MAPS_URL,
+  urlWebsite = "https://ieeecsbangalore.org/deeptech/",
   urlLinkedin,
   urlTwitter,
   urlInstagram,
@@ -82,7 +89,26 @@ export default function RegistrationApprovedEmail({
         >
           Add to Google Calendar
         </Button>
+        <Button
+          href={mapsUrl}
+          className="bg-[#00629B] text-white font-bold rounded-lg px-6 py-3 text-[14px] ml-3"
+        >
+          View on Google Maps
+        </Button>
       </Section>
+
+      <Text className="text-gray-700 text-[15px] leading-[24px]">
+        The detailed agenda and the full speaker lineup are available on our website:{" "}
+        <Link href={urlWebsite} className="text-[#00629B]">
+          {urlWebsite.replace(/^https?:\/\//, "")}
+        </Link>
+        .
+      </Text>
+
+      <Text className="text-gray-700 text-[15px] leading-[24px]">
+        <strong>Spread the word!</strong> Share your ticket and event details on social media, tag the IEEE CS
+        Bangalore pages, and use the hashtags <strong>#IEEEDeeptech26</strong> and <strong>#PhysicalAI</strong>.
+      </Text>
     </BaseEmailLayout>
   );
 }

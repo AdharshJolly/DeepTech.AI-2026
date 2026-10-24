@@ -11,7 +11,7 @@ interface PartnerInquiryConfirmationEmailProps {
 export default function PartnerInquiryConfirmationEmail({
   contactPerson = "Partner",
   organizationName = "Acme Corp",
-  urlWebsite = "https://deeptech.ai",
+  urlWebsite = "https://ieeecsbangalore.org/deeptech/",
 }: PartnerInquiryConfirmationEmailProps) {
   return (
     <BaseEmailLayout
@@ -40,7 +40,7 @@ export default function PartnerInquiryConfirmationEmail({
       </Section>
 
       <Text className="text-gray-700 text-[15px] leading-[24px]">
-        In the meantime, feel free to learn more about the event at <Link href={urlWebsite} className="text-[#00629B]">deeptech.ai</Link>.
+        In the meantime, feel free to learn more about the event at <Link href={urlWebsite} className="text-[#00629B]">ieeecsbangalore.org/deeptech</Link>.
       </Text>
     </BaseEmailLayout>
   );

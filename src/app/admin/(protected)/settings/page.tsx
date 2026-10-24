@@ -29,7 +29,7 @@ export default function AdminSettingsPage() {
           admin_cc_email: data.admin_cc_email || "",
           admin_bcc_email: data.admin_bcc_email || "",
           contact_email: data.contact_email || "ieee.deeptech@gmail.com",
-          url_website: data.url_website || "https://deeptech.ai",
+          url_website: data.url_website || "https://ieeecsbangalore.org/deeptech/",
           url_linkedin: data.url_linkedin || "https://www.linkedin.com/company/ieeecsbc/",
           url_twitter: data.url_twitter || "https://twitter.com/ieeecsbc",
           url_instagram: data.url_instagram || "https://www.instagram.com/ieeecsbc",

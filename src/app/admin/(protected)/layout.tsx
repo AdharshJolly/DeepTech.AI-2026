@@ -10,6 +10,7 @@ import {
   Share2,
   ShieldCheck,
   Settings,
+  Send,
 } from "lucide-react";
 import SignOutButton from "@/components/admin/SignOutButton";
 
@@ -24,6 +25,7 @@ const allNavItems = [
   { name: "Social Claims", href: "/admin/social", icon: Share2, section: "social" },
   { name: "Feature Flags", href: "/admin/feature-flags", icon: ToggleLeft, section: "feature-flags" },
   { name: "Users", href: "/admin/users", icon: ShieldCheck, section: "users" },
+  { name: "Send Email", href: "/admin/email", icon: Send, section: "email" },
   { name: "Settings", href: "/admin/settings", icon: Settings, section: "settings" },
 ];
 
@@ -60,7 +62,7 @@ export default async function AdminLayout({
     // SuperAdmin sees everything
     if (user.role === "superAdmin") return true;
     // Settings is strictly SuperAdmin only
-    if (item.section === "settings") return false;
+    if (item.section === "settings" || item.section === "email") return false;
     // Check if user has read permission for this section
     return (user.permissions || []).some(
       (p) => p.section === item.section && p.actions.includes("read")

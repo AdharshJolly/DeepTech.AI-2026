@@ -131,13 +131,13 @@ export default function Contact() {
             <div className="bg-white p-3 md:p-4 rounded-[2rem] md:rounded-[2.5rem] border border-ieee-gray/10 shadow-lg overflow-hidden relative flex-1 min-h-60 md:min-h-80">
               <div className="relative w-full h-full rounded-3xl overflow-hidden bg-ieee-gray/5">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.914836591106!2d77.72128397455987!3d12.977303814767291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11f4e9762799%3A0xc6fb11df29ea4c7a!2sGE%20Healthcare!5e0!3m2!1sen!2sin!4v1783961758146!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9969537477086!2d77.7267591!3d12.9720464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1300006b4d31%3A0xccab7b5cd494ac9a!2sGate%203%20-%20John%20F.%20Welch%20Technology%20Center!5e0!3m2!1sen!2sin!4v1792752137327!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, position: "absolute", inset: 0 }}
                   allowFullScreen={true}
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   className="w-full h-full transition-all duration-700"
                 ></iframe>
               </div>
