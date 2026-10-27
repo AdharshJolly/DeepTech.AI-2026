@@ -12,11 +12,79 @@ import {
 } from "lucide-react";
 import { event as gaEvent } from "@/lib/analytics";
 
+export interface AgendaPerson {
+  name: string;
+  designation?: string;
+  role: string;
+  linkedinUrl?: string;
+}
+
+// Display order and heading for each people group on an expanded session.
+const PERSON_GROUPS: { role: string; single: string; plural: string }[] = [
+  { role: "dignitary", single: "Dignitary", plural: "Dignitaries" },
+  { role: "keynote", single: "Keynote Address", plural: "Keynote Address" },
+  { role: "moderator", single: "Moderator", plural: "Moderators" },
+  { role: "panelist", single: "Panelist", plural: "Panelists" },
+  { role: "speaker", single: "Featured Speaker", plural: "Featured Speakers" },
+];
+
+function safeLinkedInUrl(url?: string): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    return u.protocol === "https:" && /(^|\.)linkedin\.com$/i.test(u.hostname)
+      ? u.href
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.84-2.05 3.8-2.05 4.06 0 4.8 2.67 4.8 6.14v5.41h-4v-4.8c0-1.15-.02-2.62-1.6-2.62-1.6 0-1.85 1.25-1.85 2.54v4.88h-4z" />
+    </svg>
+  );
+}
+
+function PersonRow({ person }: { person: AgendaPerson }) {
+  const href = safeLinkedInUrl(person.linkedinUrl);
+  return (
+    <div className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
+      <div className="w-12 h-12 rounded-xl bg-ieee-gray/5 border border-ieee-gray/20 flex items-center justify-center shrink-0">
+        <Users className="w-5 h-5 text-ieee-blue" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="font-heading font-bold text-base text-ieee-black">
+          {person.name}
+        </div>
+        {person.designation && (
+          <div className="text-sm text-ieee-gray">{person.designation}</div>
+        )}
+      </div>
+      {href && (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${person.name} on LinkedIn`}
+          onClick={(e) => e.stopPropagation()}
+          className="w-10 h-10 shrink-0 rounded-xl border border-ieee-gray/20 flex items-center justify-center text-ieee-blue hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-colors"
+        >
+          <LinkedInIcon className="w-5 h-5" />
+        </a>
+      )}
+    </div>
+  );
+}
+
 export interface AgendaItem {
   _id?: string;
   time: string;
   title: string;
   speakerName?: string;
+  people?: AgendaPerson[];
   track?: string;
   type: string;
   description?: string;
@@ -143,7 +211,7 @@ export default function AgendaClient({
     const hasSpeaker = Boolean(
       session.speakerName && session.speakerName.trim().length > 0
     );
-    return hasDesc || hasSpeaker;
+    return hasDesc || hasSpeaker || Boolean(session.people?.length);
   };
 
   // Default first expandable item to be expanded
@@ -151,7 +219,8 @@ export default function AgendaClient({
     const firstExpandable = agendaItems.find((item) =>
       Boolean(
         (item.description && item.description.trim().length > 0) ||
-          (item.speakerName && item.speakerName.trim().length > 0)
+          (item.speakerName && item.speakerName.trim().length > 0) ||
+          item.people?.length
       )
     );
     return firstExpandable
@@ -522,8 +591,28 @@ export default function AgendaClient({
                                 </div>
                               )}
 
-                              {/* Featured Speaker Section if available */}
-                              {session.speakerName && (
+                              {/* People grouped by role, with LinkedIn links */}
+                              {PERSON_GROUPS.map((group) => {
+                                const members = (session.people || []).filter(
+                                  (p) => p.role === group.role
+                                );
+                                if (members.length === 0) return null;
+                                return (
+                                  <div key={group.role} className="space-y-2.5">
+                                    <h4 className="text-xs font-bold uppercase tracking-widest text-ieee-orange">
+                                      {members.length > 1
+                                        ? group.plural
+                                        : group.single}
+                                    </h4>
+                                    {members.map((p, i) => (
+                                      <PersonRow key={`${p.name}-${i}`} person={p} />
+                                    ))}
+                                  </div>
+                                );
+                              })}
+
+                              {/* Legacy single-speaker text when no structured people */}
+                              {session.speakerName && !session.people?.length && (
                                 <div className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
                                   <div className="w-12 h-12 rounded-xl bg-ieee-gray/5 border border-ieee-gray/20 flex items-center justify-center shrink-0">
                                     <Users className="w-5 h-5 text-ieee-blue" />

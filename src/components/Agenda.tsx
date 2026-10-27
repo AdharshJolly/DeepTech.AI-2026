@@ -40,6 +40,14 @@ export default async function Agenda() {
     time: String(item.time || ""),
     title: String(item.title || ""),
     speakerName: item.speakerName ? String(item.speakerName) : undefined,
+    people: Array.isArray(item.people)
+      ? (item.people as Array<Record<string, unknown>>).map((p) => ({
+          name: String(p.name || ""),
+          designation: p.designation ? String(p.designation) : undefined,
+          role: String(p.role || "speaker"),
+          linkedinUrl: p.linkedinUrl ? String(p.linkedinUrl) : undefined,
+        }))
+      : [],
     track: item.track ? String(item.track) : undefined,
     type: String(item.type || "keynote"),
     description: item.description ? String(item.description) : undefined,

@@ -5,11 +5,30 @@ import { Loader2, Trash2, Plus, Edit2, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePermissions } from "@/hooks/usePermissions";
 
+interface AgendaPerson {
+  name: string;
+  designation?: string;
+  role: string;
+  linkedinUrl?: string;
+}
+
+const PERSON_ROLES = [
+  { value: "speaker", label: "Speaker" },
+  { value: "keynote", label: "Keynote Address" },
+  { value: "moderator", label: "Moderator" },
+  { value: "panelist", label: "Panelist" },
+  { value: "dignitary", label: "Dignitary" },
+];
+
+const inputClass =
+  "p-3 bg-ieee-gray/5 border border-ieee-gray/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all w-full text-sm";
+
 interface AgendaItem {
   _id: string;
   time: string;
   title: string;
   speakerName?: string;
+  people?: AgendaPerson[];
   track?: string;
   type: string;
   description?: string;
@@ -27,6 +46,7 @@ export default function AgendaManager() {
   const [uploading, setUploading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [people, setPeople] = useState<AgendaPerson[]>([]);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -51,11 +71,18 @@ export default function AgendaManager() {
 
   const openAddModal = () => {
     setEditingId(null);
+    setPeople([]);
     setIsModalOpen(true);
   };
 
+  const updatePerson = (index: number, patch: Partial<AgendaPerson>) =>
+    setPeople((prev) =>
+      prev.map((p, i) => (i === index ? { ...p, ...patch } : p))
+    );
+
   const handleEdit = (item: AgendaItem) => {
     setEditingId(item._id);
+    setPeople(item.people ? item.people.map((p) => ({ ...p })) : []);
     setIsModalOpen(true);
     setTimeout(() => {
       if (formRef.current) {
@@ -82,6 +109,7 @@ export default function AgendaManager() {
     setIsModalOpen(false);
     setTimeout(() => {
       setEditingId(null);
+      setPeople([]);
       if (formRef.current) formRef.current.reset();
     }, 300);
   };
@@ -97,6 +125,14 @@ export default function AgendaManager() {
       time: formData.get("time"),
       title: formData.get("title"),
       speakerName: formData.get("speakerName"),
+      people: people
+        .filter((p) => p.name.trim())
+        .map((p) => ({
+          name: p.name.trim(),
+          designation: p.designation?.trim() || undefined,
+          role: p.role,
+          linkedinUrl: p.linkedinUrl?.trim() || undefined,
+        })),
       track: formData.get("track"),
       type: formData.get("type"),
       description: formData.get("description"),
@@ -148,7 +184,7 @@ export default function AgendaManager() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-3xl shadow-2xl border border-ieee-gray/10 w-full max-w-2xl relative z-10 overflow-hidden"
+              className="bg-white rounded-3xl shadow-2xl border border-ieee-gray/10 w-full max-w-2xl relative z-10 overflow-y-auto max-h-[90vh]"
             >
               <div className="p-6 border-b border-ieee-gray/10 flex items-center justify-between bg-ieee-gray/5">
                 <h2 className="text-xl font-bold flex items-center gap-2 text-ieee-black">
@@ -232,6 +268,83 @@ export default function AgendaManager() {
                     className="w-full p-3.5 bg-ieee-gray/5 border border-ieee-gray/10 rounded-2xl focus:outline-none focus:ring-2 focus:ring-ieee-blue focus:bg-white transition-all"
                     rows={4}
                   ></textarea>
+
+                  {/* People: speakers, moderator, panelists, dignitaries */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-bold text-ieee-black">People</h3>
+                        <p className="text-xs text-ieee-gray">
+                          Shown on the agenda grouped by role, with LinkedIn
+                          links. Overrides Speaker Name when present.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPeople((prev) => [
+                            ...prev,
+                            { name: "", designation: "", role: "speaker", linkedinUrl: "" },
+                          ])
+                        }
+                        className="text-ieee-blue font-bold text-sm flex items-center gap-1 hover:bg-ieee-blue/10 px-3 py-2 rounded-xl transition-colors"
+                      >
+                        <Plus className="w-4 h-4" /> Add Person
+                      </button>
+                    </div>
+                    {people.map((p, i) => (
+                      <div
+                        key={i}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3 rounded-2xl border border-ieee-gray/10 bg-ieee-gray/5 relative"
+                      >
+                        <input
+                          value={p.name}
+                          onChange={(e) => updatePerson(i, { name: e.target.value })}
+                          placeholder="Name"
+                          className={inputClass}
+                        />
+                        <select
+                          value={p.role}
+                          onChange={(e) => updatePerson(i, { role: e.target.value })}
+                          className={inputClass}
+                        >
+                          {PERSON_ROLES.map((r) => (
+                            <option key={r.value} value={r.value}>
+                              {r.label}
+                            </option>
+                          ))}
+                        </select>
+                        <input
+                          value={p.designation || ""}
+                          onChange={(e) =>
+                            updatePerson(i, { designation: e.target.value })
+                          }
+                          placeholder="Designation, Company"
+                          className={inputClass}
+                        />
+                        <div className="flex gap-2">
+                          <input
+                            value={p.linkedinUrl || ""}
+                            onChange={(e) =>
+                              updatePerson(i, { linkedinUrl: e.target.value })
+                            }
+                            placeholder="LinkedIn URL (https://...)"
+                            className={inputClass}
+                          />
+                          <button
+                            type="button"
+                            aria-label="Remove person"
+                            onClick={() =>
+                              setPeople((prev) => prev.filter((_, j) => j !== i))
+                            }
+                            className="text-red-500 hover:bg-red-50 p-2.5 rounded-xl transition-colors shrink-0"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
                   <div className="pt-4 flex gap-3 justify-end">
                     <button
